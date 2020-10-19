@@ -1,0 +1,54 @@
+
+pack.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+burners
+  rotate: false
+  xy: 559, 2
+  size: 1245, 1246
+  orig: 1245, 1246
+  offset: 0, 0
+  index: -1
+lb
+  rotate: false
+  xy: 2, 693
+  size: 555, 555
+  orig: 555, 555
+  offset: 0, 0
+  index: -1
+lu
+  rotate: false
+  xy: 559, 1250
+  size: 555, 555
+  orig: 555, 555
+  offset: 0, 0
+  index: -1
+rb
+  rotate: false
+  xy: 1116, 1250
+  size: 555, 555
+  orig: 555, 555
+  offset: 0, 0
+  index: -1
+ru
+  rotate: false
+  xy: 2, 1250
+  size: 555, 555
+  orig: 555, 555
+  offset: 0, 0
+  index: -1
+
+pack2.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+back-board
+  rotate: false
+  xy: 2, 2
+  size: 1500, 1500
+  orig: 1500, 1500
+  offset: 0, 0
+  index: -1

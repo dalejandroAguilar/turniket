@@ -1,0 +1,48 @@
+
+pack.png
+size: 1024,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+back-board
+  rotate: false
+  xy: 2, 2
+  size: 250, 250
+  orig: 250, 250
+  offset: 0, 0
+  index: -1
+burners
+  rotate: false
+  xy: 254, 44
+  size: 208, 208
+  orig: 208, 208
+  offset: 0, 0
+  index: -1
+lb
+  rotate: false
+  xy: 559, 64
+  size: 93, 93
+  orig: 93, 93
+  offset: 0, 0
+  index: -1
+lu
+  rotate: false
+  xy: 464, 64
+  size: 93, 93
+  orig: 93, 93
+  offset: 0, 0
+  index: -1
+rb
+  rotate: false
+  xy: 559, 159
+  size: 93, 93
+  orig: 93, 93
+  offset: 0, 0
+  index: -1
+ru
+  rotate: false
+  xy: 464, 159
+  size: 93, 93
+  orig: 93, 93
+  offset: 0, 0
+  index: -1
