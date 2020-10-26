@@ -4,6 +4,13 @@ size: 2048,2048
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+blade
+  rotate: false
+  xy: 263, 1399
+  size: 106, 406
+  orig: 106, 406
+  offset: 0, 0
+  index: -1
 burners
   rotate: false
   xy: 559, 2
@@ -20,23 +27,30 @@ lb
   index: -1
 lu
   rotate: false
-  xy: 559, 1250
+  xy: 928, 1250
   size: 555, 555
   orig: 555, 555
   offset: 0, 0
   index: -1
 rb
   rotate: false
-  xy: 1116, 1250
+  xy: 1485, 1250
   size: 555, 555
   orig: 555, 555
   offset: 0, 0
   index: -1
 ru
   rotate: false
-  xy: 2, 1250
+  xy: 371, 1250
   size: 555, 555
   orig: 555, 555
+  offset: 0, 0
+  index: -1
+token
+  rotate: false
+  xy: 2, 1546
+  size: 259, 259
+  orig: 259, 259
   offset: 0, 0
   index: -1
 

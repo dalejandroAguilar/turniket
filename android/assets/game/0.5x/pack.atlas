@@ -11,6 +11,13 @@ back-board
   orig: 250, 250
   offset: 0, 0
   index: -1
+blade
+  rotate: false
+  xy: 654, 184
+  size: 18, 68
+  orig: 18, 68
+  offset: 0, 0
+  index: -1
 burners
   rotate: false
   xy: 254, 44
@@ -44,5 +51,12 @@ ru
   xy: 464, 159
   size: 93, 93
   orig: 93, 93
+  offset: 0, 0
+  index: -1
+token
+  rotate: false
+  xy: 674, 209
+  size: 43, 43
+  orig: 43, 43
   offset: 0, 0
   index: -1

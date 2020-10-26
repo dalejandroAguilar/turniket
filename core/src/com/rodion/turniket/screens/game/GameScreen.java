@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.rodion.turniket.MainGame;
 import com.rodion.turniket.basics.BasicScreen;
+import com.rodion.turniket.utilities.ScreenScale;
 
 public class GameScreen extends BasicScreen {
     private GameStage stage;
@@ -31,6 +32,7 @@ public class GameScreen extends BasicScreen {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
+        ScreenScale.resize(width, height);
         stage.resize(width, height);
     }
 }

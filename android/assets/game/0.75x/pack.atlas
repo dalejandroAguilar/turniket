@@ -6,43 +6,57 @@ filter: Nearest,Nearest
 repeat: none
 back-board
   rotate: false
-  xy: 2, 2
+  xy: 2, 69
   size: 375, 375
   orig: 375, 375
   offset: 0, 0
   index: -1
+blade
+  rotate: false
+  xy: 975, 342
+  size: 27, 102
+  orig: 27, 102
+  offset: 0, 0
+  index: -1
 burners
   rotate: false
-  xy: 379, 65
+  xy: 379, 132
   size: 312, 312
   orig: 312, 312
   offset: 0, 0
   index: -1
 lb
   rotate: false
-  xy: 834, 97
+  xy: 834, 164
   size: 139, 139
   orig: 139, 139
   offset: 0, 0
   index: -1
 lu
   rotate: false
-  xy: 693, 97
+  xy: 693, 164
   size: 139, 139
   orig: 139, 139
   offset: 0, 0
   index: -1
 rb
   rotate: false
-  xy: 834, 238
+  xy: 834, 305
   size: 139, 139
   orig: 139, 139
   offset: 0, 0
   index: -1
 ru
   rotate: false
-  xy: 693, 238
+  xy: 693, 305
   size: 139, 139
   orig: 139, 139
+  offset: 0, 0
+  index: -1
+token
+  rotate: false
+  xy: 2, 2
+  size: 65, 65
+  orig: 65, 65
   offset: 0, 0
   index: -1
