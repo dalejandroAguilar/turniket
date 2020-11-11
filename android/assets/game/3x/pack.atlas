@@ -4,51 +4,37 @@ size: 2048,2048
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+axis
+  rotate: false
+  xy: 2, 2
+  size: 105, 106
+  orig: 105, 106
+  offset: 0, 0
+  index: -1
+back-board
+  rotate: false
+  xy: 2, 371
+  size: 1500, 1500
+  orig: 1500, 1500
+  offset: 0, 0
+  index: -1
 blade
   rotate: false
-  xy: 263, 1399
+  xy: 1504, 1204
   size: 106, 406
   orig: 106, 406
   offset: 0, 0
   index: -1
-burners
+burner
   rotate: false
-  xy: 559, 2
-  size: 1245, 1246
-  orig: 1245, 1246
-  offset: 0, 0
-  index: -1
-lb
-  rotate: false
-  xy: 2, 693
-  size: 555, 555
-  orig: 555, 555
-  offset: 0, 0
-  index: -1
-lu
-  rotate: false
-  xy: 928, 1250
-  size: 555, 555
-  orig: 555, 555
-  offset: 0, 0
-  index: -1
-rb
-  rotate: false
-  xy: 1485, 1250
-  size: 555, 555
-  orig: 555, 555
-  offset: 0, 0
-  index: -1
-ru
-  rotate: false
-  xy: 371, 1250
-  size: 555, 555
-  orig: 555, 555
+  xy: 1504, 1612
+  size: 259, 259
+  orig: 259, 259
   offset: 0, 0
   index: -1
 token
   rotate: false
-  xy: 2, 1546
+  xy: 2, 110
   size: 259, 259
   orig: 259, 259
   offset: 0, 0
@@ -59,10 +45,38 @@ size: 2048,2048
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-back-board
+grid
+  rotate: false
+  xy: 2, 559
+  size: 1217, 1217
+  orig: 1217, 1217
+  offset: 0, 0
+  index: -1
+lb
+  rotate: false
+  xy: 1221, 664
+  size: 555, 555
+  orig: 555, 555
+  offset: 0, 0
+  index: -1
+lu
+  rotate: false
+  xy: 1221, 1221
+  size: 555, 555
+  orig: 555, 555
+  offset: 0, 0
+  index: -1
+rb
+  rotate: false
+  xy: 559, 2
+  size: 555, 555
+  orig: 555, 555
+  offset: 0, 0
+  index: -1
+ru
   rotate: false
   xy: 2, 2
-  size: 1500, 1500
-  orig: 1500, 1500
+  size: 555, 555
+  orig: 555, 555
   offset: 0, 0
   index: -1

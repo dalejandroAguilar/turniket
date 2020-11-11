@@ -47,19 +47,22 @@ public class Game {
             board[token.getY()][token.getX()] = null;
             board[stepY][stepX] = token;
             token.setPosition(stepX, token.getY() + 2 * dir.y);
+            token.listener.onMove(dir);
             return true;
         }
-        if (board[halfStepY][halfStepX].getClass() == Blade.class) {
-            board[token.getY()][token.getX()] = null;
-            Blade blade = (Blade) board[halfStepY][halfStepX];
-            TurnId id = blade.getId();
-            if (turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), board)) {
-                board[stepY][stepX] = token;
-                token.setPosition(stepX, stepY);
-            } else {
-                board[token.getY()][token.getX()] = token;
+        if (board[halfStepY][halfStepX] != null)
+            if (board[halfStepY][halfStepX].getClass() == Blade.class) {
+                board[token.getY()][token.getX()] = null;
+                Blade blade = (Blade) board[halfStepY][halfStepX];
+                TurnId id = blade.getId();
+                if (turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), board)) {
+                    board[stepY][stepX] = token;
+                    token.setPosition(stepX, stepY);
+                } else {
+                    board[token.getY()][token.getX()] = token;
+                }
             }
-        }
+        token.listener.onMove(dir);
         return true;
     }
 
@@ -123,4 +126,17 @@ public class Game {
         }
         System.out.println("-----");
     }
+
+    public Token[] getTokens() {
+        return tokens;
+    }
+
+    public Turnstile[] getTurnstiles() {
+        return turnstiles;
+    }
+
+    public Token getToken(int i, int j){
+        return (Token)board[2*i][2*j];
+    }
+
 }

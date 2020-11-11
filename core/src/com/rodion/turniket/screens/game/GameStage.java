@@ -1,5 +1,6 @@
 package com.rodion.turniket.screens.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rodion.turniket.basics.BasicScreen;
 import com.rodion.turniket.basics.BasicStage;

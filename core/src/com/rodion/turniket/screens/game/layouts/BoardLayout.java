@@ -1,135 +1,136 @@
 package com.rodion.turniket.screens.game.layouts;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.utils.Align;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.ImageEntity;
 import com.rodion.turniket.basics.Layout;
+import com.rodion.turniket.kernel.Blade;
+import com.rodion.turniket.kernel.Game;
 import com.rodion.turniket.kernel.Token;
+import com.rodion.turniket.kernel.Turnstile;
+import com.rodion.turniket.kernel.constants.Direction;
+import com.rodion.turniket.kernel.constants.TokenColor;
+import com.rodion.turniket.screens.game.GameInput;
+import com.rodion.turniket.screens.game.entities.BladeEntity;
+import com.rodion.turniket.screens.game.entities.BoardEntity;
+import com.rodion.turniket.screens.game.entities.BurnerEntity;
 import com.rodion.turniket.screens.game.entities.TokenEntity;
-import com.rodion.turniket.utilities.AssetManagerMaster;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class BoardLayout extends Layout {
-    private ImageEntity backboard;
-    private ImageEntity lu;
-    private ImageEntity lb;
-    private ImageEntity ru;
-    private ImageEntity rb;
-    private ImageEntity burner;
-    private TokenEntity token;
+    private Game game;
+    private BoardEntity board;
+    private ArrayList<TokenEntity> tokens;
+    private ArrayList<BladeEntity> blades;
+    private GameInput input;
+    private InputMultiplexer multiplexer;
 
     public BoardLayout(BasicStage basicStage) {
         super(basicStage);
-        Stack stack = new Stack();
-        Table table = new Table();
-        Table table2 = new Table();
-        token = new TokenEntity();
-        token.setColor(Color.MAGENTA);
-
-        backboard = new ImageEntity() {
+        game = new Game();
+        multiplexer = new InputMultiplexer();
+        input = new GameInput() {
             @Override
-            public void setAssetAddress() {
-                super.setAssetAddress();
-                setAssetManager(AssetManagerMaster.game);
-                assetPath = "game";
-                assetName = "back-board";
+            public void onAction(Direction direction) {
+                board.onAction(direction);
             }
         };
+        File file = new File("maps/map.dat");
+        try {
+            game.readFile(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        game.setFromMap();
+        board = new BoardEntity(getParentStage()) {
+            Direction direction;
 
-        backboard.prepareAssets();
-
-        lu = new ImageEntity() {
             @Override
-            public void setAssetAddress() {
-                super.setAssetAddress();
-                setAssetManager(AssetManagerMaster.game);
-                assetPath = "game";
-                assetName = "lu";
+            public void onAction(Direction direction) {
+                this.direction = direction;
+            }
+
+            @Override
+            public void onClickBurner(BurnerEntity burner) {
+                super.onClickBurner(burner);
+                selectToken = game.getToken(burner.getI(), burner.getJ());
+                Token token = game.getToken(burner.getI(), burner.getJ());
+                if (token != null)
+                    game.move(token.getColor(), direction);
+
             }
         };
-        lu.prepareAssets();
-        lu.setColor(Color.CYAN);
-
-        lb = new ImageEntity() {
-            @Override
-            public void setAssetAddress() {
-                super.setAssetAddress();
-                setAssetManager(AssetManagerMaster.game);
-                assetPath = "game";
-                assetName = "lb";
+        tokens = new ArrayList<>();
+        blades = new ArrayList<>();
+        for (Token token : game.getTokens()) {
+            if (token.getX() != -1 || token.getY() != -1) {
+                TokenEntity tokenEntity = new TokenEntity(token) {
+                    @Override
+                    public void updatePosition() {
+                        super.updatePosition();
+                        ImageEntity burner = board.getBurners()[getToken().geti()][getToken().getj()];
+                        float x = burner.getAbsX();
+                        float y = burner.getAbsY();
+                        setPosition(x, y);
+                    }
+                };
+                tokenEntity.getToken().addListener(
+                        new Token.Listener() {
+                            @Override
+                            public void onMove(Direction direction) {
+                                System.out.println("onMove");
+                            }
+                        }
+                );
+                tokens.add(tokenEntity);
             }
-        };
-        lb.prepareAssets();
-        lb.setColor(Color.GREEN);
-
-        ru = new ImageEntity() {
-            @Override
-            public void setAssetAddress() {
-                super.setAssetAddress();
-                setAssetManager(AssetManagerMaster.game);
-                assetPath = "game";
-                assetName = "ru";
+        }
+        for (Turnstile turnstile : game.getTurnstiles()) {
+            for (Blade blade : turnstile.getBlades()) {
+                BladeEntity bladeEntity = new BladeEntity(blade) {
+                    @Override
+                    public void updatePosition() {
+                        super.updatePosition();
+                        ImageEntity axis = board.getAxis()[getBlade().getId().index];
+                        float x = axis.getX(Align.topLeft);
+                        float y = axis.getY(Align.topLeft);
+                        setPosition(x, y, Align.topLeft);
+                    }
+                };
+                bladeEntity.prepareAssets();
+                blades.add(bladeEntity);
             }
-        };
-        ru.prepareAssets();
-        ru.setColor(Color.PURPLE);
-
-        rb = new ImageEntity() {
-            @Override
-            public void setAssetAddress() {
-                super.setAssetAddress();
-                setAssetManager(AssetManagerMaster.game);
-                assetPath = "game";
-                assetName = "rb";
-            }
-        };
-        rb.prepareAssets();
-        rb.setColor(Color.ORANGE);
-
-        burner = new ImageEntity() {
-            @Override
-            public void setAssetAddress() {
-                super.setAssetAddress();
-                setAssetManager(AssetManagerMaster.game);
-                assetPath = "game";
-                assetName = "burners";
-            }
-        };
-        burner.prepareAssets();
-        table.add(lu).left().top().expand();
-        table.add(ru).right().top().expand().row();
-        table.add(lb).left().bottom().expand();
-        table.add(rb).right().bottom().expand();
-        stack.add(backboard);
-        stack.add(table);
-        table2.add(burner);
-        stack.add(table2);
-        token.setPosition(100, 100);
-        add(stack);
-
+        }
+        add(board).center();
+        multiplexer.addProcessor(new GestureDetector(input));
+        multiplexer.addProcessor(basicStage);
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-//        token.setPosition(100,100);
-
-        token.draw(batch, parentAlpha);
+        for (TokenEntity token : tokens)
+            token.draw(batch, parentAlpha);
+        for (BladeEntity blade : blades)
+            blade.draw(batch, parentAlpha);
     }
 
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        TokenEntity.boardldpos.setPosition((int) (0.5 * width), (int) (0.5 * height));
-        backboard.resize(width, height);
-        lu.resize(width, height);
-        lb.resize(width, height);
-        ru.resize(width, height);
-        rb.resize(width, height);
-        burner.resize(width, height);
-        token.resize(width, height);
+        board.resize(width, height);
+        for (TokenEntity token : tokens)
+            token.resize(width, height);
+        for (BladeEntity blade : blades)
+            blade.resize(width, height);
     }
 }

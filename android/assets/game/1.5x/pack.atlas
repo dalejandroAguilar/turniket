@@ -4,58 +4,72 @@ size: 2048,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+axis
+  rotate: false
+  xy: 2, 2
+  size: 53, 53
+  orig: 53, 53
+  offset: 0, 0
+  index: -1
 back-board
   rotate: false
-  xy: 2, 133
+  xy: 2, 188
   size: 750, 750
   orig: 750, 750
   offset: 0, 0
   index: -1
 blade
   rotate: false
-  xy: 1939, 680
+  xy: 1924, 735
   size: 53, 203
   orig: 53, 203
   offset: 0, 0
   index: -1
-burners
+burner
   rotate: false
-  xy: 754, 260
-  size: 623, 623
-  orig: 623, 623
+  xy: 754, 199
+  size: 129, 129
+  orig: 129, 129
+  offset: 0, 0
+  index: -1
+grid
+  rotate: false
+  xy: 754, 330
+  size: 608, 608
+  orig: 608, 608
   offset: 0, 0
   index: -1
 lb
   rotate: false
-  xy: 1659, 325
+  xy: 1644, 380
   size: 278, 278
   orig: 278, 278
   offset: 0, 0
   index: -1
 lu
   rotate: false
-  xy: 1379, 325
+  xy: 1364, 380
   size: 278, 278
   orig: 278, 278
   offset: 0, 0
   index: -1
 rb
   rotate: false
-  xy: 1659, 605
+  xy: 1644, 660
   size: 278, 278
   orig: 278, 278
   offset: 0, 0
   index: -1
 ru
   rotate: false
-  xy: 1379, 605
+  xy: 1364, 660
   size: 278, 278
   orig: 278, 278
   offset: 0, 0
   index: -1
 token
   rotate: false
-  xy: 2, 2
+  xy: 2, 57
   size: 129, 129
   orig: 129, 129
   offset: 0, 0

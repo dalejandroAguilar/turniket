@@ -26,7 +26,7 @@ public class ScreenScale {
         }
     }
 
-    public static FactorScale getFac() {
+    public static FactorScale getFactorScale() {
         return factorScale;
     }
 }

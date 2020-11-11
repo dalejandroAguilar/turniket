@@ -85,4 +85,18 @@ public enum Direction {
         return null;
     }
 
+    public float getAngle(){
+        switch (this) {
+            case Up:
+                return 180;
+            case Down:
+                return 0;
+            case Right:
+                return 90;
+            case Left:
+                return 270;
+        }
+        return 0;
+    }
+
 }
