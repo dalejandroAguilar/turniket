@@ -12,7 +12,6 @@ public class GameScreen extends BasicScreen {
     public GameScreen(MainGame mainGame) {
         super(mainGame);
         stage = new GameStage(new ScreenViewport(), this);
-//        Gdx.input.setInputProcessor(stage);
     }
 
 

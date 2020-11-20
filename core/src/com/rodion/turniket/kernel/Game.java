@@ -47,9 +47,14 @@ public class Game {
             board[token.getY()][token.getX()] = null;
             board[stepY][stepX] = token;
             token.setPosition(stepX, token.getY() + 2 * dir.y);
-            token.listener.onMove(dir);
+            token.listener.onMove(dir, Token.Status.Ok);
             return true;
         }
+        if (board[stepY][stepX] != null && board[halfStepY][halfStepX] == null) {
+            token.listener.onMove(dir, Token.Status.TokenCollision);
+            return false;
+        }
+
         if (board[halfStepY][halfStepX] != null)
             if (board[halfStepY][halfStepX].getClass() == Blade.class) {
                 board[token.getY()][token.getX()] = null;
@@ -58,12 +63,15 @@ public class Game {
                 if (turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), board)) {
                     board[stepY][stepX] = token;
                     token.setPosition(stepX, stepY);
+                    token.listener.onMove(dir, Token.Status.Ok);
+                    return true;
                 } else {
                     board[token.getY()][token.getX()] = token;
+                    token.listener.onMove(dir, Token.Status.BladeTokenCollision);
+                    return false;
                 }
             }
-        token.listener.onMove(dir);
-        return true;
+        return false;
     }
 
     public void readFile(File file) throws FileNotFoundException {
@@ -135,8 +143,8 @@ public class Game {
         return turnstiles;
     }
 
-    public Token getToken(int i, int j){
-        return (Token)board[2*i][2*j];
+    public Token getToken(int i, int j) {
+        return (Token) board[2 * i][2 * j];
     }
 
 }

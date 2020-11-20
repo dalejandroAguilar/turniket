@@ -28,18 +28,20 @@ public class GameInput implements GestureDetector.GestureListener {
 
     @Override
     public boolean fling(float velocityX, float velocityY, int button) {
-        if (Math.abs(velocityX) > Math.abs(velocityY))
-            if (velocityX > 0)
-                onAction(Direction.Right);
+        if(button==0) {
+            if (Math.abs(velocityX) > Math.abs(velocityY))
+                if (velocityX > 0)
+                    onAction(Direction.Right);
+                else
+                    onAction(Direction.Left);
+            else if (Math.abs(velocityX) < Math.abs(velocityY))
+                if (velocityY > 0)
+                    onAction(Direction.Down);
+                else
+                    onAction(Direction.Up);
             else
-                onAction(Direction.Left);
-        else if (Math.abs(velocityX) < Math.abs(velocityY))
-            if (velocityY > 0)
-                onAction(Direction.Down);
-            else
-                onAction(Direction.Up);
-        else
-            return false;
+                return false;
+        }
         return false;
     }
 

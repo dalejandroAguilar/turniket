@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Turnstile extends Node {
     private ArrayList<Blade> blades;
     private TurnId id;
+
     public Turnstile(TurnId id) {
         this.id = id;
         blades = new ArrayList<>();
@@ -31,29 +32,40 @@ public class Turnstile extends Node {
             Direction direction = blade.getDirection().rotate(spin);
             int halfStepX = blade.getX() + direction.x;
             int halfStepY = blade.getY() + direction.y;
-            int stepX = getX() + direction.x;
-            int stepY = getY() + direction.y;
             if (board[halfStepY][halfStepX] != null) {
-//                blade.listener.onRotate(spin);
-                return false;
-            }
-            if (board[stepY][stepX] != null) {
-                if (((Blade) board[stepY][stepX]).getId() != blade.getId()) {
-//                    blade.listener.onRotate(spin);
-                    return false;
+                for (Blade blade2 : blades) {
+                    blade2.listener.onRotate(spin, Blade.Status.TokenCollision);
                 }
+                return false;
             }
         }
         for (Blade blade : blades) {
             Direction direction = blade.getDirection().rotate(spin);
             int stepX = getX() + direction.x;
             int stepY = getY() + direction.y;
+            if (board[stepY][stepX] != null) {
+                if (((Blade) board[stepY][stepX]).getId() != blade.getId()) {
+                    for (Blade blade2 : blades) {
+                        blade2.listener.onRotate(spin, Blade.Status.BladeCollision);
+                    }
+                    return false;
+                }
+            }
+        }
+
+        for (Blade blade : blades) {
+            Direction direction = blade.getDirection().rotate(spin);
+            int stepX = getX() + direction.x;
+            int stepY = getY() + direction.y;
+
+            if (blade==board[blade.getY()][blade.getX()])
+                board[blade.getY()][blade.getX()] = null;
+
             blade.setDirection(direction);
-            board[blade.getY()][blade.getX()] = null;
             board[stepY][stepX] = blade;
             blade.setPosition(stepX, stepY);
-            if(blade.listener != null)
-                blade.listener.onRotate(spin);
+            if (blade.listener != null)
+                blade.listener.onRotate(spin, Blade.Status.Ok);
         }
         return true;
     }

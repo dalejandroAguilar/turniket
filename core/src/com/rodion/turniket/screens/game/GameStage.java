@@ -5,18 +5,19 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rodion.turniket.basics.BasicScreen;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.screens.game.layouts.BoardLayout;
+import com.rodion.turniket.screens.game.layouts.GameLayout;
 
 public class GameStage extends BasicStage {
-    private BoardLayout boardLayout;
+    private GameLayout gameLayout;
     public GameStage(Viewport viewport, BasicScreen basicScreen) {
         super(viewport, basicScreen);
-        boardLayout = new BoardLayout(this);
-        addActor(boardLayout);
+        gameLayout = new GameLayout(this);
+        addActor(gameLayout);
     }
 
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        boardLayout.resize(width, height);
+        gameLayout.resize(width, height);
     }
 }

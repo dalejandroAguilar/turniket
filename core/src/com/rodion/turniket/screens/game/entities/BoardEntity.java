@@ -21,14 +21,14 @@ public class BoardEntity extends Layout {
     private ImageEntity grid;
     private BurnerEntity[][] burners;
     private ImageEntity[] axis;
-    public Token selectToken;
+    protected Token selectToken;
 
     public BoardEntity(BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
         Stack stack = new Stack();
         Stack stack2 = new Stack();
-        Table table = new Table();
+        final Table table = new Table();
         Table table2 = new Table();
         Table burnersLayout = new Table();
         Table table4 = new Table();
@@ -36,17 +36,19 @@ public class BoardEntity extends Layout {
         axis = new ImageEntity[4];
         selectToken = null;
 
-
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 burners[i][j] = new BurnerEntity(i, j){
                     @Override
-                    public void onClickAction() {
-                        System.out.println("tocado");
-                        onClickBurner(this);
+                    public boolean touchDown() {
+                        return onTouchDownBurner(this);
+                    }
+
+                    @Override
+                    public void touchUp() {
+                        onTouchUpBurner(this);
                     }
                 };
-                burners[i][j].prepareAssets();
                 burnersLayout.add(burners[i][j]).expand();
             }
             burnersLayout.row();
@@ -57,7 +59,6 @@ public class BoardEntity extends Layout {
             axis[i] = new ImageEntity() {
                 @Override
                 public void setAssetAddress() {
-                    super.setAssetAddress();
                     setAssetManager(AssetManagerMaster.game);
                     assetPath = "game";
                     assetName = "axis";
@@ -65,7 +66,6 @@ public class BoardEntity extends Layout {
 
                 @Override
                 public void updatePosition() {
-                    super.updatePosition();
                     int i = finalI / 2;
                     int j = finalI % 2;
                     axis[finalI].setPosition(0.5f * (burners[i][j].getAbsX() + burners[i + 1][j + 1].getAbsX() + burners[i + 1][j + 1].getDrawable().getMinWidth()),
@@ -79,7 +79,6 @@ public class BoardEntity extends Layout {
         backboard = new ImageEntity() {
             @Override
             public void setAssetAddress() {
-                super.setAssetAddress();
                 setAssetManager(AssetManagerMaster.game);
                 assetPath = "game";
                 assetName = "back-board";
@@ -90,7 +89,6 @@ public class BoardEntity extends Layout {
         lu = new ImageEntity() {
             @Override
             public void setAssetAddress() {
-                super.setAssetAddress();
                 setAssetManager(AssetManagerMaster.game);
                 assetPath = "game";
                 assetName = "lu";
@@ -102,7 +100,6 @@ public class BoardEntity extends Layout {
         lb = new ImageEntity() {
             @Override
             public void setAssetAddress() {
-                super.setAssetAddress();
                 setAssetManager(AssetManagerMaster.game);
                 assetPath = "game";
                 assetName = "lb";
@@ -114,7 +111,6 @@ public class BoardEntity extends Layout {
         ru = new ImageEntity() {
             @Override
             public void setAssetAddress() {
-                super.setAssetAddress();
                 setAssetManager(AssetManagerMaster.game);
                 assetPath = "game";
                 assetName = "ru";
@@ -126,7 +122,6 @@ public class BoardEntity extends Layout {
         rb = new ImageEntity() {
             @Override
             public void setAssetAddress() {
-                super.setAssetAddress();
                 setAssetManager(AssetManagerMaster.game);
                 assetPath = "game";
                 assetName = "rb";
@@ -138,7 +133,6 @@ public class BoardEntity extends Layout {
         grid = new ImageEntity() {
             @Override
             public void setAssetAddress() {
-                super.setAssetAddress();
                 setAssetManager(AssetManagerMaster.game);
                 assetPath = "game";
                 assetName = "grid";
@@ -193,6 +187,10 @@ public class BoardEntity extends Layout {
     public void onAction(Direction direction){
     }
 
-    public void onClickBurner(BurnerEntity burner){
+    public boolean onTouchDownBurner(BurnerEntity burner){
+        return true;
+    }
+
+    public void onTouchUpBurner(BurnerEntity burner){
     }
 }

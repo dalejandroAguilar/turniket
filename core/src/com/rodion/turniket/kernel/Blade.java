@@ -33,7 +33,7 @@ public class Blade extends Node {
     }
 
     public interface Listener{
-        public void onRotate(Spin spin);
+        public void onRotate(Spin spin, Status status);
     }
 
     public enum Status{

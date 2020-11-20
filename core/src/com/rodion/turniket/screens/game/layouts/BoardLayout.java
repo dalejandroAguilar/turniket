@@ -2,7 +2,6 @@ package com.rodion.turniket.screens.game.layouts;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.utils.Align;
@@ -14,7 +13,6 @@ import com.rodion.turniket.kernel.Game;
 import com.rodion.turniket.kernel.Token;
 import com.rodion.turniket.kernel.Turnstile;
 import com.rodion.turniket.kernel.constants.Direction;
-import com.rodion.turniket.kernel.constants.TokenColor;
 import com.rodion.turniket.screens.game.GameInput;
 import com.rodion.turniket.screens.game.entities.BladeEntity;
 import com.rodion.turniket.screens.game.entities.BoardEntity;
@@ -35,6 +33,8 @@ public class BoardLayout extends Layout {
 
     public BoardLayout(BasicStage basicStage) {
         super(basicStage);
+        setFillParent(false);
+
         game = new Game();
         multiplexer = new InputMultiplexer();
         input = new GameInput() {
@@ -59,13 +59,16 @@ public class BoardLayout extends Layout {
             }
 
             @Override
-            public void onClickBurner(BurnerEntity burner) {
-                super.onClickBurner(burner);
+            public boolean onTouchDownBurner(BurnerEntity burner) {
                 selectToken = game.getToken(burner.getI(), burner.getJ());
-                Token token = game.getToken(burner.getI(), burner.getJ());
-                if (token != null)
-                    game.move(token.getColor(), direction);
+                return true;
+            }
 
+            @Override
+            public void onTouchUpBurner(BurnerEntity burner) {
+                if (selectToken != null)
+                    game.move(selectToken.getColor(), direction);
+                selectToken = null;
             }
         };
         tokens = new ArrayList<>();
@@ -79,17 +82,12 @@ public class BoardLayout extends Layout {
                         ImageEntity burner = board.getBurners()[getToken().geti()][getToken().getj()];
                         float x = burner.getAbsX();
                         float y = burner.getAbsY();
-                        setPosition(x, y);
+                        if (selectAnimation == 0 && isOnPlay)
+                            setPosition(getLastX(), getLastY());
+                        else
+                            setPosition(x, y);
                     }
                 };
-                tokenEntity.getToken().addListener(
-                        new Token.Listener() {
-                            @Override
-                            public void onMove(Direction direction) {
-                                System.out.println("onMove");
-                            }
-                        }
-                );
                 tokens.add(tokenEntity);
             }
         }
@@ -100,12 +98,20 @@ public class BoardLayout extends Layout {
                     public void updatePosition() {
                         super.updatePosition();
                         ImageEntity axis = board.getAxis()[getBlade().getId().index];
-                        float x = axis.getX(Align.topLeft);
-                        float y = axis.getY(Align.topLeft);
-                        setPosition(x, y, Align.topLeft);
+                        float x;
+                        float y;
+                        if (getSelectAnimation() % 2 == 0) {
+                            x = axis.getX(Align.topLeft);
+                            y = axis.getY(Align.topLeft);
+                            setPosition(x, y, Align.topLeft);
+                        }
+                        if (getSelectAnimation() % 2 == 1) {
+                            x = axis.getX(Align.topRight);
+                            y = axis.getY(Align.topRight);
+                            setPosition(x, y, Align.topRight);
+                        }
                     }
                 };
-                bladeEntity.prepareAssets();
                 blades.add(bladeEntity);
             }
         }
@@ -113,6 +119,15 @@ public class BoardLayout extends Layout {
         multiplexer.addProcessor(new GestureDetector(input));
         multiplexer.addProcessor(basicStage);
         Gdx.input.setInputProcessor(multiplexer);
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        for (BladeEntity bladeEntity : blades)
+            bladeEntity.act(delta);
+        for (TokenEntity tokenEntity : tokens)
+            tokenEntity.act(delta);
     }
 
     @Override

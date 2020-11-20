@@ -5,32 +5,50 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.rodion.turniket.utilities.ScreenScale;
 
 public class AnimatedEntity extends Image {
     protected TextureRegionDrawable[][] textures;
+    protected TextureRegionDrawable[] frames;
     protected String assetPath;
-    protected String[] assetName;
+    protected String[] assetNames;
     protected AssetManager assetManager;
-    protected int keyFrameIndex;
+    protected Animation animation;
+    protected float elapsedTime;
+    protected float frameDuration;
+    protected boolean isOnPlay;
+//    protected boolean isOnPlay;
+    protected float lastX;
+    protected float lastY;
 
-    public AnimatedEntity() {
-        keyFrameIndex = 0;
+
+    public AnimatedEntity(float keyDuration) {
+        elapsedTime = 0;
+        this.frameDuration = keyDuration;
+        isOnPlay = false;
+//        animation.setPlayMode(Animation.PlayMode.);
     }
 
     public void prepareAssets() {
         setAssetAddress();
-        textures = new TextureRegionDrawable[assetName.length][FactorScale.getN()];
+        textures = new TextureRegionDrawable[FactorScale.getN()][assetNames.length];
+        frames = new TextureRegionDrawable[assetNames.length];
         TextureAtlas atlas;
         for (FactorScale factorScale : FactorScale.values()) {
             atlas = assetManager.get(assetPath + "/" + factorScale.value + "x/pack.atlas",
                     TextureAtlas.class);
-            for (int i = 0; i < assetName.length; i++)
-                textures[i][factorScale.index] =
-                        new TextureRegionDrawable(atlas.findRegion(assetName[i]));
+            for (int i = 0; i < assetNames.length; i++)
+                textures[factorScale.index][i] =
+                        new TextureRegionDrawable(atlas.findRegion(assetNames[i]));
         }
+        for(int i =0; i<frames.length; i++)
+            frames[i] = textures[FactorScale.Normal.index][i];
+        animation = new Animation(frameDuration, frames);
     }
 
     public void setAssetAddress() {
@@ -38,8 +56,16 @@ public class AnimatedEntity extends Image {
     }
 
     public void resize(int width, int height) {
-        updatePosition();
-        setDrawable(textures[keyFrameIndex][ScreenScale.getFactorScale().index]);
+        if(!isOnPlay){
+            updatePosition();
+            lastX = getX();
+            lastY = getY();
+        }
+        else
+            setPosition(lastX,lastY);
+        for(int i =0; i<frames.length; i++)
+            frames[i] = textures[ScreenScale.getFactorScale().index][i];
+        setDrawable((Drawable) animation.getKeyFrame(elapsedTime,false));
         setSize(getDrawable().getMinWidth(), getDrawable().getMinHeight());
     }
 
@@ -76,8 +102,30 @@ public class AnimatedEntity extends Image {
     }
 
     @Override
+    public void act(float delta) {
+        super.act(delta);
+        if(animation.isAnimationFinished(elapsedTime)){
+            elapsedTime =0;
+            isOnPlay =false;
+            setDrawable((Drawable) animation.getKeyFrame(elapsedTime,false));
+
+        }
+        if (isOnPlay) {
+            elapsedTime += delta;
+            setDrawable((Drawable) animation.getKeyFrame(elapsedTime,false));
+        }
+    }
+
+    @Override
     public void draw(Batch batch, float parentAlpha) {
-        updatePosition();
+        if(!isOnPlay){
+            updatePosition();
+            lastX = getX();
+            lastY = getY();
+        }
+        else
+            setPosition(lastX,lastY);
+        setDrawable((Drawable) animation.getKeyFrame(elapsedTime,false));
         super.draw(batch, parentAlpha);
     }
 
@@ -85,5 +133,19 @@ public class AnimatedEntity extends Image {
 
     }
 
+    public float getElapsedTime() {
+        return elapsedTime;
+    }
 
+    public void setElapsedTime(float elapsedTime) {
+        this.elapsedTime = elapsedTime;
+    }
+
+    public void setOnPlay(boolean onPlay) {
+        isOnPlay = onPlay;
+    }
+
+    public float getDuration(){
+        return animation.getAnimationDuration();
+    }
 }

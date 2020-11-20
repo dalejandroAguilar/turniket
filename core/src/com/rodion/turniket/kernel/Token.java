@@ -44,11 +44,11 @@ Token extends Node {
     }
 
     public interface Listener{
-        public void onMove(Direction direction);
+        public void onMove(Direction direction, Status status);
     }
 
     public enum Status{
-        Ok(0), BladeCollision(1), TokenCollision(2);
+        Ok(0), BladeTokenCollision(1), TokenCollision(2);
         private int value;
         Status(int value){}
     }
