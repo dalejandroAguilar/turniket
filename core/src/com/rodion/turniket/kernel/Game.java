@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
+//    private State state;
     private Turnstile[] turnstiles;
     private Token[] tokens;
-    private Character[][] map;
     private Node[][] board;
+    private Character[][] map;
     private static ArrayList<Node> turnPositions;
 
     public Game() {

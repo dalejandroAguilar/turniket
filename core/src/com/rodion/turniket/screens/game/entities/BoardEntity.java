@@ -39,14 +39,21 @@ public class BoardEntity extends Layout {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 burners[i][j] = new BurnerEntity(i, j){
-                    @Override
-                    public boolean touchDown() {
-                        return onTouchDownBurner(this);
-                    }
+//                    @Override
+//                    public boolean touchDown() {
+//                        return onTouchDownBurner(this);
+//                    }
+//
+//                    @Override
+//                    public void touchUp() {
+//                        onTouchUpBurner(this);
+//                    }
+
 
                     @Override
-                    public void touchUp() {
-                        onTouchUpBurner(this);
+                    public void onAction(BurnerEntity burner, Direction direction) {
+                        super.onAction(burner, direction);
+                        onBurnerAction(burner, direction);
                     }
                 };
                 burnersLayout.add(burners[i][j]).expand();
@@ -187,10 +194,14 @@ public class BoardEntity extends Layout {
     public void onAction(Direction direction){
     }
 
-    public boolean onTouchDownBurner(BurnerEntity burner){
-        return true;
-    }
+//    public boolean onTouchDownBurner(BurnerEntity burner){
+//        return true;
+//    }
+//
+//    public void onTouchUpBurner(BurnerEntity burner){
+//    }
 
-    public void onTouchUpBurner(BurnerEntity burner){
+    public void onBurnerAction(BurnerEntity burner, Direction direction){
+
     }
 }

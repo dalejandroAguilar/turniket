@@ -28,7 +28,7 @@ public class BoardLayout extends Layout {
     private BoardEntity board;
     private ArrayList<TokenEntity> tokens;
     private ArrayList<BladeEntity> blades;
-    private GameInput input;
+//    private GameInput input;
     private InputMultiplexer multiplexer;
 
     public BoardLayout(BasicStage basicStage) {
@@ -37,12 +37,13 @@ public class BoardLayout extends Layout {
 
         game = new Game();
         multiplexer = new InputMultiplexer();
-        input = new GameInput() {
-            @Override
-            public void onAction(Direction direction) {
-                board.onAction(direction);
-            }
-        };
+//        input = new GameInput() {
+//            @Override
+//            public void onAction(Direction direction) {
+//                board.onAction(direction);
+//            }
+//        };
+
         File file = new File("maps/map.dat");
         try {
             game.readFile(file);
@@ -51,25 +52,28 @@ public class BoardLayout extends Layout {
         }
         game.setFromMap();
         board = new BoardEntity(getParentStage()) {
-            Direction direction;
+//            Direction direction;
+
 
             @Override
-            public void onAction(Direction direction) {
-                this.direction = direction;
-            }
-
-            @Override
-            public boolean onTouchDownBurner(BurnerEntity burner) {
-                selectToken = game.getToken(burner.getI(), burner.getJ());
-                return true;
-            }
-
-            @Override
-            public void onTouchUpBurner(BurnerEntity burner) {
+            public void onBurnerAction(BurnerEntity burner, Direction direction) {
+                Token selectToken = game.getToken(burner.getI(), burner.getJ());
                 if (selectToken != null)
                     game.move(selectToken.getColor(), direction);
-                selectToken = null;
             }
+
+//            @Override
+//            public boolean onTouchDownBurner(BurnerEntity burner) {
+//                selectToken = game.getToken(burner.getI(), burner.getJ());
+//                return true;
+//            }
+//
+//            @Override
+//            public void onTouchUpBurner(BurnerEntity burner) {
+//                if (selectToken != null)
+//                    game.move(selectToken.getColor(), direction);
+//                selectToken = null;
+//            }
         };
         tokens = new ArrayList<>();
         blades = new ArrayList<>();
@@ -116,7 +120,7 @@ public class BoardLayout extends Layout {
             }
         }
         add(board).center();
-        multiplexer.addProcessor(new GestureDetector(input));
+//        multiplexer.addProcessor(new GestureDetector(input));
         multiplexer.addProcessor(basicStage);
         Gdx.input.setInputProcessor(multiplexer);
     }

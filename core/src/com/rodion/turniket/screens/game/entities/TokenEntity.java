@@ -2,7 +2,9 @@ package com.rodion.turniket.screens.game.entities;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.rodion.turniket.basics.BundleAnimationEntity;
 import com.rodion.turniket.kernel.Token;
 import com.rodion.turniket.kernel.constants.Direction;
@@ -41,7 +43,7 @@ public class TokenEntity extends BundleAnimationEntity {
         this.token.addListener(new Token.Listener() {
             @Override
             public void onMove(final Direction direction, final Token.Status status) {
-                System.out.println("token move dir" + direction);
+//                System.out.println("token move dir" + direction);
                 addAction(
                         Actions.sequence(
                                 Actions.parallel(
@@ -81,6 +83,8 @@ public class TokenEntity extends BundleAnimationEntity {
                 );
             }
         });
+
+
     }
 
     @Override
