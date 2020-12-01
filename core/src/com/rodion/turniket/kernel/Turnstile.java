@@ -10,6 +10,23 @@ public class Turnstile extends Node {
     private ArrayList<Blade> blades;
     private TurnId id;
 
+    public Turnstile(Turnstile t) {
+        setPosition(t.getX(),t.getY());
+        id = TurnId.get(t.id);
+        blades = new ArrayList<>();
+        for (int i = 0; i < t.blades.size(); i++) {
+            blades.add(new Blade(t.blades.get(i)));
+        }
+    }
+
+    public void set(Turnstile t){
+        setPosition(t.getX(),t.getY());
+        id = TurnId.get(t.id);
+        for (int i = 0; i < t.blades.size(); i++) {
+            blades.get(i).set(t.blades.get(i));
+        }
+    }
+
     public Turnstile(TurnId id) {
         this.id = id;
         blades = new ArrayList<>();
@@ -43,6 +60,10 @@ public class Turnstile extends Node {
             Direction direction = blade.getDirection().rotate(spin);
             int stepX = getX() + direction.x;
             int stepY = getY() + direction.y;
+            System.out.println(id);
+            System.out.println(stepX+","+stepY);
+            System.out.println(getX()+","+getY());
+
             if (board[stepY][stepX] != null) {
                 if (((Blade) board[stepY][stepX]).getId() != blade.getId()) {
                     for (Blade blade2 : blades) {
@@ -58,7 +79,7 @@ public class Turnstile extends Node {
             int stepX = getX() + direction.x;
             int stepY = getY() + direction.y;
 
-            if (blade==board[blade.getY()][blade.getX()])
+            if (blade == board[blade.getY()][blade.getX()])
                 board[blade.getY()][blade.getX()] = null;
 
             blade.setDirection(direction);
@@ -69,4 +90,5 @@ public class Turnstile extends Node {
         }
         return true;
     }
+
 }

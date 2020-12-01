@@ -73,7 +73,7 @@ public class BladeEntity extends BundleAnimationEntity {
                                             @Override
                                             public void run() {
                                                 if (status == Blade.Status.Ok)
-                                                    setRotation(getBlade().getDirection().getAngle());
+                                                    updateRotation();
                                                 setOnPlay(false);
                                             }
 
@@ -232,5 +232,9 @@ public class BladeEntity extends BundleAnimationEntity {
     public void setAxisPosition(float x, float y) {
         axisX = x;
         axisY = y;
+    }
+
+    public void updateRotation(){
+        setRotation(getBlade().getDirection().getAngle());
     }
 }

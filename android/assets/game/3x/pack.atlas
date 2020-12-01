@@ -74,11 +74,25 @@ frame_score
   orig: 529, 204
   offset: 0, 0
   index: -1
+left_title_bar
+  rotate: false
+  xy: 1913, 1370
+  size: 44, 136
+  orig: 44, 136
+  offset: 0, 0
+  index: -1
 level_title
   rotate: false
   xy: 2, 277
   size: 1460, 244
   orig: 1460, 244
+  offset: 0, 0
+  index: -1
+right_title_bar
+  rotate: false
+  xy: 1913, 1232
+  size: 44, 136
+  orig: 44, 136
   offset: 0, 0
   index: -1
 tokena03

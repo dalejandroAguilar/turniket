@@ -31,6 +31,11 @@ public class BottomMenuLayout extends Layout {
                 assetPath = "game";
                 assetName = "button_restart";
             }
+
+            @Override
+            public void onAction() {
+                onRestart();
+            }
         };
         restartButton.prepareAssets();
 
@@ -41,6 +46,11 @@ public class BottomMenuLayout extends Layout {
                 assetPath = "game";
                 assetName = "button_undo";
             }
+
+            @Override
+            public void onAction() {
+                onUndo();
+            }
         };
         undoButton.prepareAssets();
 
@@ -50,6 +60,12 @@ public class BottomMenuLayout extends Layout {
                 setAssetManager(AssetManagerMaster.game);
                 assetPath = "game";
                 assetName = "button_redo";
+
+            }
+
+            @Override
+            public void onAction() {
+                onRedo();
             }
         };
         redoButton.prepareAssets();
@@ -70,5 +86,17 @@ public class BottomMenuLayout extends Layout {
         restartButton.resize(width, height);
         undoButton.resize(width, height);
         redoButton.resize(width, height);
+    }
+
+    public void onUndo(){
+
+    }
+
+    public void onRedo(){
+
+    }
+
+    public void onRestart(){
+
     }
 }

@@ -43,7 +43,6 @@ public class TokenEntity extends BundleAnimationEntity {
         this.token.addListener(new Token.Listener() {
             @Override
             public void onMove(final Direction direction, final Token.Status status) {
-//                System.out.println("token move dir" + direction);
                 addAction(
                         Actions.sequence(
                                 Actions.parallel(

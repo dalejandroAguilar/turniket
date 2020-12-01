@@ -9,65 +9,69 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Game {
-//    private State state;
-    private Turnstile[] turnstiles;
-    private Token[] tokens;
-    private Node[][] board;
+public class Game implements Command {
+    private State state;
+    private State initState;
+
     private Character[][] map;
     private static ArrayList<Node> turnPositions;
 
     public Game() {
-        board = new Node[5][5];
+        initState = new State();
+        initState.board = new Node[5][5];
         turnPositions = new ArrayList<>();
         turnPositions.add(new Node(1, 1));
         turnPositions.add(new Node(3, 1));
         turnPositions.add(new Node(1, 3));
         turnPositions.add(new Node(3, 3));
 
-        turnstiles = new Turnstile[TurnId.values().length];
-        tokens = new Token[TokenColor.values().length];
+        initState.turnstiles = new Turnstile[TurnId.values().length];
+        initState.tokens = new Token[TokenColor.values().length];
         map = new Character[5][5];
         for (TokenColor color : TokenColor.values())
-            tokens[color.index] = new Token(-1, -1, color);
+            initState.tokens[color.index] = new Token(-1, -1, color);
         for (TurnId id : TurnId.values()) {
-            turnstiles[id.index] = new Turnstile(id);
-            turnstiles[id.index].setPosition(turnPositions.get(id.index));
+            initState.turnstiles[id.index] = new Turnstile(id);
+            initState.turnstiles[id.index].setPosition(turnPositions.get(id.index));
         }
     }
 
     public boolean move(TokenColor color, Direction dir) {
-        Token token = tokens[color.index];
+        System.out.println("move gu");
+        Token token = state.tokens[color.index];
         int stepX = token.getX() + 2 * dir.x;
         int stepY = token.getY() + 2 * dir.y;
         int halfStepX = token.getX() + dir.x;
         int halfStepY = token.getY() + dir.y;
         if (!(stepY < 5 && stepX < 5 && stepX >= 0 && stepY >= 0))
             return false;
-        if (board[halfStepY][halfStepX] == null && board[stepY][stepX] == null) {
-            board[token.getY()][token.getX()] = null;
-            board[stepY][stepX] = token;
+        if (state.board[halfStepY][halfStepX] == null && state.board[stepY][stepX] == null) {
+            state.previousState = new State(state);
+            state.board[token.getY()][token.getX()] = null;
+            state.board[stepY][stepX] = token;
             token.setPosition(stepX, token.getY() + 2 * dir.y);
             token.listener.onMove(dir, Token.Status.Ok);
             return true;
         }
-        if (board[stepY][stepX] != null && board[halfStepY][halfStepX] == null) {
+        if (state.board[stepY][stepX] != null && state.board[halfStepY][halfStepX] == null) {
             token.listener.onMove(dir, Token.Status.TokenCollision);
             return false;
         }
 
-        if (board[halfStepY][halfStepX] != null)
-            if (board[halfStepY][halfStepX].getClass() == Blade.class) {
-                board[token.getY()][token.getX()] = null;
-                Blade blade = (Blade) board[halfStepY][halfStepX];
+        if (state.board[halfStepY][halfStepX] != null)
+            if (state.board[halfStepY][halfStepX].getClass() == Blade.class) {
+                State dummyPreviousState = new State(state);
+                state.board[token.getY()][token.getX()] = null;
+                Blade blade = (Blade) state.board[halfStepY][halfStepX];
                 TurnId id = blade.getId();
-                if (turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), board)) {
-                    board[stepY][stepX] = token;
+                if (state.turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), state.board)) {
+                    state.board[stepY][stepX] = token;
                     token.setPosition(stepX, stepY);
                     token.listener.onMove(dir, Token.Status.Ok);
+                    state.previousState = dummyPreviousState;
                     return true;
                 } else {
-                    board[token.getY()][token.getX()] = token;
+                    state.board[token.getY()][token.getX()] = token;
                     token.listener.onMove(dir, Token.Status.BladeTokenCollision);
                     return false;
                 }
@@ -97,33 +101,34 @@ public class Game {
             for (int j = 0; j < 5; j++) {
                 for (TokenColor color : TokenColor.values())
                     if (map[i][j] == color.value) {
-                        tokens[color.index].setPosition(j, i);
-                        board[i][j] = tokens[color.index];
+                        initState.tokens[color.index].setPosition(j, i);
+                        initState.board[i][j] = initState.tokens[color.index];
                     }
                 for (TurnId id : TurnId.values())
                     if (map[i][j] == id.value) {
                         if (!turnPositions.contains(Node.dummy(j, i))) {
-                            Turnstile turnstile = turnstiles[id.index];
+                            Turnstile turnstile = initState.turnstiles[id.index];
                             Direction direction = Direction.get(j - turnstile.getX(),
                                     i - turnstile.getY());
                             Blade blade = new Blade(j, i, direction, id);
                             turnstile.addBlade(blade);
-                            board[i][j] = blade;
+                            initState.board[i][j] = blade;
                         }
                     }
             }
         }
+        state = new State(initState);
     }
 
     public void print() {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                if (board[i][j] != null) {
-                    if (board[i][j].getClass() == Token.class) {
-                        System.out.print(((Token) board[i][j]).getColor().value);
+                if (state.board[i][j] != null) {
+                    if (state.board[i][j].getClass() == Token.class) {
+                        System.out.print(((Token) state.board[i][j]).getColor().value);
                     }
-                    if (board[i][j].getClass() == Blade.class) {
-                        System.out.print(((Blade) board[i][j]).getId().value);
+                    if (state.board[i][j].getClass() == Blade.class) {
+                        System.out.print(((Blade) state.board[i][j]).getId().value);
                     }
 
                 } else if (turnPositions.contains(Node.dummy(j, i))) {
@@ -137,15 +142,43 @@ public class Game {
     }
 
     public Token[] getTokens() {
-        return tokens;
+        return state.tokens;
     }
 
     public Turnstile[] getTurnstiles() {
-        return turnstiles;
+        return state.turnstiles;
     }
 
     public Token getToken(int i, int j) {
-        return (Token) board[2 * i][2 * j];
+        return (Token) state.board[2 * i][2 * j];
     }
 
+    @Override
+    public void undo() {
+        System.out.println("undo");
+        if (state.previousState != null) {
+            State dummystate = new State(state);
+            state.set(state.previousState);
+
+            if (state.nextState == null)
+                state.nextState = new State(dummystate);
+            else
+                state.nextState.set(dummystate);
+        }
+    }
+
+    @Override
+    public void redo() {
+        System.out.println("redo");
+        if (state.nextState != null){
+            System.out.println("nextState");
+            state.set(state.nextState);
+        }
+    }
+
+    @Override
+    public void restart() {
+        System.out.println("restart");
+        state.set(initState);
+    }
 }

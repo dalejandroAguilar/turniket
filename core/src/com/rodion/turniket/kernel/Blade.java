@@ -16,6 +16,29 @@ public class Blade extends Node {
         listener = null;
     }
 
+    public void set(Blade b){
+        setPosition(b.getX(), b.getY());
+        direction = Direction.get(b.direction.x, b.direction.y);
+        id = TurnId.get(b.id);
+    }
+
+
+    public Blade( Blade b){
+        setPosition(b.getX(), b.getY());
+        direction = Direction.get(b.direction.x, b.direction.y);
+        id = TurnId.get(b.id);
+//        listener = null;
+//        listener=b.listener;
+//        final Listener blistener = b.listener;
+//        listener = new Listener() {
+//            @Override
+//            public void onRotate(Spin spin, Status status) {
+//               blistener.onRotate(spin, status);
+//            }
+//        };
+//                b. listener;
+    }
+
     public Direction getDirection() {
         return direction;
     }

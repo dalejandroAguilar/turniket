@@ -11,6 +11,11 @@ public enum Direction {
         this.y = y;
     }
 
+     Direction(Direction direction){
+        this.x = direction.x;
+        this.y = direction.y;
+    }
+
     public static Direction get(int x, int y) {
         if (x == 0 && y == -1)
             return Direction.Up;

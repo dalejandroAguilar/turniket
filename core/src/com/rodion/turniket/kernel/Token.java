@@ -14,6 +14,31 @@ Token extends Node {
         listener = null;
     }
 
+    public void set(Token t) {
+        setPosition(t.getX(), t.getY());
+        setColor(t.getColor());
+    }
+
+    public Token(Token t){
+        setPosition(t.getX(), t.getY());
+        setColor(t.getColor());
+//        listener = t.listener;
+        System.out.println("token null");
+        listener = null;
+
+//        final  Listener tlistener = t.listener;
+
+//        listener = new Listener() {
+//            @Override
+//            public void onMove(Direction direction, Status status) {
+//                System.out.println("lisnter. move");
+////                 tlistener.onMove(direction, status);
+//            }
+//        };
+//        addListener(listener);
+//        listener = t.listener;
+    }
+
     public void setColor(TokenColor color) {
         this.color = color;
     }

@@ -24,4 +24,18 @@ public enum TurnId {
                 value = ' ';
         }
     }
+
+    public static TurnId get(TurnId id) {
+        switch (id.value){
+            case '1':
+                return One;
+            case '2':
+                return Two;
+            case '3':
+                return  Three;
+            case '4':
+                return Four;
+        }
+        return null;
+    }
 }

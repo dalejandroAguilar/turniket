@@ -28,9 +28,9 @@ public class ImageButtonEntity extends ImageEntity {
                         public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                             if (button == 0) {
                                 addAction(Actions.color(Color.WHITE, .2f));
-                                System.out.println("touch up");
+//                                System.out.println("touch up");
                                 if (isPressed) {
-                                    action();
+                                    onAction();
                                 }
                             }
                         }
@@ -38,7 +38,7 @@ public class ImageButtonEntity extends ImageEntity {
                         @Override
                         public void touchDragged(InputEvent event, float x, float y, int pointer) {
                             if (pointer == 0) {
-                                System.out.println("dragged");
+//                                System.out.println("dragged");
                                 if (!isOver() && isPressed) {
                                     addAction(Actions.color(Color.WHITE, .2f));
                                     isPressed = false;
@@ -49,6 +49,6 @@ public class ImageButtonEntity extends ImageEntity {
         );
     }
 
-    public void action() {
+    public void onAction() {
     }
 }

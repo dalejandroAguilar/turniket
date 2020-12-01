@@ -10,6 +10,15 @@ public class Node {
         y = 0;
     }
 
+    public Node(Node n) {
+        if (n != null) {
+            x = n.getX();
+            y = n.getY();
+        }
+//        else
+//            this.equals(n);
+    }
+
     public Node(int x, int y) {
         setPosition(x, y);
     }

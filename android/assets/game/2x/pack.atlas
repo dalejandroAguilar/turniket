@@ -81,6 +81,13 @@ lb
   orig: 370, 370
   offset: 0, 0
   index: -1
+left_title_bar
+  rotate: false
+  xy: 1979, 1899
+  size: 29, 91
+  orig: 29, 91
+  offset: 0, 0
+  index: -1
 level_title
   rotate: false
   xy: 1004, 1827
@@ -100,6 +107,13 @@ rb
   xy: 1376, 1455
   size: 370, 370
   orig: 370, 370
+  offset: 0, 0
+  index: -1
+right_title_bar
+  rotate: false
+  xy: 1976, 1188
+  size: 29, 91
+  orig: 29, 91
   offset: 0, 0
   index: -1
 ru

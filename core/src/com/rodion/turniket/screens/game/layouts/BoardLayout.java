@@ -28,7 +28,7 @@ public class BoardLayout extends Layout {
     private BoardEntity board;
     private ArrayList<TokenEntity> tokens;
     private ArrayList<BladeEntity> blades;
-//    private GameInput input;
+    //    private GameInput input;
     private InputMultiplexer multiplexer;
 
     public BoardLayout(BasicStage basicStage) {
@@ -58,8 +58,19 @@ public class BoardLayout extends Layout {
             @Override
             public void onBurnerAction(BurnerEntity burner, Direction direction) {
                 Token selectToken = game.getToken(burner.getI(), burner.getJ());
-                if (selectToken != null)
+//                System.out.println("hello!!"+ burner.getI() + burner.getJ());
+
+                if (selectToken != null) {
+//                    System.out.println("hello!!");
                     game.move(selectToken.getColor(), direction);
+                    for (Turnstile turnstile : game.getTurnstiles()) {
+                        System.out.println(turnstile.getBlades().size());
+                        for (Blade blade : turnstile.getBlades())
+                            System.out.println(blade.getDirection());
+                    }
+                    game.print();
+                }
+
             }
 
 //            @Override
@@ -151,5 +162,25 @@ public class BoardLayout extends Layout {
             token.resize(width, height);
         for (BladeEntity blade : blades)
             blade.resize(width, height);
+    }
+
+    public void onUndo() {
+        game.undo();
+        for(BladeEntity blade : blades)
+            blade.updateRotation();
+
+    }
+
+    public void onRedo() {
+        game.redo();
+        for(BladeEntity blade : blades)
+            blade.updateRotation();
+
+    }
+
+    public void onRestart() {
+        game.restart();
+        for(BladeEntity blade : blades)
+            blade.updateRotation();
     }
 }
