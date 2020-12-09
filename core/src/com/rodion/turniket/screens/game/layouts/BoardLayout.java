@@ -13,7 +13,6 @@ import com.rodion.turniket.kernel.Game;
 import com.rodion.turniket.kernel.Token;
 import com.rodion.turniket.kernel.Turnstile;
 import com.rodion.turniket.kernel.constants.Direction;
-import com.rodion.turniket.screens.game.GameInput;
 import com.rodion.turniket.screens.game.entities.BladeEntity;
 import com.rodion.turniket.screens.game.entities.BoardEntity;
 import com.rodion.turniket.screens.game.entities.BurnerEntity;
@@ -28,7 +27,6 @@ public class BoardLayout extends Layout {
     private BoardEntity board;
     private ArrayList<TokenEntity> tokens;
     private ArrayList<BladeEntity> blades;
-    //    private GameInput input;
     private InputMultiplexer multiplexer;
 
     public BoardLayout(BasicStage basicStage) {
@@ -37,12 +35,6 @@ public class BoardLayout extends Layout {
 
         game = new Game();
         multiplexer = new InputMultiplexer();
-//        input = new GameInput() {
-//            @Override
-//            public void onAction(Direction direction) {
-//                board.onAction(direction);
-//            }
-//        };
 
         File file = new File("maps/map.dat");
         try {
@@ -62,29 +54,17 @@ public class BoardLayout extends Layout {
 
                 if (selectToken != null) {
 //                    System.out.println("hello!!");
-                    game.move(selectToken.getColor(), direction);
-                    for (Turnstile turnstile : game.getTurnstiles()) {
-                        System.out.println(turnstile.getBlades().size());
-                        for (Blade blade : turnstile.getBlades())
-                            System.out.println(blade.getDirection());
-                    }
+                    if(game.move(selectToken.getColor(), direction))
+                        onMove();
+//                    for (Turnstile turnstile : game.getTurnstiles()) {
+//                        System.out.println(turnstile.getBlades().size());
+////                        for (Blade blade : turnstile.getBlades())
+////                            System.out.println(blade.getDirection());
+//                    }
                     game.print();
                 }
 
             }
-
-//            @Override
-//            public boolean onTouchDownBurner(BurnerEntity burner) {
-//                selectToken = game.getToken(burner.getI(), burner.getJ());
-//                return true;
-//            }
-//
-//            @Override
-//            public void onTouchUpBurner(BurnerEntity burner) {
-//                if (selectToken != null)
-//                    game.move(selectToken.getColor(), direction);
-//                selectToken = null;
-//            }
         };
         tokens = new ArrayList<>();
         blades = new ArrayList<>();
@@ -134,6 +114,12 @@ public class BoardLayout extends Layout {
 //        multiplexer.addProcessor(new GestureDetector(input));
         multiplexer.addProcessor(basicStage);
         Gdx.input.setInputProcessor(multiplexer);
+        game.addListener(new Game.Listener() {
+            @Override
+            public void onWin() {
+                System.out.println("win");
+            }
+        });
     }
 
     @Override
@@ -175,7 +161,6 @@ public class BoardLayout extends Layout {
         game.redo();
         for(BladeEntity blade : blades)
             blade.updateRotation();
-
     }
 
     public void onRestart() {
@@ -183,4 +168,16 @@ public class BoardLayout extends Layout {
         for(BladeEntity blade : blades)
             blade.updateRotation();
     }
+
+    public void onMove(){
+
+    }
+
+
+
+    public int getSteps(){
+        return game.getSteps();
+    }
+
+
 }

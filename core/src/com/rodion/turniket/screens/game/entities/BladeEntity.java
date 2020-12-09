@@ -1,5 +1,7 @@
 package com.rodion.turniket.screens.game.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.rodion.turniket.basics.BundleAnimationEntity;
@@ -12,11 +14,15 @@ public class BladeEntity extends BundleAnimationEntity {
     private Blade blade;
     private float axisX;
     private float axisY;
+    private Sound sound;
+
 
     public BladeEntity(Blade blade) {
         super(.02f, 6);
         prepareAssets();
         this.blade = blade;
+        sound = Gdx.audio.newSound(Gdx.files.internal("sounds/pass.mp3"));
+
         setRotation(blade.getDirection().getAngle());
         setAxisPosition(117.67586389f, 117.67586389f);
         setSelectAnimation(1);
@@ -34,6 +40,7 @@ public class BladeEntity extends BundleAnimationEntity {
                                                     public void run() {
                                                         switch (status) {
                                                             case Ok:
+                                                                 sound.play();
                                                                 if (spinfinal == Spin.CounterClokwise) {
                                                                     setAxisPosition(17.46713562f, 117.67586389f);
                                                                     setSelectAnimation(0);

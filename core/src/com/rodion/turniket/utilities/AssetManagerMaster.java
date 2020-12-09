@@ -1,6 +1,7 @@
 package com.rodion.turniket.utilities;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class AssetManagerMaster {
@@ -8,6 +9,7 @@ public class AssetManagerMaster {
 
     public static void loadGame() {
         load(game,"game");
+//        game.load("sounds/pass.mp3", Sound.class);
         game.finishLoading();
     }
 

@@ -16,8 +16,6 @@ public class GameInput implements GestureDetector.GestureListener {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-//        System.out.println("Tap");
-//        gameScreen.onAction(CENTER);
         return true;
     }
 

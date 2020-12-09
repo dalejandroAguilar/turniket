@@ -11,6 +11,7 @@ public class BottomMenuLayout extends Layout {
     private ImageButtonEntity restartButton;
     private ImageButtonEntity hintButton;
     private ImageButtonEntity undoButton;
+
     public BottomMenuLayout(BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
@@ -60,7 +61,6 @@ public class BottomMenuLayout extends Layout {
                 setAssetManager(AssetManagerMaster.game);
                 assetPath = "game";
                 assetName = "button_redo";
-
             }
 
             @Override
@@ -89,14 +89,11 @@ public class BottomMenuLayout extends Layout {
     }
 
     public void onUndo(){
-
     }
 
     public void onRedo(){
-
     }
 
     public void onRestart(){
-
     }
 }

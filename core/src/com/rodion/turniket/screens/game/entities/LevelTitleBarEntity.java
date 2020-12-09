@@ -1,8 +1,7 @@
 package com.rodion.turniket.screens.game.entities;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.utils.Align;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.ImageEntity;
 import com.rodion.turniket.basics.LabelEntity;
@@ -16,13 +15,14 @@ public class LevelTitleBarEntity extends Layout {
     private ImageEntity left;
     private ImageEntity right;
     private ImageEntity center;
-    private LabelEntity label;
+    private LabelEntity levelLabel;
+    private LabelEntity number;
 
 
     public LevelTitleBarEntity(BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
-        left = new ImageEntity(){
+        left = new ImageEntity() {
             @Override
             public void setAssetAddress() {
                 setAssetManager(AssetManagerMaster.game);
@@ -33,7 +33,7 @@ public class LevelTitleBarEntity extends Layout {
         left.prepareAssets();
         left.setColor(ColorManagerMaster.green);
 
-        right = new ImageEntity(){
+        right = new ImageEntity() {
             @Override
             public void setAssetAddress() {
                 setAssetManager(AssetManagerMaster.game);
@@ -45,42 +45,58 @@ public class LevelTitleBarEntity extends Layout {
 
         right.prepareAssets();
         right.setColor(ColorManagerMaster.green);
-        center = new ImageEntity(){
+        final Layout table = new Layout(getParentStage());
+        levelLabel = new LabelEntity("Beginer", FontManagerMaster.nexaStyle);
+        number =  new LabelEntity("11", FontManagerMaster.nexaStyle){
+            @Override
+            public void updatePosition() {
+                super.updatePosition();
+                setPosition(center.getAbsPosition(Align.center).x,
+                        center.getAbsPosition(Align.center).y, Align.center);
+            }
+        };
+
+        center = new ImageEntity() {
             @Override
             public void setAssetAddress() {
                 setAssetManager(AssetManagerMaster.game);
                 assetPath = "game";
                 assetName = "token";
             }
+
+            @Override
+            public void updatePosition() {
+                super.updatePosition();
+                setPosition(table.getAbsPosition(Align.center).x,
+                        table.getAbsPosition(Align.center).y, Align.center);
+            }
         };
         center.prepareAssets();
+        center.setColor(ColorManagerMaster.green);
 
 
-
-        label = new LabelEntity("Beginer", FontManagerMaster.nexaStyle);
-
-        Stack stack = new Stack();
-        Table table = new Table();
-        table.add(label).expand().left().pad(10);
-        table.setFillParent(true);
+        table.add(levelLabel).expand().left().pad(5);
+        table.setFillParent(false);
         table.setBackground(ColorManagerMaster.greenBg);
-//        stack.add(table);
-//        stack.add(center);
-//        add(left);
-//        add(stack).expand();
-//        add(center).center();
-        add(table);
-//        add(right);
+        add(table).expandX().fillX();
 
     }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        center.draw(batch, parentAlpha);
+        number.draw(batch, parentAlpha);
+    }
+
 
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
         left.resize(width, height);
         right.resize(width, height);
-        label.resize(width, height);
+        levelLabel.resize(width, height);
         center.resize(width, height);
-
+        number.resize(width, height);
     }
 }

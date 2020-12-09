@@ -6,9 +6,11 @@ public class State {
     public Node[][] board;
     public State nextState;
     public State previousState;
+    private int step;
+
 
     public State() {
-
+        step = 0;
     }
 
     public State(State s) {
@@ -29,6 +31,7 @@ public class State {
 
         previousState = s.previousState;
         nextState = s.nextState;
+        step = s.step;
     }
 
     public void set(State s) {
@@ -50,5 +53,14 @@ public class State {
 
         previousState = s.previousState;
         nextState = s.nextState;
+        step = s.step;
+    }
+
+    public int getSteps(){
+        return step;
+    }
+
+    public void setStep(int step) {
+        this.step = step;
     }
 }

@@ -3,28 +3,26 @@ package com.rodion.turniket.kernel;
 import com.rodion.turniket.kernel.constants.Direction;
 import com.rodion.turniket.kernel.constants.TokenColor;
 import com.rodion.turniket.kernel.constants.TurnId;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Game implements Command {
     private State state;
     private State initState;
-
     private Character[][] map;
-    private static ArrayList<Node> turnPositions;
+    final private static ArrayList<Node> turnPositions = new ArrayList<>(
+            Arrays.asList(new Node(1, 1), new Node(3, 1),
+                    new Node(1, 3), new Node(3, 3)));
+    final private static Node[] tokenTargets = {new Node(0, 0), new Node(4, 0),
+            new Node(4, 4), new Node(0, 4)};
+    private Listener listener;
 
     public Game() {
         initState = new State();
         initState.board = new Node[5][5];
-        turnPositions = new ArrayList<>();
-        turnPositions.add(new Node(1, 1));
-        turnPositions.add(new Node(3, 1));
-        turnPositions.add(new Node(1, 3));
-        turnPositions.add(new Node(3, 3));
-
         initState.turnstiles = new Turnstile[TurnId.values().length];
         initState.tokens = new Token[TokenColor.values().length];
         map = new Character[5][5];
@@ -37,7 +35,6 @@ public class Game implements Command {
     }
 
     public boolean move(TokenColor color, Direction dir) {
-        System.out.println("move gu");
         Token token = state.tokens[color.index];
         int stepX = token.getX() + 2 * dir.x;
         int stepY = token.getY() + 2 * dir.y;
@@ -51,6 +48,9 @@ public class Game implements Command {
             state.board[stepY][stepX] = token;
             token.setPosition(stepX, token.getY() + 2 * dir.y);
             token.listener.onMove(dir, Token.Status.Ok);
+            if (isWin())
+                listener.onWin();
+            state.setStep(state.getSteps()+1);
             return true;
         }
         if (state.board[stepY][stepX] != null && state.board[halfStepY][halfStepX] == null) {
@@ -69,6 +69,9 @@ public class Game implements Command {
                     token.setPosition(stepX, stepY);
                     token.listener.onMove(dir, Token.Status.Ok);
                     state.previousState = dummyPreviousState;
+                    if (isWin())
+                        listener.onWin();
+                    state.setStep(state.getSteps()+1);
                     return true;
                 } else {
                     state.board[token.getY()][token.getX()] = token;
@@ -130,7 +133,6 @@ public class Game implements Command {
                     if (state.board[i][j].getClass() == Blade.class) {
                         System.out.print(((Blade) state.board[i][j]).getId().value);
                     }
-
                 } else if (turnPositions.contains(Node.dummy(j, i))) {
                     System.out.print(turnPositions.indexOf(Node.getDummyNode()) + 1);
                 } else
@@ -155,11 +157,9 @@ public class Game implements Command {
 
     @Override
     public void undo() {
-        System.out.println("undo");
         if (state.previousState != null) {
             State dummystate = new State(state);
             state.set(state.previousState);
-
             if (state.nextState == null)
                 state.nextState = new State(dummystate);
             else
@@ -169,16 +169,34 @@ public class Game implements Command {
 
     @Override
     public void redo() {
-        System.out.println("redo");
-        if (state.nextState != null){
-            System.out.println("nextState");
+        if (state.nextState != null)
             state.set(state.nextState);
-        }
     }
 
     @Override
     public void restart() {
-        System.out.println("restart");
         state.set(initState);
+    }
+
+    private boolean isWin() {
+        for (int i = 0; i<4; i++) {
+            Token token = getTokens()[i];
+            if (token.getX() != -1 || token.getY() != -1)
+                if (token.getX() != tokenTargets[i].getX() || token.getY() != tokenTargets[i].getY())
+                    return false;
+        }
+        return true;
+    }
+
+    public void addListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    public interface Listener {
+        void onWin();
+    }
+
+    public int getSteps(){
+        return state.getSteps();
     }
 }

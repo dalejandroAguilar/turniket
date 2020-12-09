@@ -19,7 +19,7 @@ Token extends Node {
         setColor(t.getColor());
     }
 
-    public Token(Token t){
+    public Token(Token t) {
         setPosition(t.getX(), t.getY());
         setColor(t.getColor());
 //        listener = t.listener;
@@ -59,22 +59,24 @@ Token extends Node {
     }
 
     public int geti() {
-       if (super.getY() == -1)
+        if (super.getY() == -1)
             return -1;
         return super.getY() / 2;
     }
 
-      public void addListener(Listener listener){
+    public void addListener(Listener listener) {
         this.listener = listener;
     }
 
-    public interface Listener{
+    public interface Listener {
         public void onMove(Direction direction, Status status);
     }
 
-    public enum Status{
+    public enum Status {
         Ok(0), BladeTokenCollision(1), TokenCollision(2);
         private int value;
-        Status(int value){}
+
+        Status(int value) {
+        }
     }
 }
