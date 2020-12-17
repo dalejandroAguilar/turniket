@@ -13,7 +13,7 @@ public class TopMenuLayout extends Layout {
     private BackgraundedLabelButton settingsButton;
     public TopMenuLayout(BasicStage basicStage) {
         super(basicStage);
-        backButton = new BackgraundedLabelButton("Back", FontManagerMaster.nexaStyle,getParentStage()){
+        backButton = new BackgraundedLabelButton("Back", FontManagerMaster.helveticaStyle,getParentStage()){
             @Override
             public void setAssetAddress() {
                 setAssetManger(AssetManagerMaster.game);
@@ -22,7 +22,7 @@ public class TopMenuLayout extends Layout {
             }
         };
         backButton.setFillParent(false);
-        settingsButton = new BackgraundedLabelButton("Settings", FontManagerMaster.nexaStyle,getParentStage()){
+        settingsButton = new BackgraundedLabelButton("Settings", FontManagerMaster.helveticaStyle,getParentStage()){
             @Override
             public void setAssetAddress() {
                 setAssetManger(AssetManagerMaster.game);
@@ -35,7 +35,6 @@ public class TopMenuLayout extends Layout {
         setFillParent(false);
         add(backButton).expandX().left();
         add(settingsButton).expandX().right();
-
         setBackground(ColorManagerMaster.grayBg);
     }
 

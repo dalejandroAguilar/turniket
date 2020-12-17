@@ -54,8 +54,8 @@ public class StatusLayout extends Layout {
         steps.setFillParent(false);
         steps.add(labelSteps).expandX().center();
         time.add(labelTime);
-        add(time).expandX();
-        add(steps).expandX();
+        add(time).expand().bottom();
+        add(steps).expand().bottom();
         setSteps(0);
     }
 
@@ -66,6 +66,11 @@ public class StatusLayout extends Layout {
         time.resize(width, height);
         labelSteps.resize(width, height);
         labelTime.resize(width, height);
+    }
+
+    public void resetTimer(){
+        counterTime=0;
+        labelTime.setText("0");
     }
 
     public void setSteps(int steps) {

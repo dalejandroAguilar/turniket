@@ -108,7 +108,7 @@ public class Game implements Command {
                         initState.board[i][j] = initState.tokens[color.index];
                     }
                 for (TurnId id : TurnId.values())
-                    if (map[i][j] == id.value) {
+                    if (map[i][j] == id.value)
                         if (!turnPositions.contains(Node.dummy(j, i))) {
                             Turnstile turnstile = initState.turnstiles[id.index];
                             Direction direction = Direction.get(j - turnstile.getX(),
@@ -117,7 +117,6 @@ public class Game implements Command {
                             turnstile.addBlade(blade);
                             initState.board[i][j] = blade;
                         }
-                    }
             }
         }
         state = new State(initState);

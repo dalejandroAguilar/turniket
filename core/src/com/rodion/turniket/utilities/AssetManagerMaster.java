@@ -20,6 +20,7 @@ public class AssetManagerMaster {
         assetManager.load(path + "/1.5x/pack.atlas", TextureAtlas.class);
         assetManager.load(path + "/2x/pack.atlas", TextureAtlas.class);
         assetManager.load(path + "/3x/pack.atlas", TextureAtlas.class);
+        assetManager.load(path + "/raster/pack.atlas", TextureAtlas.class);
     }
 
     public static void dispose(){

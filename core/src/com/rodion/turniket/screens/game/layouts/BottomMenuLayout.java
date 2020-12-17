@@ -71,10 +71,10 @@ public class BottomMenuLayout extends Layout {
         redoButton.prepareAssets();
 
         add().expandX();
-        add(hintButton).left().expandX();
-        add(restartButton).expandX();
-        add(undoButton).expandX();
-        add(redoButton).expandX();
+        add(hintButton).left().padBottom(10).padTop(10).expandX();
+        add(restartButton).padBottom(10).padTop(10).expandX();
+        add(undoButton).padBottom(10).padTop(10).expandX();
+        add(redoButton).padBottom(10).padTop(10).expandX();
         add().expandX();
         setBackground(ColorManagerMaster.grayBg);
     }

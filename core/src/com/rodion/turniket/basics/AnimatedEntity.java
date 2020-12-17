@@ -13,25 +13,22 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.rodion.turniket.utilities.ScreenScale;
 
 public class AnimatedEntity extends Image {
-    protected TextureRegionDrawable[][] textures;
-    protected TextureRegionDrawable[] frames;
+    private TextureRegionDrawable[][] textures;
+    private TextureRegionDrawable[] frames;
+    private String[] assetNames;
+    private AssetManager assetManager;
+    private Animation animation;
+    private float elapsedTime;
+    private float frameDuration;
+    private boolean isOnPlay;
+    private float lastX;
+    private float lastY;
     protected String assetPath;
-    protected String[] assetNames;
-    protected AssetManager assetManager;
-    protected Animation animation;
-    protected float elapsedTime;
-    protected float frameDuration;
-    protected boolean isOnPlay;
-//    protected boolean isOnPlay;
-    protected float lastX;
-    protected float lastY;
-
 
     public AnimatedEntity(float keyDuration) {
         elapsedTime = 0;
         this.frameDuration = keyDuration;
         isOnPlay = false;
-//        animation.setPlayMode(Animation.PlayMode.);
     }
 
     public void prepareAssets() {
@@ -52,7 +49,6 @@ public class AnimatedEntity extends Image {
     }
 
     public void setAssetAddress() {
-
     }
 
     public void resize(int width, int height) {
@@ -130,7 +126,6 @@ public class AnimatedEntity extends Image {
     }
 
     public void updatePosition() {
-
     }
 
     public float getElapsedTime() {

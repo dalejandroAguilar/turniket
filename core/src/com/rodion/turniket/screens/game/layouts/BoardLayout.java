@@ -44,16 +44,12 @@ public class BoardLayout extends Layout {
         }
         game.setFromMap();
         board = new BoardEntity(getParentStage()) {
-//            Direction direction;
-
 
             @Override
             public void onBurnerAction(BurnerEntity burner, Direction direction) {
                 Token selectToken = game.getToken(burner.getI(), burner.getJ());
-//                System.out.println("hello!!"+ burner.getI() + burner.getJ());
 
                 if (selectToken != null) {
-//                    System.out.println("hello!!");
                     if(game.move(selectToken.getColor(), direction))
                         onMove();
 //                    for (Turnstile turnstile : game.getTurnstiles()) {
@@ -66,6 +62,9 @@ public class BoardLayout extends Layout {
 
             }
         };
+
+
+
         tokens = new ArrayList<>();
         blades = new ArrayList<>();
         for (Token token : game.getTokens()) {
@@ -86,6 +85,7 @@ public class BoardLayout extends Layout {
                 tokens.add(tokenEntity);
             }
         }
+
         for (Turnstile turnstile : game.getTurnstiles()) {
             for (Blade blade : turnstile.getBlades()) {
                 BladeEntity bladeEntity = new BladeEntity(blade) {
@@ -118,6 +118,7 @@ public class BoardLayout extends Layout {
             @Override
             public void onWin() {
                 System.out.println("win");
+                BoardLayout.this.onWin();
             }
         });
     }
@@ -173,11 +174,11 @@ public class BoardLayout extends Layout {
 
     }
 
-
-
     public int getSteps(){
         return game.getSteps();
     }
 
+    public void onWin(){
 
+    }
 }
