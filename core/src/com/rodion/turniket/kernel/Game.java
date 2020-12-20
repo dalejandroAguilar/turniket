@@ -100,7 +100,7 @@ public class Game implements Command {
     }
 
     public void setFromMap() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++)
             for (int j = 0; j < 5; j++) {
                 for (TokenColor color : TokenColor.values())
                     if (map[i][j] == color.value) {
@@ -118,7 +118,6 @@ public class Game implements Command {
                             initState.board[i][j] = blade;
                         }
             }
-        }
         state = new State(initState);
     }
 

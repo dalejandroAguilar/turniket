@@ -1,9 +1,8 @@
-package com.rodion.turniket.screens.game.layouts;
+package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.utils.Align;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.ImageEntity;
@@ -13,10 +12,10 @@ import com.rodion.turniket.kernel.Game;
 import com.rodion.turniket.kernel.Token;
 import com.rodion.turniket.kernel.Turnstile;
 import com.rodion.turniket.kernel.constants.Direction;
-import com.rodion.turniket.screens.game.entities.BladeEntity;
-import com.rodion.turniket.screens.game.entities.BoardEntity;
-import com.rodion.turniket.screens.game.entities.BurnerEntity;
-import com.rodion.turniket.screens.game.entities.TokenEntity;
+import com.rodion.turniket.screens.game.stages.gameStage.entities.BladeEntity;
+import com.rodion.turniket.screens.game.stages.gameStage.entities.BoardEntity;
+import com.rodion.turniket.screens.game.stages.gameStage.entities.BurnerEntity;
+import com.rodion.turniket.screens.game.stages.gameStage.entities.TokenEntity;
 
 import java.io.File;
 import java.io.FileNotFoundException;

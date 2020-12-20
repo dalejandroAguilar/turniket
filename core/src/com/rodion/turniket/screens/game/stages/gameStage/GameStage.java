@@ -1,11 +1,9 @@
-package com.rodion.turniket.screens.game.stages;
+package com.rodion.turniket.screens.game.stages.gameStage;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rodion.turniket.basics.BasicScreen;
 import com.rodion.turniket.basics.BasicStage;
-import com.rodion.turniket.screens.game.layouts.BoardLayout;
-import com.rodion.turniket.screens.game.layouts.GameLayout;
+import com.rodion.turniket.screens.game.stages.gameStage.layouts.GameLayout;
 
 public class GameStage extends BasicStage {
     private GameLayout gameLayout;

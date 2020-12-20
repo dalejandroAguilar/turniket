@@ -12,6 +12,7 @@ public class LabelEntity extends Label {
     static final Vector2 dummyVector = new Vector2(0, 0);
 
 
+
     public LabelEntity(CharSequence text, Label.LabelStyle[] style) {
         super(text, style[FactorScale.Normal.index]);
         this.style = style;

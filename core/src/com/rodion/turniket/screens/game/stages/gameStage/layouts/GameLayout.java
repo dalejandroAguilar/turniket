@@ -1,13 +1,9 @@
-package com.rodion.turniket.screens.game.layouts;
+package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.rodion.turniket.basics.BasicStage;
-import com.rodion.turniket.basics.ImageEntity;
 import com.rodion.turniket.basics.Layout;
-import com.rodion.turniket.screens.game.entities.LevelTitleBarEntity;
-import com.rodion.turniket.utilities.AssetManagerMaster;
+import com.rodion.turniket.screens.game.stages.gameStage.entities.LevelTitleBarEntity;
 
 public class GameLayout extends Layout {
 

@@ -1,4 +1,4 @@
-package com.rodion.turniket.screens.game.entities;
+package com.rodion.turniket.screens.game.stages.gameStage.entities;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;

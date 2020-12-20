@@ -6,12 +6,14 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.rodion.turniket.MainGame;
 import com.rodion.turniket.basics.BasicScreen;
 import com.rodion.turniket.screens.game.stages.ConfettiStage;
-import com.rodion.turniket.screens.game.stages.GameStage;
+import com.rodion.turniket.screens.game.stages.gameStage.GameStage;
+import com.rodion.turniket.screens.game.stages.youWinStage.YouWinStage;
 import com.rodion.turniket.utilities.ScreenScale;
 
 public class GameScreen extends BasicScreen {
     private GameStage gameStage;
     private ConfettiStage confettiStage;
+    private YouWinStage youWinPopUpStage;
     public GameScreen(MainGame mainGame) {
         super(mainGame);
         gameStage = new GameStage(new ScreenViewport(), this){
@@ -26,8 +28,10 @@ public class GameScreen extends BasicScreen {
             public void onFinish() {
                 super.onFinish();
                 System.out.println("Finish confetti");
+                youWinPopUpStage.showUp();
             }
         };
+        youWinPopUpStage = new YouWinStage(new ScreenViewport(), this);
     }
 
     @Override
@@ -39,6 +43,8 @@ public class GameScreen extends BasicScreen {
         gameStage.draw();
         confettiStage.act();
         confettiStage.draw();
+        youWinPopUpStage.act();
+        youWinPopUpStage.draw();
     }
 
     @Override
@@ -52,5 +58,6 @@ public class GameScreen extends BasicScreen {
         ScreenScale.resize(width, height);
         gameStage.resize(width, height);
         confettiStage.resize(width, height);
+        youWinPopUpStage.resize(width, height);
     }
 }

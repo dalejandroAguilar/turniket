@@ -1,4 +1,4 @@
-package com.rodion.turniket.screens.game.entities;
+package com.rodion.turniket.screens.game.stages.gameStage.entities;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Align;
