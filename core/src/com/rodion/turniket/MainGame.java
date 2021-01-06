@@ -10,6 +10,7 @@ import com.rodion.turniket.screens.game.GameScreen;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.LevelManagerMaster;
 
 public class MainGame extends Game {
 	private GameScreen gameScreen;
@@ -19,6 +20,7 @@ public class MainGame extends Game {
 		AssetManagerMaster.loadGame();
 		ColorManagerMaster.load();
 		FontManagerMaster.loadFonts();
+		LevelManagerMaster.init();
 		gameScreen = new GameScreen(this);
 		setScreen(gameScreen);
 	}

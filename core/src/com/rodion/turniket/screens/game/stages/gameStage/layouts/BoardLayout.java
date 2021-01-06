@@ -12,6 +12,7 @@ import com.rodion.turniket.kernel.Game;
 import com.rodion.turniket.kernel.Token;
 import com.rodion.turniket.kernel.Turnstile;
 import com.rodion.turniket.kernel.constants.Direction;
+import com.rodion.turniket.screens.game.stages.gameStage.GameStage;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.BladeEntity;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.BoardEntity;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.BurnerEntity;
@@ -26,16 +27,11 @@ public class BoardLayout extends Layout {
     private BoardEntity board;
     private ArrayList<TokenEntity> tokens;
     private ArrayList<BladeEntity> blades;
-    private InputMultiplexer multiplexer;
 
-    public BoardLayout(BasicStage basicStage) {
+    public BoardLayout(File file, BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
-
         game = new Game();
-        multiplexer = new InputMultiplexer();
-
-        File file = new File("maps/map.dat");
         try {
             game.readFile(file);
         } catch (FileNotFoundException e) {
@@ -43,11 +39,9 @@ public class BoardLayout extends Layout {
         }
         game.setFromMap();
         board = new BoardEntity(getParentStage()) {
-
             @Override
             public void onBurnerAction(BurnerEntity burner, Direction direction) {
                 Token selectToken = game.getToken(burner.getI(), burner.getJ());
-
                 if (selectToken != null) {
                     if(game.move(selectToken.getColor(), direction))
                         onMove();
@@ -56,13 +50,13 @@ public class BoardLayout extends Layout {
 ////                        for (Blade blade : turnstile.getBlades())
 ////                            System.out.println(blade.getDirection());
 //                    }
-                    game.print();
+//                    ((GameStage) basicStage).offInput();
+                    onMoveTry();
+//                    game.print();
                 }
 
             }
         };
-
-
 
         tokens = new ArrayList<>();
         blades = new ArrayList<>();
@@ -79,6 +73,12 @@ public class BoardLayout extends Layout {
                             setPosition(getLastX(), getLastY());
                         else
                             setPosition(x, y);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        onMoveFinish();
                     }
                 };
                 tokens.add(tokenEntity);
@@ -110,13 +110,10 @@ public class BoardLayout extends Layout {
             }
         }
         add(board).center();
-//        multiplexer.addProcessor(new GestureDetector(input));
-        multiplexer.addProcessor(basicStage);
-        Gdx.input.setInputProcessor(multiplexer);
         game.addListener(new Game.Listener() {
             @Override
             public void onWin() {
-                System.out.println("win");
+//                System.out.println("win");
                 BoardLayout.this.onWin();
             }
         });
@@ -172,6 +169,16 @@ public class BoardLayout extends Layout {
     public void onMove(){
 
     }
+
+    public void onMoveTry(){
+
+    }
+
+     public void onMoveFinish() {
+
+    }
+
+
 
     public int getSteps(){
         return game.getSteps();

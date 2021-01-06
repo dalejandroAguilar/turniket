@@ -8,12 +8,22 @@ public class YouWinStage extends BasicStage {
     private YouWinLayout popUp;
     public YouWinStage(Viewport viewport, BasicScreen basicScreen) {
         super(viewport, basicScreen);
-        popUp = new YouWinLayout(this);
+        popUp = new YouWinLayout(this){
+            @Override
+            public void onContinue() {
+                super.onContinue();
+                YouWinStage.this.onContinue();
+            }
+        };
         addActor(popUp);
     }
 
     public void showUp(){
         popUp.showUp();
+    }
+
+    public void onContinue(){
+        popUp.onHide();
     }
 
     @Override

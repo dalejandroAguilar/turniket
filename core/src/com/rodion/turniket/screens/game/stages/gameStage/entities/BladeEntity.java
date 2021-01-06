@@ -3,7 +3,6 @@ package com.rodion.turniket.screens.game.stages.gameStage.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.rodion.turniket.basics.BundleAnimationEntity;
 import com.rodion.turniket.kernel.Blade;
 import com.rodion.turniket.kernel.constants.Spin;
@@ -15,7 +14,6 @@ public class BladeEntity extends BundleAnimationEntity {
     private float axisX;
     private float axisY;
     private Sound sound;
-
 
     public BladeEntity(Blade blade) {
         super(.02f, 6);
@@ -29,67 +27,35 @@ public class BladeEntity extends BundleAnimationEntity {
         blade.addListener(new Blade.Listener() {
             @Override
             public void onRotate(final Spin spin, final Blade.Status status) {
-
-                final Spin spinfinal = spin;
-                addAction(
-                        Actions.sequence(
-                                Actions.parallel(
-                                        Actions.run(
-                                                new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        switch (status) {
-                                                            case Ok:
-                                                                 sound.play();
-                                                                if (spinfinal == Spin.CounterClokwise) {
-                                                                    setAxisPosition(17.46713562f, 117.67586389f);
-                                                                    setSelectAnimation(0);
-                                                                } else {
-                                                                    setAxisPosition(117.67586389f, 117.67586389f);
-                                                                    setSelectAnimation(1);
-                                                                }
-                                                                break;
-                                                            case TokenCollision:
-                                                                if (spinfinal == Spin.CounterClokwise) {
-                                                                    setAxisPosition(17.46713562f, 117.67586389f);
-
-                                                                    setSelectAnimation(2);
-                                                                } else {
-                                                                    setAxisPosition(117.67586389f, 117.67586389f);
-                                                                    setSelectAnimation(3);
-                                                                }
-                                                                break;
-                                                            case BladeCollision:
-                                                                if (spinfinal == Spin.CounterClokwise) {
-                                                                    setAxisPosition(17.46713562f, 117.67586389f);
-                                                                    setSelectAnimation(4);
-                                                                } else {
-                                                                    setAxisPosition(117.67586389f, 117.67586389f);
-                                                                    setSelectAnimation(5);
-                                                                }
-                                                                break;
-                                                        }
-                                                        setOnPlay(true);
-                                                    }
-                                                }
-                                        ),
-                                        Actions.delay(getDuration())
-                                ),
-                                Actions.run(
-                                        new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                if (status == Blade.Status.Ok)
-                                                    updateRotation();
-                                                setOnPlay(false);
-                                            }
-
-                                        }
-                                )
-                        )
-                );
+                int mirror = 0;
+                if (spin == Spin.CounterClokwise) {
+                    setAxisPosition(17.46713562f, 117.67586389f);
+                    mirror = 0;
+                } else {
+                    setAxisPosition(117.67586389f, 117.67586389f);
+                    mirror = 1;
+                }
+                switch (status) {
+                    case Ok:
+                        sound.play();
+                        setSelectAnimation(0 + mirror);
+                        break;
+                    case TokenCollision:
+                        setSelectAnimation(2 + mirror);
+                        break;
+                    case BladeCollision:
+                        setSelectAnimation(4 + mirror);
+                        break;
+                }
+                setOnPlay(true);
             }
         });
+    }
+
+    @Override
+    public void onFinish() {
+        updateRotation();
+        setOnPlay(false);
     }
 
     @Override
@@ -97,7 +63,7 @@ public class BladeEntity extends BundleAnimationEntity {
         super.setAssetAddress();
         setAssetManager(AssetManagerMaster.game);
         assetPath = "game";
-        assetNames = new String[6][18];
+        assetNames = new String[6][17];
         assetNames[0][0] = "bladea01";
         assetNames[0][1] = "bladea01";
         assetNames[0][2] = "bladea01";
@@ -115,7 +81,7 @@ public class BladeEntity extends BundleAnimationEntity {
         assetNames[0][14] = "bladea11";
         assetNames[0][15] = "bladea12";
         assetNames[0][16] = "bladea13";
-        assetNames[0][17] = "bladea14";
+//        assetNames[0][17] = "bladea14";
 
         assetNames[1][0] = "bladea01m";
         assetNames[1][1] = "bladea01m";
@@ -134,7 +100,7 @@ public class BladeEntity extends BundleAnimationEntity {
         assetNames[1][14] = "bladea11m";
         assetNames[1][15] = "bladea12m";
         assetNames[1][16] = "bladea13m";
-        assetNames[1][17] = "bladea14m";
+//        assetNames[1][17] = "bladea14m";
 
         assetNames[2][0] = "bladea01";
         assetNames[2][1] = "bladea01";
@@ -153,7 +119,7 @@ public class BladeEntity extends BundleAnimationEntity {
         assetNames[2][14] = "bladeb02";
         assetNames[2][15] = "bladeb03";
         assetNames[2][16] = "bladeb04";
-        assetNames[2][17] = "bladea01";
+//        assetNames[2][17] = "bladea01";
 
         assetNames[3][0] = "bladea01m";
         assetNames[3][1] = "bladea01m";
@@ -172,18 +138,18 @@ public class BladeEntity extends BundleAnimationEntity {
         assetNames[3][14] = "bladeb02m";
         assetNames[3][15] = "bladeb03m";
         assetNames[3][16] = "bladeb04m";
-        assetNames[3][17] = "bladea01m";
+//        assetNames[3][17] = "bladea01m";
 
-        assetNames[4][0]  = "bladea01";
-        assetNames[4][1]  = "bladea01";
-        assetNames[4][2]  = "bladea01";
-        assetNames[4][3]  = "bladea01";
-        assetNames[4][4]  = "bladea01";
-        assetNames[4][5]  = "bladea02";
-        assetNames[4][6]  = "bladea03";
-        assetNames[4][7]  = "bladea04";
-        assetNames[4][8]  = "bladea05";
-        assetNames[4][9]  = "bladec01";
+        assetNames[4][0] = "bladea01";
+        assetNames[4][1] = "bladea01";
+        assetNames[4][2] = "bladea01";
+        assetNames[4][3] = "bladea01";
+        assetNames[4][4] = "bladea01";
+        assetNames[4][5] = "bladea02";
+        assetNames[4][6] = "bladea03";
+        assetNames[4][7] = "bladea04";
+        assetNames[4][8] = "bladea05";
+        assetNames[4][9] = "bladec01";
         assetNames[4][10] = "bladea05";
         assetNames[4][11] = "bladea04";
         assetNames[4][12] = "bladea03";
@@ -191,18 +157,18 @@ public class BladeEntity extends BundleAnimationEntity {
         assetNames[4][14] = "bladeb02";
         assetNames[4][15] = "bladeb03";
         assetNames[4][16] = "bladeb04";
-        assetNames[4][17] = "bladea01";
+//        assetNames[4][17] = "bladea01";
 
-        assetNames[5][0]  = "bladea01m";
-        assetNames[5][1]  = "bladea01m";
-        assetNames[5][2]  = "bladea01m";
-        assetNames[5][3]  = "bladea01m";
-        assetNames[5][4]  = "bladea01m";
-        assetNames[5][5]  = "bladea02m";
-        assetNames[5][6]  = "bladea03m";
-        assetNames[5][7]  = "bladea04m";
-        assetNames[5][8]  = "bladea05m";
-        assetNames[5][9]  = "bladec01m";
+        assetNames[5][0] = "bladea01m";
+        assetNames[5][1] = "bladea01m";
+        assetNames[5][2] = "bladea01m";
+        assetNames[5][3] = "bladea01m";
+        assetNames[5][4] = "bladea01m";
+        assetNames[5][5] = "bladea02m";
+        assetNames[5][6] = "bladea03m";
+        assetNames[5][7] = "bladea04m";
+        assetNames[5][8] = "bladea05m";
+        assetNames[5][9] = "bladec01m";
         assetNames[5][10] = "bladea05m";
         assetNames[5][11] = "bladea04m";
         assetNames[5][12] = "bladea03m";
@@ -210,7 +176,7 @@ public class BladeEntity extends BundleAnimationEntity {
         assetNames[5][14] = "bladeb02m";
         assetNames[5][15] = "bladeb03m";
         assetNames[5][16] = "bladeb04m";
-        assetNames[5][17] = "bladea01m";
+//        assetNames[5][17] = "bladea01m";
     }
 
     public Blade getBlade() {
@@ -241,7 +207,7 @@ public class BladeEntity extends BundleAnimationEntity {
         axisY = y;
     }
 
-    public void updateRotation(){
+    public void updateRotation() {
         setRotation(getBlade().getDirection().getAngle());
     }
 }

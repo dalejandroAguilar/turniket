@@ -57,20 +57,20 @@ public class BurnerEntity extends ImageEntity {
                         if (Math.abs(dx) > threshold) {
                             if (dx > 0) {
                                 onAction(BurnerEntity.this, Direction.Right);
-                                System.out.println("Right");
+//                                System.out.println("Right");
                             } else {
                                 onAction(BurnerEntity.this, Direction.Left);
-                                System.out.println("Left");
+//                                System.out.println("Left");
                             }
                         }
                     } else {
                         if (Math.abs(dy) > threshold) {
                             if (dy > 0) {
                                 onAction(BurnerEntity.this, Direction.Up);
-                                System.out.println("Up");
+//                                System.out.println("Up");
                             } else {
                                 onAction(BurnerEntity.this, Direction.Down);
-                                System.out.println("Down");
+//                                System.out.println("Down");
                             }
                         }
                     }

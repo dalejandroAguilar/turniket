@@ -1,13 +1,15 @@
 package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.Layout;
+import com.rodion.turniket.screens.game.stages.gameStage.TopMenuLayout;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.LevelTitleBarEntity;
 
+import java.io.File;
+
 public class GameLayout extends Layout {
-
-
     private TopMenuLayout topMenu;
     private ScoreLayout score;
     private BoardLayout board;
@@ -15,11 +17,10 @@ public class GameLayout extends Layout {
     private LevelTitleBarEntity levelTitle;
     private StatusLayout status;
 
-    public GameLayout(BasicStage basicStage) {
+    public GameLayout(File file, BasicStage basicStage) {
         super(basicStage);
         setFillParent(true);
         topMenu = new TopMenuLayout(getParentStage());
-
 
         levelTitle = new LevelTitleBarEntity(getParentStage());
 
@@ -28,16 +29,27 @@ public class GameLayout extends Layout {
         score = new ScoreLayout(getParentStage());
         status = new StatusLayout(getParentStage());
 
-        board = new BoardLayout(getParentStage()){
+        board = new BoardLayout(file, getParentStage()){
             @Override
             public void onMove() {
                 status.setSteps(board.getSteps());
             }
 
             @Override
+            public void onMoveTry() {
+                GameLayout.this.onMoveTry();
+            }
+
+            @Override
+            public void onMoveFinish() {
+                GameLayout.this.onMoveFinish();
+            }
+
+            @Override
             public void onWin() {
                 super.onWin();
                 GameLayout.this.onWin();
+                status.stop();
             }
         };
         bottomMenu = new BottomMenuLayout(getParentStage()){
@@ -59,8 +71,6 @@ public class GameLayout extends Layout {
                 status.setSteps(board.getSteps());
                 status.resetTimer();
             }
-
-
         };
         add(topMenu).expandX().fillX().row();
         add(levelTitle).padTop(20).padBottom(20).expandX().fillX().row();
@@ -71,7 +81,16 @@ public class GameLayout extends Layout {
     }
 
     public void onWin(){
+    }
 
+
+    public void onBegin(){
+        status.onBegin();
+        score.onBegin();
+    }
+
+    public void onEnd(){
+        status.stop();
     }
 
     @Override
@@ -83,5 +102,13 @@ public class GameLayout extends Layout {
         levelTitle.resize(width, height);
         status.resize(width, height);
         score.resize(width, height);
+    }
+
+    public void onMoveTry() {
+
+    }
+
+     public void onMoveFinish() {
+
     }
 }

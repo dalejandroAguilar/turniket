@@ -6,6 +6,7 @@ import com.rodion.turniket.basics.BackgroundedLayout;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.basics.Layout;
+import com.rodion.turniket.screens.game.stages.gameStage.TopMenuLayout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
@@ -14,11 +15,18 @@ public class YouWinLayout extends Layout {
     private LabelEntity label;
     private BackgroundedLayout popUpLayout;
     private BottomMenuLayout bottomMenu;
-
+    private TopMenuLayout topMenu;
 
     public YouWinLayout(BasicStage basicStage) {
         super(basicStage);
-        bottomMenu = new BottomMenuLayout(basicStage);
+        topMenu = new TopMenuLayout(getParentStage());
+        bottomMenu = new BottomMenuLayout(basicStage){
+            @Override
+            public void onContinue() {
+                super.onContinue();
+                YouWinLayout.this.onContinue();
+            }
+        };
         popUpLayout = new BackgroundedLayout (basicStage){
              @Override
              public void setAssetAddress() {
@@ -26,7 +34,10 @@ public class YouWinLayout extends Layout {
                 setAssetPath("game");
                 setAssetName("popup_frame");
             }
+
         };
+
+
         popUpLayout.prepareAssets();
         Color temp = popUpLayout.getColor();
         temp.a = 0;
@@ -34,14 +45,22 @@ public class YouWinLayout extends Layout {
         popUpLayout.setFillParent(false);
         label = new LabelEntity("Congrats!", FontManagerMaster.nexaStyle);
         popUpLayout.add(label);
-        add(popUpLayout).expand().row();
+
+        topMenu.setFillParent(false);
+
+        add(topMenu).expandX().fillX().top().row();
+        add(popUpLayout).expand().padTop(200).row();
         bottomMenu.setVisible(false);
-        add(bottomMenu).expand().fillX().bottom();
+        add(bottomMenu).expandX().fillX().bottom();
     }
 
     public void showUp(){
         popUpLayout.addAction(Actions.fadeIn(0.5f));
         bottomMenu.setVisible(true);
+    }
+
+    public void onHide(){
+        clear();
     }
 
     @Override
@@ -51,5 +70,10 @@ public class YouWinLayout extends Layout {
         popUpLayout.resize(width, height);
         label.resize(width, height);
         bottomMenu.resize(width, height);
+        topMenu.resize(width, height);
+    }
+
+    public void onContinue(){
+
     }
 }

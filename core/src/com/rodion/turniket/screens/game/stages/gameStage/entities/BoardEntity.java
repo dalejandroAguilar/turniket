@@ -38,7 +38,7 @@ public class BoardEntity extends Layout {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                burners[i][j] = new BurnerEntity(i, j){
+                burners[i][j] = new BurnerEntity(i, j) {
                     @Override
                     public void onAction(BurnerEntity burner, Direction direction) {
                         super.onAction(burner, direction);
@@ -64,9 +64,11 @@ public class BoardEntity extends Layout {
                 public void updatePosition() {
                     int i = finalI / 2;
                     int j = finalI % 2;
-                    axis[finalI].setPosition(0.5f * (burners[i][j].getAbsX() + burners[i + 1][j + 1].getAbsX() + burners[i + 1][j + 1].getDrawable().getMinWidth()),
-                            0.5f * (burners[i][j].getAbsY() + burners[i + 1][j + 1].getAbsY() + burners[i + 1][j + 1].getDrawable().getMinHeight()),
-                            Align.center);
+
+//                    if (burners[i + 1][j + 1].getDrawable()!=null && burners[i ][j ]!=null)
+                        axis[finalI].setPosition(0.5f * (burners[i][j].getAbsX() + burners[i + 1][j + 1].getAbsX() + burners[i + 1][j + 1].getDrawable().getMinWidth()),
+                                0.5f * (burners[i][j].getAbsY() + burners[i + 1][j + 1].getAbsY() + burners[i + 1][j + 1].getDrawable().getMinHeight()),
+                                Align.center);
                 }
             };
             axis[i].prepareAssets();
@@ -180,7 +182,7 @@ public class BoardEntity extends Layout {
             axisElement.resize(width, height);
     }
 
-    public void onBurnerAction(BurnerEntity burner, Direction direction){
+    public void onBurnerAction(BurnerEntity burner, Direction direction) {
 
     }
 }

@@ -33,7 +33,6 @@ public class AnimatedRasterEntity extends Image {
         int nframes = assetNames.length;
         textures = new TextureRegionDrawable[nframes];
         TextureAtlas atlas;
-        System.out.println(assetPath + "/raster/pack.atlas");
         atlas = assetManager.get(assetPath + "/raster/pack.atlas", TextureAtlas.class);
         for (int i = 0; i < nframes; i++)
             textures[i] = new TextureRegionDrawable(atlas.findRegion(assetNames[i]));

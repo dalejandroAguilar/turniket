@@ -38,7 +38,7 @@ public class BundleAnimationEntity extends Image {
 
 //        int nAnimations;
         int framesLength = assetNames[0].length;
-        System.out.println(framesLength);
+//        System.out.println(framesLength);
 
         textures = new TextureRegionDrawable[nAnimations][FactorScale.getN()][framesLength];
         frames = new TextureRegionDrawable[nAnimations][framesLength];
@@ -118,7 +118,7 @@ public class BundleAnimationEntity extends Image {
             elapsedTime = 0;
             isOnPlay = false;
             setDrawable((Drawable) animations[selectAnimation].getKeyFrame(elapsedTime, false));
-
+            onFinish();
         }
         if (isOnPlay) {
             elapsedTime += delta;
@@ -146,7 +146,6 @@ public class BundleAnimationEntity extends Image {
     }
 
     public void setOnPlay(boolean onPlay) {
-//        updatePosition();
         isOnPlay = onPlay;
     }
 
@@ -160,5 +159,9 @@ public class BundleAnimationEntity extends Image {
 
     public void setSelectAnimation(int selectAnimation) {
         this.selectAnimation = selectAnimation;
+    }
+
+    public void onFinish(){
+
     }
 }

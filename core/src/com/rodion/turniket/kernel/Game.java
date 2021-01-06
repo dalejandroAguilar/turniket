@@ -156,12 +156,12 @@ public class Game implements Command {
     @Override
     public void undo() {
         if (state.previousState != null) {
-            State dummystate = new State(state);
+            State dummyState = new State(state);
             state.set(state.previousState);
             if (state.nextState == null)
-                state.nextState = new State(dummystate);
+                state.nextState = new State(dummyState);
             else
-                state.nextState.set(dummystate);
+                state.nextState.set(dummyState);
         }
     }
 

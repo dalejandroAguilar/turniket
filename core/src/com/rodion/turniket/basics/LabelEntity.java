@@ -21,7 +21,7 @@ public class LabelEntity extends Label {
 
      public void resize(int width, int height) {
         updatePosition();
-        System.out.println(ScreenScale.getFactorScale().index);
+//        System.out.println(ScreenScale.getFactorScale().index);
         setStyle(style[ScreenScale.getFactorScale().index]);
     }
 

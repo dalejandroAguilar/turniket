@@ -1,4 +1,4 @@
-package com.rodion.turniket.screens.game.stages.gameStage.layouts;
+package com.rodion.turniket.screens.game.stages.gameStage;
 
 import com.rodion.turniket.basics.BackgraundedLabelButton;
 import com.rodion.turniket.basics.BasicStage;

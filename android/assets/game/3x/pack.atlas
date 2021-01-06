@@ -159,7 +159,7 @@ bladeb03m
   index: -1
 button_back
   rotate: false
-  xy: 533, 56
+  xy: 940, 56
   size: 339, 181
   orig: 339, 181
   offset: 0, 0
@@ -171,11 +171,18 @@ button_label_frame
   orig: 1500, 300
   offset: 0, 0
   index: -1
+crown
+  rotate: false
+  xy: 532, 41
+  size: 406, 196
+  orig: 406, 196
+  offset: 0, 0
+  index: -1
 frame_score
   rotate: false
   xy: 2, 33
-  size: 529, 204
-  orig: 529, 204
+  size: 528, 204
+  orig: 528, 204
   offset: 0, 0
   index: -1
 

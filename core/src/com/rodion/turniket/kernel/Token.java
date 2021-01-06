@@ -23,7 +23,7 @@ Token extends Node {
         setPosition(t.getX(), t.getY());
         setColor(t.getColor());
 //        listener = t.listener;
-        System.out.println("token null");
+//        System.out.println("token null");
         listener = null;
 
 //        final  Listener tlistener = t.listener;

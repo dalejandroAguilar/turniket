@@ -60,9 +60,9 @@ public class Turnstile extends Node {
             Direction direction = blade.getDirection().rotate(spin);
             int stepX = getX() + direction.x;
             int stepY = getY() + direction.y;
-            System.out.println(id);
-            System.out.println(stepX+","+stepY);
-            System.out.println(getX()+","+getY());
+//            System.out.println(id);
+//            System.out.println(stepX+","+stepY);
+//            System.out.println(getX()+","+getY());
 
             if (board[stepY][stepX] != null) {
                 if (((Blade) board[stepY][stepX]).getId() != blade.getId()) {

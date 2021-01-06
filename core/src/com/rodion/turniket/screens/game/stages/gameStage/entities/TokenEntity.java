@@ -6,15 +6,16 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.rodion.turniket.basics.BundleAnimationEntity;
 import com.rodion.turniket.kernel.Token;
 import com.rodion.turniket.kernel.constants.Direction;
+import com.rodion.turniket.screens.game.stages.gameStage.GameStage;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ScreenScale;
 
 public class TokenEntity extends BundleAnimationEntity {
     private Token token;
-    float axisX = 43.04054054f;
-    float axisY = 43.04054054f;
-    float lastX;
-    float lastY;
+    private float axisX = 43.04054054f;
+    private float axisY = 43.04054054f;
+    private float lastX;
+    private float lastY;
 
     public TokenEntity(Token token) {
         super(.02f, 4);
@@ -41,48 +42,28 @@ public class TokenEntity extends BundleAnimationEntity {
         this.token.addListener(new Token.Listener() {
             @Override
             public void onMove(final Direction direction, final Token.Status status) {
-                addAction(
-                        Actions.sequence(
-                                Actions.parallel(
-                                        Actions.run(
-                                                new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        setRotation(direction.getAngle() - 90);
-                                                        switch (status) {
-                                                            case Ok:
-                                                                setSelectAnimation(0);
-                                                                break;
-                                                            case BladeTokenCollision:
-                                                                setSelectAnimation(1);
+                setRotation(direction.getAngle() - 90);
+                switch (status) {
+                    case Ok:
+                        setSelectAnimation(0);
+                        break;
+                    case BladeTokenCollision:
+                        setSelectAnimation(1);
+                        break;
 
-                                                                break;
-
-                                                            case TokenCollision:
-                                                                setSelectAnimation(3);
-                                                                break;
-                                                        }
-                                                        setOnPlay(true);
-                                                    }
-                                                }
-                                        ),
-                                        Actions.delay(getDuration())
-                                ),
-                                Actions.run(
-                                        new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                setOnPlay(false);
-                                                setRotation(0);
-                                            }
-                                        }
-                                )
-                        )
-                );
+                    case TokenCollision:
+                        setSelectAnimation(3);
+                        break;
+                }
+                setOnPlay(true);
             }
         });
+    }
 
-
+    @Override
+    public void onFinish() {
+        setOnPlay(false);
+        setRotation(0);
     }
 
     @Override
@@ -90,7 +71,7 @@ public class TokenEntity extends BundleAnimationEntity {
         super.setAssetAddress();
         setAssetManager(AssetManagerMaster.game);
         assetPath = "game";
-        assetNames = new String[4][18];
+        assetNames = new String[4][17];
         assetNames[0][0] = "tokena00";
         assetNames[0][1] = "tokena01";
         assetNames[0][2] = "tokena02";
@@ -108,7 +89,7 @@ public class TokenEntity extends BundleAnimationEntity {
         assetNames[0][14] = "tokena14";
         assetNames[0][15] = "tokena15";
         assetNames[0][16] = "tokena16";
-        assetNames[0][17] = "tokena17";
+//        assetNames[0][17] = "tokena17";
 
         assetNames[1][0] = "tokena00";
         assetNames[1][1] = "tokena01";
@@ -127,7 +108,7 @@ public class TokenEntity extends BundleAnimationEntity {
         assetNames[1][14] = "tokena03";
         assetNames[1][15] = "tokena02";
         assetNames[1][16] = "tokena01";
-        assetNames[1][17] = "tokena00";
+//        assetNames[1][17] = "tokena00";
 
         assetNames[2][0] = "tokena00";
         assetNames[2][1] = "tokena01";
@@ -146,7 +127,7 @@ public class TokenEntity extends BundleAnimationEntity {
         assetNames[2][14] = "tokena03";
         assetNames[2][15] = "tokena02";
         assetNames[2][16] = "tokena01";
-        assetNames[2][17] = "tokena00";
+//        assetNames[2][17] = "tokena00";
 
         assetNames[3][0] = "tokena00";
         assetNames[3][1] = "tokena01";
@@ -165,7 +146,7 @@ public class TokenEntity extends BundleAnimationEntity {
         assetNames[3][14] = "tokena03";
         assetNames[3][15] = "tokena02";
         assetNames[3][16] = "tokena01";
-        assetNames[3][17] = "tokena00";
+//        assetNames[3][17] = "tokena00";
     }
 
     public Token getToken() {

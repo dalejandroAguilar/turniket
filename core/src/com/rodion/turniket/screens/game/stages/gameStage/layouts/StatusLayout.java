@@ -1,8 +1,11 @@
 package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Timer;
 import com.rodion.turniket.basics.BackgroundedLayout;
 import com.rodion.turniket.basics.BasicStage;
+import com.rodion.turniket.basics.ImageEntity;
 import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
@@ -13,7 +16,9 @@ public class StatusLayout extends Layout {
     private BackgroundedLayout steps;
     private LabelEntity labelTime;
     private LabelEntity labelSteps;
+    private ImageEntity crown;
     private Timer.Task myTimerTask;
+
     private int counterTime;
 
     public StatusLayout(BasicStage basicStage) {
@@ -27,7 +32,6 @@ public class StatusLayout extends Layout {
                 counterTime ++;
             }
         };
-        startTimer();
         labelTime = new LabelEntity("0", FontManagerMaster.nexaStyle);
         steps = new BackgroundedLayout(basicStage) {
             @Override
@@ -38,6 +42,9 @@ public class StatusLayout extends Layout {
             }
         };
         steps.prepareAssets();
+        steps.setColor(Color.ORANGE);
+        steps.setFillParent(false);
+
         time = new BackgroundedLayout(basicStage) {
             @Override
             public void setAssetAddress() {
@@ -46,26 +53,28 @@ public class StatusLayout extends Layout {
                 setAssetName("frame_score");
             }
         };
+        time.prepareAssets();
+        time.setColor(Color.ORANGE);
+        time.setFillParent(false);
         labelSteps = new LabelEntity("10", FontManagerMaster.nexaStyle);
 
-        time.prepareAssets();
-        time.setFillParent(false);
+        crown = new ImageEntity(){
+            @Override
+            public void setAssetAddress() {
+                 setAssetManager(AssetManagerMaster.game);
+                 assetPath = "game";
+                 assetName = "crown";
+            }
+        };
+        crown.prepareAssets();
+        crown.setColor(Color.ORANGE);
 
-        steps.setFillParent(false);
         steps.add(labelSteps).expandX().center();
         time.add(labelTime);
-        add(time).expand().bottom();
-        add(steps).expand().bottom();
+        add(time).bottom();
+        add(crown).bottom();
+        add(steps).bottom();
         setSteps(0);
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        super.resize(width, height);
-        steps.resize(width, height);
-        time.resize(width, height);
-        labelSteps.resize(width, height);
-        labelTime.resize(width, height);
     }
 
     public void resetTimer(){
@@ -75,6 +84,27 @@ public class StatusLayout extends Layout {
 
     public void setSteps(int steps) {
         labelSteps.setText(steps + " steps");
+    }
+
+    public void stop(){
+        myTimerTask.cancel();
+    }
+
+    public void onBegin(){
+        startTimer();
+        time.addAction(Actions.color(Color.BLACK, .3f));
+        steps.addAction(Actions.color(Color.BLACK, .3f));
+        crown.addAction(Actions.fadeOut(.3f));
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        steps.resize(width, height);
+        time.resize(width, height);
+        labelSteps.resize(width, height);
+        labelTime.resize(width, height);
+        crown.resize(width, height);
     }
 
     public void startTimer() {

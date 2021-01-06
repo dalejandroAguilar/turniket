@@ -300,7 +300,7 @@ burner
   index: -1
 button_back
   rotate: false
-  xy: 143, 49
+  xy: 247, 49
   size: 85, 45
   orig: 85, 45
   offset: 0, 0
@@ -321,7 +321,7 @@ button_label_frame
   index: -1
 button_next
   rotate: false
-  xy: 307, 10
+  xy: 334, 10
   size: 75, 75
   orig: 75, 75
   offset: 0, 0
@@ -342,30 +342,37 @@ button_previous
   index: -1
 button_redo
   rotate: false
-  xy: 461, 10
+  xy: 488, 10
   size: 75, 75
   orig: 75, 75
   offset: 0, 0
   index: -1
 button_restart
   rotate: false
-  xy: 230, 19
+  xy: 1912, 672
   size: 75, 75
   orig: 75, 75
   offset: 0, 0
   index: -1
 button_settings
   rotate: false
-  xy: 136, 2
+  xy: 247, 2
   size: 78, 45
   orig: 78, 45
   offset: 0, 0
   index: -1
 button_undo
   rotate: false
-  xy: 384, 10
+  xy: 411, 10
   size: 75, 75
   orig: 75, 75
+  offset: 0, 0
+  index: -1
+crown
+  rotate: false
+  xy: 143, 45
+  size: 102, 49
+  orig: 102, 49
   offset: 0, 0
   index: -1
 frame_score
@@ -440,14 +447,14 @@ ru
   index: -1
 star
   rotate: false
-  xy: 605, 22
+  xy: 632, 22
   size: 63, 63
   orig: 63, 63
   offset: 0, 0
   index: -1
 token
   rotate: false
-  xy: 538, 20
+  xy: 565, 20
   size: 65, 65
   orig: 65, 65
   offset: 0, 0
