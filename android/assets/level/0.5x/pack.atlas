@@ -1,0 +1,174 @@
+
+pack.png
+size: 512,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+axis
+  rotate: false
+  xy: 203, 15
+  size: 5, 5
+  orig: 5, 5
+  offset: 0, 0
+  index: -1
+back_board
+  rotate: false
+  xy: 355, 191
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+blade
+  rotate: false
+  xy: 299, 41
+  size: 5, 17
+  orig: 5, 17
+  offset: 0, 0
+  index: -1
+board
+  rotate: false
+  xy: 420, 191
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1
+button_back
+  rotate: false
+  xy: 92, 34
+  size: 57, 30
+  orig: 57, 30
+  offset: 0, 0
+  index: -1
+button_help
+  rotate: false
+  xy: 317, 113
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+button_label_frame
+  rotate: false
+  xy: 2, 66
+  size: 250, 50
+  orig: 250, 50
+  offset: 0, 0
+  index: -1
+button_next
+  rotate: false
+  xy: 369, 139
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+button_play
+  rotate: false
+  xy: 254, 60
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+button_previous
+  rotate: false
+  xy: 151, 14
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+button_redo
+  rotate: false
+  xy: 369, 87
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+button_restart
+  rotate: false
+  xy: 247, 8
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+button_settings
+  rotate: false
+  xy: 92, 2
+  size: 52, 30
+  orig: 52, 30
+  offset: 0, 0
+  index: -1
+button_undo
+  rotate: false
+  xy: 421, 139
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+frame_score
+  rotate: false
+  xy: 2, 30
+  size: 88, 34
+  orig: 88, 34
+  offset: 0, 0
+  index: -1
+grid
+  rotate: false
+  xy: 264, 112
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+level_frame
+  rotate: false
+  xy: 264, 165
+  size: 89, 89
+  orig: 89, 89
+  offset: 0, 0
+  index: -1
+little_star
+  rotate: false
+  xy: 485, 218
+  size: 14, 13
+  orig: 14, 13
+  offset: 0, 0
+  index: -1
+next_mark
+  rotate: false
+  xy: 421, 121
+  size: 14, 16
+  orig: 14, 16
+  offset: 0, 0
+  index: -1
+number_level_frame
+  rotate: false
+  xy: 485, 233
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+popup_frame
+  rotate: false
+  xy: 2, 118
+  size: 260, 136
+  orig: 260, 136
+  offset: 0, 0
+  index: -1
+previous_mark
+  rotate: false
+  xy: 2, 12
+  size: 14, 16
+  orig: 14, 16
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 203, 22
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+token
+  rotate: false
+  xy: 355, 177
+  size: 12, 12
+  orig: 12, 12
+  offset: 0, 0
+  index: -1

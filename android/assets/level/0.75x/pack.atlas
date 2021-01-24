@@ -1,0 +1,139 @@
+
+pack.png
+size: 1024,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+axis
+  rotate: false
+  xy: 191, 40
+  size: 7, 7
+  orig: 7, 7
+  offset: 0, 0
+  index: -1
+back_board
+  rotate: false
+  xy: 530, 82
+  size: 94, 94
+  orig: 94, 94
+  offset: 0, 0
+  index: -1
+blade
+  rotate: false
+  xy: 755, 150
+  size: 7, 26
+  orig: 7, 26
+  offset: 0, 0
+  index: -1
+board
+  rotate: false
+  xy: 626, 82
+  size: 94, 94
+  orig: 94, 94
+  offset: 0, 0
+  index: -1
+button_back
+  rotate: false
+  xy: 2, 2
+  size: 85, 45
+  orig: 85, 45
+  offset: 0, 0
+  index: -1
+button_label_frame
+  rotate: false
+  xy: 394, 178
+  size: 375, 75
+  orig: 375, 75
+  offset: 0, 0
+  index: -1
+button_next
+  rotate: false
+  xy: 926, 178
+  size: 75, 75
+  orig: 75, 75
+  offset: 0, 0
+  index: -1
+button_previous
+  rotate: false
+  xy: 849, 178
+  size: 75, 75
+  orig: 75, 75
+  offset: 0, 0
+  index: -1
+button_redo
+  rotate: false
+  xy: 607, 5
+  size: 75, 75
+  orig: 75, 75
+  offset: 0, 0
+  index: -1
+button_settings
+  rotate: false
+  xy: 89, 2
+  size: 78, 45
+  orig: 78, 45
+  offset: 0, 0
+  index: -1
+button_undo
+  rotate: false
+  xy: 530, 5
+  size: 75, 75
+  orig: 75, 75
+  offset: 0, 0
+  index: -1
+grid
+  rotate: false
+  xy: 771, 177
+  size: 76, 76
+  orig: 76, 76
+  offset: 0, 0
+  index: -1
+level_frame
+  rotate: false
+  xy: 394, 42
+  size: 134, 134
+  orig: 134, 134
+  offset: 0, 0
+  index: -1
+little_star
+  rotate: false
+  xy: 722, 123
+  size: 21, 20
+  orig: 21, 20
+  offset: 0, 0
+  index: -1
+next_mark
+  rotate: false
+  xy: 684, 57
+  size: 20, 23
+  orig: 20, 23
+  offset: 0, 0
+  index: -1
+number_level_frame
+  rotate: false
+  xy: 722, 145
+  size: 31, 31
+  orig: 31, 31
+  offset: 0, 0
+  index: -1
+popup_frame
+  rotate: false
+  xy: 2, 49
+  size: 390, 204
+  orig: 390, 204
+  offset: 0, 0
+  index: -1
+previous_mark
+  rotate: false
+  xy: 169, 24
+  size: 20, 23
+  orig: 20, 23
+  offset: 0, 0
+  index: -1
+token
+  rotate: false
+  xy: 1003, 236
+  size: 17, 17
+  orig: 17, 17
+  offset: 0, 0
+  index: -1
