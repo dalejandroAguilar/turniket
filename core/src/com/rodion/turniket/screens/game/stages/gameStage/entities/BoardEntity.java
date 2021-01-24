@@ -31,7 +31,7 @@ public class BoardEntity extends Layout {
         final Table table = new Table();
         Table table2 = new Table();
         Table burnersLayout = new Table();
-        Table table4 = new Table();
+        Table table3 = new Table();
         burners = new BurnerEntity[3][3];
         axis = new ImageEntity[4];
         selectToken = null;
@@ -146,8 +146,8 @@ public class BoardEntity extends Layout {
         table2.add(grid).expand();
         stack2.add(table2);
         stack2.add(burnersLayout);
-        table4.add(stack2);
-        stack.add(table4);
+        table3.add(stack2);
+        stack.add(table3);
         add(stack);
     }
 

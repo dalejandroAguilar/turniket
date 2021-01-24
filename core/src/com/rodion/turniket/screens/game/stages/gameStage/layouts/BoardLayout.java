@@ -1,7 +1,6 @@
 package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
+
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Align;
 import com.rodion.turniket.basics.BasicStage;
@@ -12,7 +11,6 @@ import com.rodion.turniket.kernel.Game;
 import com.rodion.turniket.kernel.Token;
 import com.rodion.turniket.kernel.Turnstile;
 import com.rodion.turniket.kernel.constants.Direction;
-import com.rodion.turniket.screens.game.stages.gameStage.GameStage;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.BladeEntity;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.BoardEntity;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.BurnerEntity;
@@ -43,16 +41,9 @@ public class BoardLayout extends Layout {
             public void onBurnerAction(BurnerEntity burner, Direction direction) {
                 Token selectToken = game.getToken(burner.getI(), burner.getJ());
                 if (selectToken != null) {
-                    if(game.move(selectToken.getColor(), direction))
+                    if (game.move(selectToken.getColor(), direction))
                         onMove();
-//                    for (Turnstile turnstile : game.getTurnstiles()) {
-//                        System.out.println(turnstile.getBlades().size());
-////                        for (Blade blade : turnstile.getBlades())
-////                            System.out.println(blade.getDirection());
-//                    }
-//                    ((GameStage) basicStage).offInput();
                     onMoveTry();
-//                    game.print();
                 }
 
             }
@@ -113,7 +104,6 @@ public class BoardLayout extends Layout {
         game.addListener(new Game.Listener() {
             @Override
             public void onWin() {
-//                System.out.println("win");
                 BoardLayout.this.onWin();
             }
         });
@@ -149,42 +139,41 @@ public class BoardLayout extends Layout {
 
     public void onUndo() {
         game.undo();
-        for(BladeEntity blade : blades)
+        for (BladeEntity blade : blades)
             blade.updateRotation();
 
     }
 
     public void onRedo() {
         game.redo();
-        for(BladeEntity blade : blades)
+        for (BladeEntity blade : blades)
             blade.updateRotation();
     }
 
     public void onRestart() {
         game.restart();
-        for(BladeEntity blade : blades)
+        for (BladeEntity blade : blades)
             blade.updateRotation();
     }
 
-    public void onMove(){
+    public void onMove() {
 
     }
 
-    public void onMoveTry(){
+    public void onMoveTry() {
 
     }
 
-     public void onMoveFinish() {
+    public void onMoveFinish() {
 
     }
 
 
-
-    public int getSteps(){
+    public int getSteps() {
         return game.getSteps();
     }
 
-    public void onWin(){
+    public void onWin() {
 
     }
 }

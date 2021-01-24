@@ -50,7 +50,7 @@ public class AnimatedRasterEntity extends Image {
     public void act(float delta) {
         super.act(delta);
         if(animation.isAnimationFinished(elapsedTime)){
-            elapsedTime =0;
+            elapsedTime = 0;
             onFinish();
         }
         if (isOnPlay)

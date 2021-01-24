@@ -63,7 +63,6 @@ public class BasicStage extends Stage {
         Gdx.input.setInputProcessor(null);
     }
 
-
     public void resize(int width, int height) {
         getViewport().update(width, height, true);
     }

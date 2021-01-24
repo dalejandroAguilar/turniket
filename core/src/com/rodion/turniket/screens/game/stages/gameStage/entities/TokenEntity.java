@@ -146,7 +146,6 @@ public class TokenEntity extends BundleAnimationEntity {
         assetNames[3][14] = "tokena03";
         assetNames[3][15] = "tokena02";
         assetNames[3][16] = "tokena01";
-//        assetNames[3][17] = "tokena00";
     }
 
     public Token getToken() {

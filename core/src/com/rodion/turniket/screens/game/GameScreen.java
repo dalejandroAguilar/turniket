@@ -27,7 +27,6 @@ public class GameScreen extends BasicScreen {
         super(mainGame);
         LevelManagerMaster.foreward();
         onMoving = false;
-
         preview = new PreviewStage(screenViewport, this) {
             @Override
             public void onPlay() {
@@ -43,8 +42,7 @@ public class GameScreen extends BasicScreen {
                         onMoving = true;
                         previousGame.addAction(Actions.moveTo(0, 0, 0.5f));
                         game.addAction(Actions.sequence(
-                                Actions.moveBy(Gdx.graphics.getWidth(), 0, 0.5f)
-                                ,
+                                Actions.moveBy(Gdx.graphics.getWidth(), 0, 0.5f),
                                 Actions.run(new Runnable() {
                                     @Override
                                     public void run() {
@@ -59,7 +57,7 @@ public class GameScreen extends BasicScreen {
                                                 public void onWin() {
                                                     super.onWin();
                                                     confettiStage.onThrow();
-                                                    game.offInput();
+//                                                    game.offInput();
                                                 }
                                             };
                                             previousGame.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -79,12 +77,13 @@ public class GameScreen extends BasicScreen {
             }
         };
 
+        preview.onInput();
         previousGame = new GameStage(LevelManagerMaster.getPreviousLevel(), screenViewport, this) {
             @Override
             public void onWin() {
                 super.onWin();
                 confettiStage.onThrow();
-                game.offInput();
+//                game.offInput();
             }
         };
 
@@ -93,7 +92,7 @@ public class GameScreen extends BasicScreen {
             public void onWin() {
                 super.onWin();
                 confettiStage.onThrow();
-                game.offInput();
+//                game.offInput();
             }
         };
 
@@ -102,13 +101,9 @@ public class GameScreen extends BasicScreen {
             public void onWin() {
                 super.onWin();
                 confettiStage.onThrow();
-                game.offInput();
+//                game.offInput();
             }
         };
-
-        nextGame.offInput();
-        game.offInput();
-        preview.onInput();
 
         confettiStage = new ConfettiStage(screenViewport, this) {
             @Override
@@ -128,6 +123,9 @@ public class GameScreen extends BasicScreen {
                 preview.onInput();
             }
         };
+        youWinPopUpStage.hide();
+        preview.offInput();
+        preview.onInput();
     }
 
     private void onNext() {
@@ -152,15 +150,16 @@ public class GameScreen extends BasicScreen {
                                         public void onWin() {
                                             super.onWin();
                                             confettiStage.onThrow();
-                                            game.offInput();
+//                                            game.offInput();
                                         }
                                     };
                                     nextGame.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
                                     nextGame.addAction(Actions.moveBy(Gdx.graphics.getWidth(), 0));
-                                    nextGame.offInput();
                                     preview.onInput();
                                 }
                                 onMoving = false;
+//                                nextGame.offInput();
+                                preview.onInput();
                             }
                         })));
             }

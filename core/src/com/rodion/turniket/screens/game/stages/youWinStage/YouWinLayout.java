@@ -6,9 +6,8 @@ import com.rodion.turniket.basics.BackgroundedLayout;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.basics.Layout;
-import com.rodion.turniket.screens.game.stages.gameStage.TopMenuLayout;
+import com.rodion.turniket.screens.game.layouts.TopMenuLayout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
-import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
 
 public class YouWinLayout extends Layout {
@@ -37,7 +36,6 @@ public class YouWinLayout extends Layout {
 
         };
 
-
         popUpLayout.prepareAssets();
         Color temp = popUpLayout.getColor();
         temp.a = 0;
@@ -50,17 +48,18 @@ public class YouWinLayout extends Layout {
 
         add(topMenu).expandX().fillX().top().row();
         add(popUpLayout).expand().padTop(200).row();
-        bottomMenu.setVisible(false);
+//        bottomMenu.setVisible(false);
         add(bottomMenu).expandX().fillX().bottom();
     }
 
     public void showUp(){
         popUpLayout.addAction(Actions.fadeIn(0.5f));
-        bottomMenu.setVisible(true);
+//        bottomMenu.setVisible(true);
     }
 
     public void onHide(){
-        clear();
+        popUpLayout.addAction(Actions.fadeOut(0.5f));
+//        clear();
     }
 
     @Override

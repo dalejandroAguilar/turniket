@@ -7,26 +7,26 @@ import com.rodion.turniket.utilities.AssetManagerMaster;
 
 public class ConfettiLayout extends Layout {
     private AnimatedRasterEntity confettiEntity;
+
     public ConfettiLayout(BasicStage basicStage) {
         super(basicStage);
         setFillParent(true);
-        confettiEntity = new AnimatedRasterEntity(0.06f){
+        confettiEntity = new AnimatedRasterEntity(0.06f) {
             @Override
             public void setAssetAddress() {
                 setAssetManager(AssetManagerMaster.game);
                 assetPath = "game";
                 assetNames = new String[24];
                 for (int i = 0; i < 10; i++) {
-                    assetNames[i] = "confetti0"+i;
+                    assetNames[i] = "confetti0" + i;
                 }
                 for (int i = 10; i < 24; i++) {
-                    assetNames[i] = "confetti"+i;
+                    assetNames[i] = "confetti" + i;
                 }
             }
 
             @Override
             public void onFinish() {
-                super.onFinish();
                 setOnPlay(false);
                 ConfettiLayout.this.onFinish();
             }
@@ -36,11 +36,11 @@ public class ConfettiLayout extends Layout {
         add(confettiEntity);
     }
 
-    public void onThrow(){
+    public void onThrow() {
         confettiEntity.setOnPlay(true);
     }
 
-    public void onFinish(){
+    public void onFinish() {
 
     }
 

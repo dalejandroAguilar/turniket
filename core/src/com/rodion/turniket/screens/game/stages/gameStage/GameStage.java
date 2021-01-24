@@ -4,7 +4,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rodion.turniket.basics.BasicScreen;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.screens.game.stages.gameStage.layouts.GameLayout;
-import com.rodion.turniket.screens.game.stages.previewStage.PreviewLayout;
 
 import java.io.File;
 
@@ -17,7 +16,7 @@ public class GameStage extends BasicStage {
             public void onWin() {
                 super.onWin();
                 GameStage.this.onWin();
-                offInput();
+//                offInput();
             }
 
             @Override
@@ -32,14 +31,9 @@ public class GameStage extends BasicStage {
 
         };
         addActor(gameLayout);
-        onInput();
     }
 
     public void onWin(){
-    }
-
-    public void onPreview(){
-
     }
 
     public void onBegin(){

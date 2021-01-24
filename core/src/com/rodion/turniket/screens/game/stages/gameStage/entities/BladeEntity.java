@@ -81,7 +81,6 @@ public class BladeEntity extends BundleAnimationEntity {
         assetNames[0][14] = "bladea11";
         assetNames[0][15] = "bladea12";
         assetNames[0][16] = "bladea13";
-//        assetNames[0][17] = "bladea14";
 
         assetNames[1][0] = "bladea01m";
         assetNames[1][1] = "bladea01m";
@@ -100,7 +99,6 @@ public class BladeEntity extends BundleAnimationEntity {
         assetNames[1][14] = "bladea11m";
         assetNames[1][15] = "bladea12m";
         assetNames[1][16] = "bladea13m";
-//        assetNames[1][17] = "bladea14m";
 
         assetNames[2][0] = "bladea01";
         assetNames[2][1] = "bladea01";
@@ -119,7 +117,6 @@ public class BladeEntity extends BundleAnimationEntity {
         assetNames[2][14] = "bladeb02";
         assetNames[2][15] = "bladeb03";
         assetNames[2][16] = "bladeb04";
-//        assetNames[2][17] = "bladea01";
 
         assetNames[3][0] = "bladea01m";
         assetNames[3][1] = "bladea01m";
@@ -138,7 +135,6 @@ public class BladeEntity extends BundleAnimationEntity {
         assetNames[3][14] = "bladeb02m";
         assetNames[3][15] = "bladeb03m";
         assetNames[3][16] = "bladeb04m";
-//        assetNames[3][17] = "bladea01m";
 
         assetNames[4][0] = "bladea01";
         assetNames[4][1] = "bladea01";
@@ -157,7 +153,6 @@ public class BladeEntity extends BundleAnimationEntity {
         assetNames[4][14] = "bladeb02";
         assetNames[4][15] = "bladeb03";
         assetNames[4][16] = "bladeb04";
-//        assetNames[4][17] = "bladea01";
 
         assetNames[5][0] = "bladea01m";
         assetNames[5][1] = "bladea01m";
@@ -176,7 +171,6 @@ public class BladeEntity extends BundleAnimationEntity {
         assetNames[5][14] = "bladeb02m";
         assetNames[5][15] = "bladeb03m";
         assetNames[5][16] = "bladeb04m";
-//        assetNames[5][17] = "bladea01m";
     }
 
     public Blade getBlade() {

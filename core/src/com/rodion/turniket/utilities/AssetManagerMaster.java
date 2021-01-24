@@ -1,16 +1,22 @@
 package com.rodion.turniket.utilities;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class AssetManagerMaster {
     public final static AssetManager game = new AssetManager();
+    public final static AssetManager level = new AssetManager();
+
 
     public static void loadGame() {
         load(game,"game");
 //        game.load("sounds/pass.mp3", Sound.class);
         game.finishLoading();
+    }
+
+    public static void loadLevels(){
+        load(level,"level");
+        level.finishLoading();
     }
 
     private static void load(AssetManager assetManager, String path) {
@@ -25,5 +31,6 @@ public class AssetManagerMaster {
 
     public static void dispose(){
         game.dispose();
+        level.dispose();
     }
 }

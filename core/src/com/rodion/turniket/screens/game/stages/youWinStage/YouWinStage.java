@@ -8,7 +8,7 @@ public class YouWinStage extends BasicStage {
     private YouWinLayout popUp;
     public YouWinStage(Viewport viewport, BasicScreen basicScreen) {
         super(viewport, basicScreen);
-        popUp = new YouWinLayout(this){
+        popUp = new YouWinLayout(this) {
             @Override
             public void onContinue() {
                 super.onContinue();
@@ -19,11 +19,13 @@ public class YouWinStage extends BasicStage {
     }
 
     public void showUp(){
+        show();
         popUp.showUp();
     }
 
     public void onContinue(){
         popUp.onHide();
+        hide();
     }
 
     @Override

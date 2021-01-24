@@ -1,10 +1,9 @@
 package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.Layout;
-import com.rodion.turniket.screens.game.stages.gameStage.TopMenuLayout;
+import com.rodion.turniket.screens.game.layouts.TopMenuLayout;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.LevelTitleBarEntity;
 
 import java.io.File;
