@@ -13,26 +13,26 @@ public class FontManagerMaster {
     static public Label.LabelStyle[] nexaStyle;
     static private BitmapFont[] helveticaFont;
     static public Label.LabelStyle[] helveticaStyle;
+    static private BitmapFont[] helveticaWhiteFont;
+    static public Label.LabelStyle[] helveticaWhiteStyle;
 
     public static void loadFonts() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/NexaBold.otf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.characters = "1234567890abcdefghijklmnopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZ.,¿?!¡ ";
+        parameter.characters = "1234567890abcdefghijklmnopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZ.,¿?!¡/ ";
 
         nexaFont = new BitmapFont[FactorScale.values().length];
         nexaStyle = new Label.LabelStyle[FactorScale.values().length];
         for (FactorScale factorScale : FactorScale.values()) {
             nexaFont[factorScale.index] = new BitmapFont();
             parameter.size = (int)(28f * factorScale.getScale());
-
-            System.out.println(parameter.size);
             nexaFont[factorScale.index] = generator.generateFont(parameter);
             nexaStyle[factorScale.index] = new Label.LabelStyle(nexaFont[factorScale.index], Color.WHITE);
         }
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Helvetica.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.characters = "1234567890abcdefghijklmnopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZ.,¿?!¡ ";
+        parameter.characters = "1234567890abcdefghijklmnopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZ.,¿?!¡/ ";
         parameter.color=Color.BLACK;
 
         helveticaFont = new BitmapFont[FactorScale.values().length];
@@ -40,10 +40,21 @@ public class FontManagerMaster {
         for (FactorScale factorScale : FactorScale.values()) {
             helveticaFont[factorScale.index] = new BitmapFont();
             parameter.size = (int)(22f * factorScale.getScale());
-
-            System.out.println(parameter.size);
             helveticaFont[factorScale.index] = generator.generateFont(parameter);
             helveticaStyle[factorScale.index] = new Label.LabelStyle(helveticaFont[factorScale.index], Color.WHITE);
+        }
+
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Helvetica.ttf"));
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.characters = "1234567890abcdefghijklmnopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZ.,¿?!¡/ ";
+        parameter.color=Color.WHITE;
+        helveticaWhiteFont = new BitmapFont[FactorScale.values().length];
+        helveticaWhiteStyle = new Label.LabelStyle[FactorScale.values().length];
+        for (FactorScale factorScale : FactorScale.values()) {
+            helveticaWhiteFont[factorScale.index] = new BitmapFont();
+            parameter.size = (int)(22f * factorScale.getScale());
+            helveticaWhiteFont[factorScale.index] = generator.generateFont(parameter);
+            helveticaWhiteStyle[factorScale.index] = new Label.LabelStyle(helveticaWhiteFont[factorScale.index], Color.WHITE);
         }
     }
 
@@ -51,6 +62,7 @@ public class FontManagerMaster {
         for (FactorScale factorScale : FactorScale.values()) {
             nexaFont[factorScale.index].dispose();
             helveticaFont[factorScale.index].dispose();
+            helveticaWhiteFont[factorScale.index].dispose();
         }
     }
 }

@@ -17,6 +17,7 @@ public class ImageEntity extends Image {
     protected String assetPath;
     protected String assetName;
     protected AssetManager assetManager;
+    private final Vector2 dummyVector = new Vector2(0,0);
 
     public ImageEntity() {
 
@@ -52,11 +53,13 @@ public class ImageEntity extends Image {
     }
 
     public Vector2 getAbsPosition() {
-        return localToStageCoordinates(new Vector2(0, 0));
+        dummyVector.set(0,0);
+        return localToStageCoordinates(dummyVector);
     }
 
     public Vector2 getAbsPosition(int align) {
-        return new Vector2(getX(align), getY(align));
+        dummyVector.set(getX(align), getY(align));
+        return localToStageCoordinates(dummyVector);
     }
 
     public float getAbsX() {
@@ -72,7 +75,7 @@ public class ImageEntity extends Image {
     }
 
     public float getAbsY(int align) {
-        return getAbsPosition(align).y;
+         return getAbsPosition(align).y;
     }
 
     @Override

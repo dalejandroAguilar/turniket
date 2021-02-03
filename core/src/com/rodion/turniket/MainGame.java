@@ -25,9 +25,9 @@ public class MainGame extends Game {
 		ColorManagerMaster.load();
 		FontManagerMaster.loadFonts();
 		LevelManagerMaster.init();
-		gameScreen = new GameScreen(this);
 		levelScreen = new LevelScreen(this);
-		setScreen(levelScreen);
+		gameScreen = new GameScreen(this);
+		setScreen(gameScreen);
 	}
 
 	@Override

@@ -51,8 +51,8 @@ public class LevelTitleBarEntity extends Layout {
             @Override
             public void updatePosition() {
                 super.updatePosition();
-                setPosition(center.getAbsPosition(Align.center).x,
-                        center.getAbsPosition(Align.center).y, Align.center);
+                setPosition(center.getX(Align.center),
+                        center.getY(Align.center), Align.center);
             }
         };
 

@@ -85,14 +85,14 @@ public class Game implements Command {
     public void readFile(File file) throws FileNotFoundException {
         Scanner reader = new Scanner(file);
         int i = 0;
-        while (reader.hasNextLine()) {
+        while (i < 5) {
             String line = reader.nextLine();
             int j;
-            for (j = 0; j < line.length(); j++) {
-                map[i][j] = line.charAt(j);
-            }
-            for (int k = j; k < 5; k++) {
-                map[i][j] = ' ';
+            for (j = 0; j < 5; j++) {
+                if (j < line.length())
+                    map[i][j] = line.charAt(j);
+                else
+                    map[i][j] = ' ';
             }
             i++;
         }
