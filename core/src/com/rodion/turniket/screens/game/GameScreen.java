@@ -57,7 +57,6 @@ public class GameScreen extends BasicScreen {
                                                 public void onWin() {
                                                     super.onWin();
                                                     confettiStage.onThrow();
-//                                                    game.offInput();
                                                 }
                                             };
                                             previousGame.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -83,7 +82,6 @@ public class GameScreen extends BasicScreen {
             public void onWin() {
                 super.onWin();
                 confettiStage.onThrow();
-//                game.offInput();
             }
         };
 
@@ -92,7 +90,6 @@ public class GameScreen extends BasicScreen {
             public void onWin() {
                 super.onWin();
                 confettiStage.onThrow();
-//                game.offInput();
             }
         };
 
@@ -101,7 +98,6 @@ public class GameScreen extends BasicScreen {
             public void onWin() {
                 super.onWin();
                 confettiStage.onThrow();
-//                game.offInput();
             }
         };
 
@@ -150,7 +146,6 @@ public class GameScreen extends BasicScreen {
                                         public void onWin() {
                                             super.onWin();
                                             confettiStage.onThrow();
-//                                            game.offInput();
                                         }
                                     };
                                     nextGame.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -158,7 +153,6 @@ public class GameScreen extends BasicScreen {
                                     preview.onInput();
                                 }
                                 onMoving = false;
-//                                nextGame.offInput();
                                 preview.onInput();
                             }
                         })));

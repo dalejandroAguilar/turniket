@@ -52,4 +52,15 @@ public class LevelManagerMaster {
         } else
             return false;
     }
+
+    public static File[] getLevels() {
+        return maps;
+    }
+
+    public static int getNLevels() {
+        return maps.length;
+    }
+
+
+
 }

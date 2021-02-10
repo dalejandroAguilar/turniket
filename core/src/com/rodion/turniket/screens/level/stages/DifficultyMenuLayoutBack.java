@@ -1,4 +1,4 @@
-package com.rodion.turniket.screens.level;
+package com.rodion.turniket.screens.level.stages;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.rodion.turniket.basics.BasicStage;
@@ -9,13 +9,13 @@ import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
 
-public class ChangeLevelMenuLayout extends Layout {
+public class DifficultyMenuLayoutBack extends Layout {
 
     private ImageButtonEntity previousButton;
     private ImageButtonEntity nextButton;
     private LabelEntity level;
 
-    public ChangeLevelMenuLayout(BasicStage basicStage) {
+    public DifficultyMenuLayoutBack(BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
 //        setDebug(true);
@@ -58,7 +58,8 @@ public class ChangeLevelMenuLayout extends Layout {
         add(previousButton).left().padBottom(10).padTop(10);
         add(levelFrame).expandX().fillX();
         add(nextButton).right().padBottom(10).padTop(10);
-
+        previousButton.setVisible(false);
+        nextButton.setVisible(false);
         setBackground(ColorManagerMaster.grayBg);
     }
 

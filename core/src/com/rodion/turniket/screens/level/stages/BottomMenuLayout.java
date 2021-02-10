@@ -1,4 +1,4 @@
-package com.rodion.turniket.screens.level;
+package com.rodion.turniket.screens.level.stages;
 
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.ImageButtonEntity;

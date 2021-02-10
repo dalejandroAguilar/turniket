@@ -64,11 +64,9 @@ public class BoardEntity extends Layout {
                 public void updatePosition() {
                     int i = finalI / 2;
                     int j = finalI % 2;
-
-//                    if (burners[i + 1][j + 1].getDrawable()!=null && burners[i ][j ]!=null)
-                        axis[finalI].setPosition(0.5f * (burners[i][j].getAbsX() + burners[i + 1][j + 1].getAbsX() + burners[i + 1][j + 1].getDrawable().getMinWidth()),
-                                0.5f * (burners[i][j].getAbsY() + burners[i + 1][j + 1].getAbsY() + burners[i + 1][j + 1].getDrawable().getMinHeight()),
-                                Align.center);
+                    axis[finalI].setPosition(0.5f * (burners[i][j].getAbsX() + burners[i + 1][j + 1].getAbsX() + burners[i + 1][j + 1].getDrawable().getMinWidth()),
+                            0.5f * (burners[i][j].getAbsY() + burners[i + 1][j + 1].getAbsY() + burners[i + 1][j + 1].getDrawable().getMinHeight()),
+                            Align.center);
                 }
             };
             axis[i].prepareAssets();

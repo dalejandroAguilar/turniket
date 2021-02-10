@@ -1,4 +1,4 @@
-package com.rodion.turniket.screens.level;
+package com.rodion.turniket.screens.level.stages;
 
 import com.badlogic.gdx.graphics.Color;
 import com.rodion.turniket.basics.BackgraundedLabelButton;
@@ -59,8 +59,6 @@ public class TopMenuLayout extends Layout {
         add().expandX().fillX();
         add(settingsButton).right();
         setBackground(ColorManagerMaster.grayBg);
-
-
     }
 
     @Override
