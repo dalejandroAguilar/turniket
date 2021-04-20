@@ -1,5 +1,6 @@
 package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.Layout;
@@ -16,14 +17,14 @@ public class GameLayout extends Layout {
     private LevelTitleBarEntity levelTitle;
     private StatusLayout status;
 
-    public GameLayout(File file, BasicStage basicStage) {
+    public GameLayout(File file, int index, BasicStage basicStage) {
         super(basicStage);
         setFillParent(true);
         topMenu = new TopMenuLayout(getParentStage());
 
-        levelTitle = new LevelTitleBarEntity(getParentStage());
+        levelTitle = new LevelTitleBarEntity(index, getParentStage());
 
-        levelTitle.setColor(Color.GREEN);
+//        levelTitle.setColor(Color.RED);
 
         score = new ScoreLayout(getParentStage());
         status = new StatusLayout(getParentStage());

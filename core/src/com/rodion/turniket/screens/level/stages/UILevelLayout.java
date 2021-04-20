@@ -6,7 +6,7 @@ import com.rodion.turniket.basics.Layout;
 public class UILevelLayout extends Layout {
     private TopMenuLayout topMenu;
     private DifficultyMenuLayoutFront difficultyMenu;
-    private BottomMenuLayout bottomMenu;
+    private BottomMenuLayoutFront bottomMenu;
 
     public UILevelLayout(BasicStage basicStage) {
         super(basicStage);
@@ -23,7 +23,7 @@ public class UILevelLayout extends Layout {
                 onNextDifficulty();
             }
         };
-        bottomMenu = new BottomMenuLayout(basicStage){
+        bottomMenu = new BottomMenuLayoutFront(basicStage){
             @Override
             public void onPrevious() {
                 onPreviousPage();

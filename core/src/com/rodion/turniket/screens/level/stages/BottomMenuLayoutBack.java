@@ -1,18 +1,19 @@
 package com.rodion.turniket.screens.level.stages;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.ImageButtonEntity;
+import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
+import com.rodion.turniket.utilities.FontManagerMaster;
 
-public class DifficultyMenuLayoutFront extends Layout {
-
+public class BottomMenuLayoutBack extends Layout {
     private ImageButtonEntity previousButton;
     private ImageButtonEntity nextButton;
+    private LabelEntity levelStatus;
 
-    public DifficultyMenuLayoutFront(BasicStage basicStage) {
+    public BottomMenuLayoutBack(BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
         previousButton = new ImageButtonEntity() {
@@ -47,17 +48,15 @@ public class DifficultyMenuLayoutFront extends Layout {
         };
         nextButton.prepareAssets();
 
-        Table table1 = new Table();
-        Table table2 = new Table();
-        table1.setBackground(ColorManagerMaster.grayBg);
-        table2.setBackground(ColorManagerMaster.grayBg);
+        levelStatus = new LabelEntity("10/11", FontManagerMaster.nexaStyle);
 
-        table1.add(previousButton);
-        table2.add(nextButton);
 
-        add(table1).left().padBottom(10).padTop(10);
-        add().expand();
-        add(table2).right().padBottom(10).padTop(10);
+
+        add(previousButton).left().padBottom(10).padTop(10).expandX();
+        add(levelStatus).center().expandX();
+        add(nextButton).right().padBottom(10).padTop(10).expandX();
+
+        setBackground(ColorManagerMaster.grayBg);
     }
 
     @Override
@@ -67,9 +66,18 @@ public class DifficultyMenuLayoutFront extends Layout {
         nextButton.resize(width, height);
     }
 
-    public void onNext() {
+    public void onContinue() {
     }
 
-    public void onPrevious() {
+    public void onPlay(){
     }
+
+    public void onNext(){
+
+    }
+
+    public void onPrevious(){
+
+    }
+
 }

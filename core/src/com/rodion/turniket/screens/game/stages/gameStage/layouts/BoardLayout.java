@@ -1,6 +1,7 @@
 package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 
 
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Align;
 import com.rodion.turniket.basics.BasicStage;
@@ -101,9 +102,12 @@ public class BoardLayout extends Layout {
             }
         }
         add(board).center();
+         System.out.println("add listener");
+//         game.removeListener();
         game.addListener(new Game.Listener() {
             @Override
             public void onWin() {
+//                System.out.p
                 BoardLayout.this.onWin();
             }
         });

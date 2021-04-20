@@ -8,6 +8,9 @@ public class Blade extends Node {
     Direction direction;
     TurnId id;
     Listener listener;
+    public Blade(){
+
+    }
 
     public Blade(int x, int y, Direction direction, TurnId id) {
         setPosition(x, y);
@@ -45,6 +48,10 @@ public class Blade extends Node {
 
     public TurnId getId() {
         return id;
+    }
+
+    public void setId(TurnId id) {
+        this.id = id;
     }
 
     public void setDirection(Direction direction) {

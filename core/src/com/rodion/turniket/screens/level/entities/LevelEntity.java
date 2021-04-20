@@ -1,5 +1,6 @@
 package com.rodion.turniket.screens.level.entities;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,7 +18,9 @@ import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
+import com.rodion.turniket.utilities.Difficulty;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.LevelManagerMaster;
 
 import java.io.File;
 
@@ -27,9 +30,13 @@ public class LevelEntity extends Layout {
     private ImageEntity[] stars;
     private ImageEntity numberFrame;
     private LabelEntity numberLevel;
+    private Difficulty difficulty;
+    private int index;
 
-    public LevelEntity(File file, BasicStage basicStage) {
+    public LevelEntity(int index, File file, Difficulty difficulty, BasicStage basicStage) {
         super(basicStage);
+        this.difficulty = difficulty;
+        this.index = index;
         setFillParent(false);
         Stack stack = new Stack();
         Table starTable = new Table();
@@ -52,7 +59,6 @@ public class LevelEntity extends Layout {
             starTable.add(stars[i]).top().expandY();
             starTable.add();
         }
-//        table.setDebug(true);
 
         board = new BoardEntity(file, basicStage);
         frame = new ImageEntity() {
@@ -64,7 +70,7 @@ public class LevelEntity extends Layout {
             }
         };
         frame.prepareAssets();
-        frame.setColor(ColorManagerMaster.green);
+        frame.setColor(difficulty.getColor());
 
         numberFrame = new ImageEntity() {
             @Override
@@ -73,18 +79,17 @@ public class LevelEntity extends Layout {
                 assetPath = "level";
                 assetName = "number_level_frame";
             }
+
             @Override
             public void updatePosition() {
-//                super.updatePosition();
                 setPosition(frame.getAbsX(Align.topLeft), frame.getAbsY(Align.topLeft), Align.topLeft);
             }
         };
         numberFrame.prepareAssets();
 
-        numberLevel = new LabelEntity("99", FontManagerMaster.helveticaWhiteStyle){
+        numberLevel = new LabelEntity(Integer.toString(index + 1), FontManagerMaster.helveticaWhiteStyle) {
             @Override
             public void updatePosition() {
-//                super.updatePosition();
                 setPosition(numberFrame.getX(Align.center), numberFrame.getY(Align.center), Align.center);
             }
         };
@@ -94,49 +99,52 @@ public class LevelEntity extends Layout {
         stack.add(board);
         add(stack);
 
+
+        final  Color difficultyColor = difficulty.getColor();
+
         setTouchable(Touchable.enabled);
-        addListener(new ClickListener(){
-               boolean isPressed;
-                        boolean isClicked;
+        addListener(new ClickListener() {
+            boolean isPressed;
+            boolean isClicked;
 
-                        @Override
-                        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                            if (button == 0) {
-                                isPressed = true;
-                                isClicked = false;
-                                frame.addAction(Actions.color(Color.GRAY, .2f));
-                            }
-                            return true;
-                        }
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (button == 0) {
+                    isPressed = true;
+                    isClicked = false;
+                    frame.addAction(Actions.color(Color.GRAY, .2f));
+                }
+                return true;
+            }
 
-                        @Override
-                        public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                            if (button == 0) {
-                                frame.addAction(Actions.color(Color.WHITE, .2f));
-                                if (isPressed) {
-                                    onAction();
-                                }
-                            }
-                        }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                if (button == 0) {
+                    frame.addAction(Actions.color(difficultyColor, .2f));
+                    if (isPressed) {
+                        onAction();
+                    }
+                }
+            }
 
-                        @Override
-                        public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                            if (pointer == 0) {
+            @Override
+            public void touchDragged(InputEvent event, float x, float y, int pointer) {
+                if (pointer == 0) {
 //                                System.out.println("dragged");
-                                if (!isOver() && isPressed) {
-                                    frame.addAction(Actions.color(Color.WHITE, .2f));
-                                    isPressed = false;
-                                }
-                            }
-                        }
+                    if (!isOver() && isPressed) {
+                        frame.addAction(Actions.color(difficultyColor, .2f));
+                        isPressed = false;
+                    }
+                }
+            }
         });
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        numberFrame.draw(batch,parentAlpha);
-        numberLevel.draw(batch,parentAlpha);
+        numberFrame.draw(batch, parentAlpha);
+        numberLevel.draw(batch, parentAlpha);
     }
 
     @Override
@@ -151,13 +159,14 @@ public class LevelEntity extends Layout {
         super.resize(width, height);
         board.resize(width, height);
         frame.resize(width, height);
-        for(ImageEntity star : stars)
+        for (ImageEntity star : stars)
             star.resize(width, height);
         numberFrame.resize(width, height);
         numberLevel.resize(width, height);
     }
 
-    public void onAction(){
-        System.out.println("Action");
+    public void onAction() {
+        System.out.println("onAction" + index);
+        LevelManagerMaster.goToLevel(index);
     }
 }

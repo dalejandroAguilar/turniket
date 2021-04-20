@@ -8,7 +8,9 @@ import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
+import com.rodion.turniket.utilities.Difficulty;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.LevelManagerMaster;
 
 public class LevelTitleBarEntity extends Layout {
 
@@ -19,9 +21,10 @@ public class LevelTitleBarEntity extends Layout {
     private LabelEntity number;
 
 
-    public LevelTitleBarEntity(BasicStage basicStage) {
+    public LevelTitleBarEntity(int index, BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
+        Difficulty difficulty = LevelManagerMaster.getDifficultOfLelve(index);
         left = new ImageEntity() {
             @Override
             public void setAssetAddress() {
@@ -42,12 +45,11 @@ public class LevelTitleBarEntity extends Layout {
             }
         };
 
-
         right.prepareAssets();
         right.setColor(ColorManagerMaster.green);
         final Layout table = new Layout(getParentStage());
-        levelLabel = new LabelEntity("Beginer", FontManagerMaster.nexaStyle);
-        number =  new LabelEntity("11", FontManagerMaster.nexaStyle){
+        levelLabel = new LabelEntity(difficulty.name(), FontManagerMaster.nexaStyle);
+        number = new LabelEntity(""+(index + 1) , FontManagerMaster.nexaStyle) {
             @Override
             public void updatePosition() {
                 super.updatePosition();
@@ -72,12 +74,12 @@ public class LevelTitleBarEntity extends Layout {
             }
         };
         center.prepareAssets();
-        center.setColor(ColorManagerMaster.green);
+        center.setColor(difficulty.getColor());
 
 
         table.add(levelLabel).expand().left().pad(5);
         table.setFillParent(false);
-        table.setBackground(ColorManagerMaster.greenBg);
+        table.setBackground(difficulty.getBgColor());
         add(table).expandX().fillX();
 
     }
@@ -88,7 +90,6 @@ public class LevelTitleBarEntity extends Layout {
         center.draw(batch, parentAlpha);
         number.draw(batch, parentAlpha);
     }
-
 
     @Override
     public void resize(int width, int height) {

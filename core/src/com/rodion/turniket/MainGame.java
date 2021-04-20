@@ -1,6 +1,7 @@
 package com.rodion.turniket;
 
 import com.badlogic.gdx.ApplicationAdapter;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,26 +15,30 @@ import com.rodion.turniket.utilities.FontManagerMaster;
 import com.rodion.turniket.utilities.LevelManagerMaster;
 
 public class MainGame extends Game {
-	private GameScreen gameScreen;
-	private LevelScreen levelScreen;
+    public GameScreen gameScreen;
+    public LevelScreen levelScreen;
 
-	@Override
-	public void create() {
-		AssetManagerMaster.loadGame();
-		AssetManagerMaster.loadLevels();
+    @Override
+    public void create() {
+        System.out.println("init");
+        AssetManagerMaster.loadGame();
+        AssetManagerMaster.loadLevels();
 
-		ColorManagerMaster.load();
-		FontManagerMaster.loadFonts();
-		LevelManagerMaster.init();
-		levelScreen = new LevelScreen(this);
-		gameScreen = new GameScreen(this);
-		setScreen(gameScreen);
-	}
+        ColorManagerMaster.load();
+        FontManagerMaster.loadFonts();
+        LevelManagerMaster.init();
 
-	@Override
-	public void dispose() {
-		super.dispose();
-		AssetManagerMaster.dispose();
-		FontManagerMaster.dispose();
-	}
+        levelScreen = new LevelScreen(this) {
+//			setScreen()
+        };
+        gameScreen = new GameScreen(this);
+        setScreen(gameScreen);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        AssetManagerMaster.dispose();
+        FontManagerMaster.dispose();
+    }
 }

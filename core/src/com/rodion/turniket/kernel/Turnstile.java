@@ -51,7 +51,8 @@ public class Turnstile extends Node {
             int halfStepY = blade.getY() + direction.y;
             if (board[halfStepY][halfStepX] != null) {
                 for (Blade blade2 : blades) {
-                    blade2.listener.onRotate(spin, Blade.Status.TokenCollision);
+                    if(blade2.listener != null)
+                        blade2.listener.onRotate(spin, Blade.Status.TokenCollision);
                 }
                 return false;
             }
@@ -67,7 +68,8 @@ public class Turnstile extends Node {
             if (board[stepY][stepX] != null) {
                 if (((Blade) board[stepY][stepX]).getId() != blade.getId()) {
                     for (Blade blade2 : blades) {
-                        blade2.listener.onRotate(spin, Blade.Status.BladeCollision);
+                        if(blade2.listener != null)
+                            blade2.listener.onRotate(spin, Blade.Status.BladeCollision);
                     }
                     return false;
                 }

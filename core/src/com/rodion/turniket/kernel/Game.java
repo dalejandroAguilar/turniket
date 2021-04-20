@@ -3,6 +3,8 @@ package com.rodion.turniket.kernel;
 import com.rodion.turniket.kernel.constants.Direction;
 import com.rodion.turniket.kernel.constants.TokenColor;
 import com.rodion.turniket.kernel.constants.TurnId;
+
+import java.awt.SystemTray;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -26,8 +28,10 @@ public class Game implements Command {
         initState.turnstiles = new Turnstile[TurnId.values().length];
         initState.tokens = new Token[TokenColor.values().length];
         map = new Character[5][5];
-        for (TokenColor color : TokenColor.values())
+        for (TokenColor color : TokenColor.values()) {
+            System.out.println("color: " + color);
             initState.tokens[color.index] = new Token(-1, -1, color);
+        }
         for (TurnId id : TurnId.values()) {
             initState.turnstiles[id.index] = new Turnstile(id);
             initState.turnstiles[id.index].setPosition(turnPositions.get(id.index));
@@ -46,11 +50,15 @@ public class Game implements Command {
             state.previousState = new State(state);
             state.board[token.getY()][token.getX()] = null;
             state.board[stepY][stepX] = token;
-            token.setPosition(stepX, token.getY() + 2 * dir.y);
-            token.listener.onMove(dir, Token.Status.Ok);
-            if (isWin())
+            token.setPosition(stepX, stepY);
+            if (token.listener != null)
+                token.listener.onMove(dir, Token.Status.Ok);
+            System.out.println("Aqui en nada");
+            if (isWin()) {
+                System.out.println("Aqui en nada win");
                 listener.onWin();
-            state.setStep(state.getSteps()+1);
+            }
+            state.setStep(state.getSteps() + 1);
             return true;
         }
         if (state.board[stepY][stepX] != null && state.board[halfStepY][halfStepX] == null) {
@@ -60,25 +68,27 @@ public class Game implements Command {
 
         if (state.board[halfStepY][halfStepX] != null)
             if (state.board[halfStepY][halfStepX].getClass() == Blade.class) {
-                State dummyPreviousState = new State(state);
-                state.board[token.getY()][token.getX()] = null;
-                Blade blade = (Blade) state.board[halfStepY][halfStepX];
-                TurnId id = blade.getId();
-                if (state.turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), state.board)) {
-                    state.board[stepY][stepX] = token;
-                    token.setPosition(stepX, stepY);
+            State dummyPreviousState = new State(state);
+            state.board[token.getY()][token.getX()] = null;
+            Blade blade = (Blade) state.board[halfStepY][halfStepX];
+            TurnId id = blade.getId();
+            if (state.turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), state.board)) {
+                state.board[stepY][stepX] = token;
+                token.setPosition(stepX, stepY);
+                if (token.listener != null)
                     token.listener.onMove(dir, Token.Status.Ok);
-                    state.previousState = dummyPreviousState;
-                    if (isWin())
-                        listener.onWin();
-                    state.setStep(state.getSteps()+1);
-                    return true;
-                } else {
-                    state.board[token.getY()][token.getX()] = token;
+                state.previousState = dummyPreviousState;
+                if (isWin())
+                    listener.onWin();
+                state.setStep(state.getSteps() + 1);
+                return true;
+            } else {
+                state.board[token.getY()][token.getX()] = token;
+                if (token.listener != null)
                     token.listener.onMove(dir, Token.Status.BladeTokenCollision);
-                    return false;
-                }
+                return false;
             }
+        }
         return false;
     }
 
@@ -125,12 +135,10 @@ public class Game implements Command {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (state.board[i][j] != null) {
-                    if (state.board[i][j].getClass() == Token.class) {
+                    if (state.board[i][j].getClass() == Token.class)
                         System.out.print(((Token) state.board[i][j]).getColor().value);
-                    }
-                    if (state.board[i][j].getClass() == Blade.class) {
+                    if (state.board[i][j].getClass() == Blade.class)
                         System.out.print(((Blade) state.board[i][j]).getId().value);
-                    }
                 } else if (turnPositions.contains(Node.dummy(j, i))) {
                     System.out.print(turnPositions.indexOf(Node.getDummyNode()) + 1);
                 } else
@@ -177,13 +185,19 @@ public class Game implements Command {
     }
 
     private boolean isWin() {
-        for (int i = 0; i<4; i++) {
+        for (int i = 0; i < 4; i++) {
             Token token = getTokens()[i];
-            if (token.getX() != -1 || token.getY() != -1)
-                if (token.getX() != tokenTargets[i].getX() || token.getY() != tokenTargets[i].getY())
+            System.out.println("isWin : color " + token.getColor());
+            if (token.getX() != -1 && token.getY() != -1)
+                if (token.getX() != TokenColor.getTarget(token.getColor()).getX() || token.getY() != TokenColor.getTarget(token.getColor()).getY())
                     return false;
         }
+        System.out.println("isWin : You win");
         return true;
+    }
+
+    public void removeListener() {
+        this.listener = null;
     }
 
     public void addListener(Listener listener) {
@@ -194,7 +208,9 @@ public class Game implements Command {
         void onWin();
     }
 
-    public int getSteps(){
+    public int getSteps() {
         return state.getSteps();
     }
+
+
 }

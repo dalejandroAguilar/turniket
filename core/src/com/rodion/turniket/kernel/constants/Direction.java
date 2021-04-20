@@ -1,17 +1,24 @@
 package com.rodion.turniket.kernel.constants;
 
+import com.rodion.turniket.kernel.LevelGenerator;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public enum Direction {
     Up(0, -1), Down(0, 1), Left(-1, 0), Right(1, 0);
     public final int x;
     public final int y;
+    private static final Random RANDOM = new Random();
 
     private Direction(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-     Direction(Direction direction){
+    Direction(Direction direction) {
         this.x = direction.x;
         this.y = direction.y;
     }
@@ -56,6 +63,20 @@ public enum Direction {
         return null;
     }
 
+    public Direction getOpposite() {
+        switch (this) {
+            case Up:
+                return Down;
+            case Down:
+                return Up;
+            case Left:
+                return Right;
+            case Right:
+                return Left;
+        }
+        return null;
+    }
+
     public Spin spinValue(Direction direction) {
         switch (this) {
             case Up:
@@ -90,7 +111,7 @@ public enum Direction {
         return null;
     }
 
-    public float getAngle(){
+    public float getAngle() {
         switch (this) {
             case Up:
                 return 180;
@@ -104,4 +125,8 @@ public enum Direction {
         return 0;
     }
 
+    public static Direction random() {
+        List<Direction> values = Arrays.asList(values());
+        return values.get(RANDOM.nextInt(values.size()));
+    }
 }

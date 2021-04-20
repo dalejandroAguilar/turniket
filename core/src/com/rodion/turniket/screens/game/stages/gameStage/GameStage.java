@@ -1,5 +1,6 @@
 package com.rodion.turniket.screens.game.stages.gameStage;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rodion.turniket.basics.BasicScreen;
 import com.rodion.turniket.basics.BasicStage;
@@ -9,9 +10,9 @@ import java.io.File;
 
 public class GameStage extends BasicStage {
     private GameLayout gameLayout;
-    public GameStage(File file, Viewport viewport, BasicScreen basicScreen) {
+    public GameStage(File file, int index, Viewport viewport, BasicScreen basicScreen) {
         super(viewport, basicScreen);
-        gameLayout = new GameLayout(file,this){
+        gameLayout = new GameLayout(file,index,this){
             @Override
             public void onWin() {
                 super.onWin();
@@ -34,6 +35,8 @@ public class GameStage extends BasicStage {
     }
 
     public void onWin(){
+        System.out.println("Win GAMELAYOUT");
+
     }
 
     public void onBegin(){

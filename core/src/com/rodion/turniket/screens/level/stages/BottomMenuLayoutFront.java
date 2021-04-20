@@ -7,15 +7,17 @@ import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.LevelManagerMaster;
 
-public class BottomMenuLayout extends Layout {
+public class BottomMenuLayoutFront extends Layout {
     private ImageButtonEntity previousButton;
     private ImageButtonEntity nextButton;
     private LabelEntity levelStatus;
 
-    public BottomMenuLayout(BasicStage basicStage) {
+    public BottomMenuLayoutFront(BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
+
         previousButton = new ImageButtonEntity() {
             @Override
             public void setAssetAddress() {
@@ -28,6 +30,7 @@ public class BottomMenuLayout extends Layout {
             public void onAction() {
                 super.onAction();
                 onPrevious();
+                levelStatus.setText((LevelManagerMaster.getPage() + 1) + "/" + LevelManagerMaster.getNpages());
             }
         };
         previousButton.prepareAssets();
@@ -44,14 +47,12 @@ public class BottomMenuLayout extends Layout {
             public void onAction() {
                 super.onAction();
                 onNext();
+                levelStatus.setText((LevelManagerMaster.getPage() + 1) + "/" + LevelManagerMaster.getNpages());
             }
         };
         nextButton.prepareAssets();
 
-        levelStatus = new LabelEntity("10/11", FontManagerMaster.nexaStyle);
-
-
-
+        levelStatus = new LabelEntity((LevelManagerMaster.getPage() + 1) + "/" + LevelManagerMaster.getNpages(), FontManagerMaster.nexaStyle);
         add(previousButton).left().padBottom(10).padTop(10).expandX();
         add(levelStatus).center().expandX();
         add(nextButton).right().padBottom(10).padTop(10).expandX();
@@ -69,14 +70,13 @@ public class BottomMenuLayout extends Layout {
     public void onContinue() {
     }
 
-    public void onPlay(){
+    public void onPlay() {
     }
 
-    public void onNext(){
-
+    public void onNext() {
     }
 
-    public void onPrevious(){
+    public void onPrevious() {
 
     }
 
