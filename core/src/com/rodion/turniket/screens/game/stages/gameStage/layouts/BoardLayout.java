@@ -1,6 +1,5 @@
 package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 
-
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Align;
@@ -27,7 +26,7 @@ public class BoardLayout extends Layout {
     private ArrayList<TokenEntity> tokens;
     private ArrayList<BladeEntity> blades;
 
-    public BoardLayout(File file, BasicStage basicStage) {
+    public BoardLayout(FileHandle file, BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
         game = new Game();
@@ -43,8 +42,8 @@ public class BoardLayout extends Layout {
                 Token selectToken = game.getToken(burner.getI(), burner.getJ());
                 if (selectToken != null) {
                     if (game.move(selectToken.getColor(), direction))
-                        onMove();
-                    onMoveTry();
+                        onMoveTry();
+//                        onMove();
                 }
 
             }
@@ -102,7 +101,7 @@ public class BoardLayout extends Layout {
             }
         }
         add(board).center();
-         System.out.println("add listener");
+        System.out.println("add listener");
 //         game.removeListener();
         game.addListener(new Game.Listener() {
             @Override
@@ -126,9 +125,11 @@ public class BoardLayout extends Layout {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         for (TokenEntity token : tokens)
-            token.draw(batch, parentAlpha);
+            if (token.isVisible())
+                token.draw(batch, parentAlpha);
         for (BladeEntity blade : blades)
-            blade.draw(batch, parentAlpha);
+            if (blade.isVisible())
+                blade.draw(batch, parentAlpha);
     }
 
     @Override
@@ -172,12 +173,20 @@ public class BoardLayout extends Layout {
 
     }
 
-
     public int getSteps() {
         return game.getSteps();
     }
 
     public void onWin() {
 
+    }
+
+    public void setLockedStatus(boolean lockedStatus) {
+        board.setLockedStatus(lockedStatus);
+
+        for (TokenEntity token : tokens)
+            token.setVisible(!lockedStatus);
+        for (BladeEntity blade : blades)
+            blade.setVisible(!lockedStatus);
     }
 }

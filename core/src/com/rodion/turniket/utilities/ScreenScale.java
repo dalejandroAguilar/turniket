@@ -5,6 +5,8 @@ import com.rodion.turniket.basics.ScreenSize;
 
 public class ScreenScale {
     private static FactorScale factorScale;
+
+
     public static void resize(int width, int height){
         float widthRadio = ((float)(width)) / ((float)(ScreenSize.WIDTH));
         float heightRadio = ((float)(height)) / ((float)(ScreenSize.HEIGHT));

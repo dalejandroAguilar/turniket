@@ -30,6 +30,12 @@ public class BookGame {
                 public void onWin() {
                     BookGame.this.onWin();
                 }
+
+                @Override
+                public void onReturn() {
+                    super.onReturn();
+                    BookGame.this.onReturn();
+                }
             };
         else
             previousGame = null;
@@ -40,6 +46,11 @@ public class BookGame {
             public void onWin() {
                 BookGame.this.onWin();
             }
+            @Override
+            public void onReturn() {
+                super.onReturn();
+                BookGame.this.onReturn();
+            }
         };
 
         nextGame = new GameStage(LevelManagerMaster.getNextLevel(),
@@ -47,6 +58,11 @@ public class BookGame {
             @Override
             public void onWin() {
                 BookGame.this.onWin();
+            }
+            @Override
+            public void onReturn() {
+                super.onReturn();
+                BookGame.this.onReturn();
             }
         };
     }
@@ -72,6 +88,11 @@ public class BookGame {
                                     @Override
                                     public void onWin() {
                                         BookGame.this.onWin();
+                                    }
+                                    @Override
+                                    public void onReturn() {
+                                        super.onReturn();
+                                        BookGame.this.onReturn();
                                     }
                                 };
                                 previousGame.resize(Gdx.graphics.getWidth(),
@@ -107,6 +128,11 @@ public class BookGame {
                                     @Override
                                     public void onWin() {
                                         BookGame.this.onWin();
+                                    }
+                                    @Override
+                                    public void onReturn() {
+                                        super.onReturn();
+                                        BookGame.this.onReturn();
                                     }
                                 };
                                 nextGame.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -164,5 +190,9 @@ public class BookGame {
 
     public boolean isOnMoving() {
         return onMoving;
+    }
+
+    public void onReturn(){
+
     }
 }

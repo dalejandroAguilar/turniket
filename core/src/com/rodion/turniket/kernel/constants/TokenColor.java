@@ -1,5 +1,6 @@
 package com.rodion.turniket.kernel.constants;
 
+import com.badlogic.gdx.graphics.Color;
 import com.rodion.turniket.kernel.Node;
 
 import java.util.Arrays;
@@ -57,6 +58,21 @@ public enum TokenColor {
         return null;
     }
 
+    public static TokenColor get(int i) {
+        switch (i) {
+            case 0:
+                return Cyan;
+            case 1:
+                return Magenta;
+            case 2:
+                return Red;
+            case 3:
+                return Green;
+            default:
+                return null;
+        }
+    }
+
     public static Node getTarget(TokenColor tokenColor) {
         switch (tokenColor) {
             case Cyan:
@@ -75,7 +91,56 @@ public enum TokenColor {
     }
 
     public static TokenColor random() {
-        List< TokenColor> values = Arrays.asList(values());
+        List<TokenColor> values = Arrays.asList(values());
         return values.get(RANDOM.nextInt(values.size()));
     }
+
+    public static String getTargetAssetName(TokenColor tokenColor) {
+        switch (tokenColor) {
+            case Cyan:
+                return "lu";
+            case Magenta:
+                return "ru";
+            case Red:
+                return "rb";
+            case Green:
+                return "lb";
+            default:
+                return null;
+        }
+    }
+
+    public static String getTargetAssetName(int i) {
+        switch (i) {
+            case 0:
+                return "lu";
+            case 1:
+                return "ru";
+            case 2:
+                return "rb";
+            case 3:
+                return "lb";
+            default:
+                return null;
+        }
+    }
+
+    public Color getColor(){
+        switch (this) {
+            case Cyan:
+                return Color.CYAN;
+            case Magenta:
+                return Color.MAGENTA;
+
+            case Red:
+                return Color.RED;
+
+            case Green:
+                return Color.GREEN;
+            default:
+                return null;
+        }
+    }
+
+
 }

@@ -31,7 +31,6 @@ public class PageStage extends BasicStage {
     }
     public void onPickLevel(){
 
-
     }
 
 //    public PageLayout getLevelLayout() {

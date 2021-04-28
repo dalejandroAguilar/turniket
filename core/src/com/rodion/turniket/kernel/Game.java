@@ -1,15 +1,13 @@
 package com.rodion.turniket.kernel;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.rodion.turniket.kernel.constants.Direction;
 import com.rodion.turniket.kernel.constants.TokenColor;
 import com.rodion.turniket.kernel.constants.TurnId;
 
-import java.awt.SystemTray;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class Game implements Command {
     private State state;
@@ -46,6 +44,9 @@ public class Game implements Command {
         int halfStepY = token.getY() + dir.y;
         if (!(stepY < 5 && stepX < 5 && stepX >= 0 && stepY >= 0))
             return false;
+        if (!(halfStepY < 5 && halfStepX < 5 && halfStepX >= 0 && halfStepY >= 0))
+            return false;
+
         if (state.board[halfStepY][halfStepX] == null && state.board[stepY][stepX] == null) {
             state.previousState = new State(state);
             state.board[token.getY()][token.getX()] = null;
@@ -53,9 +54,7 @@ public class Game implements Command {
             token.setPosition(stepX, stepY);
             if (token.listener != null)
                 token.listener.onMove(dir, Token.Status.Ok);
-            System.out.println("Aqui en nada");
             if (isWin()) {
-                System.out.println("Aqui en nada win");
                 listener.onWin();
             }
             state.setStep(state.getSteps() + 1);
@@ -92,21 +91,23 @@ public class Game implements Command {
         return false;
     }
 
-    public void readFile(File file) throws FileNotFoundException {
-        Scanner reader = new Scanner(file);
+    public void readFile(FileHandle file) throws FileNotFoundException {
+//        Scanner reader = new Scanner(file);
         int i = 0;
+        String text = file.readString();
+        String[] lines = text.split("\n");
         while (i < 5) {
-            String line = reader.nextLine();
+//            System.out.println("line: " + line);
             int j;
             for (j = 0; j < 5; j++) {
-                if (j < line.length())
-                    map[i][j] = line.charAt(j);
+                if (j < lines[i].length())
+                    map[i][j] = lines[i].charAt(j);
                 else
                     map[i][j] = ' ';
             }
             i++;
         }
-        reader.close();
+//        file.close();
     }
 
     public void setFromMap() {
@@ -189,7 +190,8 @@ public class Game implements Command {
             Token token = getTokens()[i];
             System.out.println("isWin : color " + token.getColor());
             if (token.getX() != -1 && token.getY() != -1)
-                if (token.getX() != TokenColor.getTarget(token.getColor()).getX() || token.getY() != TokenColor.getTarget(token.getColor()).getY())
+                if (token.getX() != TokenColor.getTarget(token.getColor()).getX()
+                        || token.getY() != TokenColor.getTarget(token.getColor()).getY())
                     return false;
         }
         System.out.println("isWin : You win");
@@ -211,6 +213,7 @@ public class Game implements Command {
     public int getSteps() {
         return state.getSteps();
     }
+
 
 
 }

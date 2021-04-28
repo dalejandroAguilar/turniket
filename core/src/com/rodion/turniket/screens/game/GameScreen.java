@@ -7,6 +7,7 @@ import com.rodion.turniket.basics.BasicScreen;
 import com.rodion.turniket.screens.game.stages.ConfettiStage;
 import com.rodion.turniket.screens.game.stages.previewStage.PreviewStage;
 import com.rodion.turniket.screens.game.stages.youWinStage.YouWinStage;
+import com.rodion.turniket.screens.level.LevelScreen;
 import com.rodion.turniket.utilities.LevelManagerMaster;
 import com.rodion.turniket.utilities.ScreenScale;
 
@@ -20,12 +21,17 @@ public class GameScreen extends BasicScreen {
     public GameScreen(MainGame mainGame) {
         super(mainGame);
 
-//        LevelManagerMaster.goForwardLevel();
         bookGame = new BookGame(screenViewport, this) {
             @Override
             public void onWin() {
                 System.out.println("onWin MainGame");
                 confettiStage.onThrow();
+            }
+
+            @Override
+            public void onReturn() {
+                super.onReturn();
+                GameScreen.this.onReturn();
             }
         };
 
@@ -105,5 +111,9 @@ public class GameScreen extends BasicScreen {
         youWinPopUpStage.resize(width, height);
         preview.resize(width, height);
         bookGame.resize(width, height);
+    }
+
+    public void onReturn(){
+        mainGame.setScreen(new LevelScreen(mainGame));
     }
 }

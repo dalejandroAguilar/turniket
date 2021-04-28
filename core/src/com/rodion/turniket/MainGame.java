@@ -13,6 +13,7 @@ import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
 import com.rodion.turniket.utilities.LevelManagerMaster;
+import com.rodion.turniket.utilities.ScreenScale;
 
 public class MainGame extends Game {
     public GameScreen gameScreen;
@@ -23,16 +24,17 @@ public class MainGame extends Game {
         System.out.println("init");
         AssetManagerMaster.loadGame();
         AssetManagerMaster.loadLevels();
-
         ColorManagerMaster.load();
         FontManagerMaster.loadFonts();
         LevelManagerMaster.init();
 
+        ScreenScale.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        gameScreen = new GameScreen(this);
         levelScreen = new LevelScreen(this) {
 //			setScreen()
         };
-        gameScreen = new GameScreen(this);
-        setScreen(gameScreen);
+        setScreen(levelScreen);
     }
 
     @Override

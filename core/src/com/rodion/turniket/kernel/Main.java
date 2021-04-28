@@ -23,7 +23,7 @@ public class Main {
                 .setMaxNBlades(6);
         levelGenerator.generate();
 
-        levelGenerator.print();
+        levelGenerator.print(System.out);
         for (int i = 0; i < maxIt; i++) {
 
 
@@ -43,7 +43,7 @@ public class Main {
 //                System.out.println("false");
         }
         System.out.println(nTry);
-        levelGenerator.print();
+        levelGenerator.print(System.out);
 
 
 //        game.readFile(file);
@@ -63,5 +63,7 @@ public class Main {
 //        game.print();
 //        game.move(TokenColor.Dummy1, Direction.Up);
 //        game.print();
+                    System.out.println("Working Directory = " + System.getProperty("user.dir"));
+
     }
 }

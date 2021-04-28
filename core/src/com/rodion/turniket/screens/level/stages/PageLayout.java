@@ -18,7 +18,7 @@ public class PageLayout extends Layout {
     private ArrayList<LevelEntity> levels;
     private BottomMenuLayoutBack bottomMenu;
 
-    public PageLayout(int page, ArrayList<File> files, BasicStage basicStage) {
+    public PageLayout(int page, ArrayList<FileHandle> files, BasicStage basicStage) {
         super(basicStage);
         setFillParent(true);
         Table levelsLayout = new Table();

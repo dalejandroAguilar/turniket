@@ -15,7 +15,7 @@ import com.rodion.turniket.utilities.ScreenScale;
 public class AnimatedEntity extends Image {
     private TextureRegionDrawable[][] textures;
     private TextureRegionDrawable[] frames;
-    private String[] assetNames;
+    protected String[] assetNames;
     private AssetManager assetManager;
     private Animation animation;
     private float elapsedTime;
@@ -24,11 +24,13 @@ public class AnimatedEntity extends Image {
     private float lastX;
     private float lastY;
     protected String assetPath;
+    private boolean invalidated;
 
     public AnimatedEntity(float keyDuration) {
         elapsedTime = 0;
         this.frameDuration = keyDuration;
         isOnPlay = false;
+        invalidated = false;
     }
 
     public void prepareAssets() {
@@ -43,7 +45,7 @@ public class AnimatedEntity extends Image {
                 textures[factorScale.index][i] =
                         new TextureRegionDrawable(atlas.findRegion(assetNames[i]));
         }
-        for(int i =0; i<frames.length; i++)
+        for (int i = 0; i < frames.length; i++)
             frames[i] = textures[FactorScale.Normal.index][i];
         animation = new Animation(frameDuration, frames);
     }
@@ -52,16 +54,15 @@ public class AnimatedEntity extends Image {
     }
 
     public void resize(int width, int height) {
-        if(!isOnPlay){
+        if (!isOnPlay) {
             updatePosition();
             lastX = getX();
             lastY = getY();
-        }
-        else
-            setPosition(lastX,lastY);
-        for(int i =0; i<frames.length; i++)
+        } else
+            setPosition(lastX, lastY);
+        for (int i = 0; i < frames.length; i++)
             frames[i] = textures[ScreenScale.getFactorScale().index][i];
-        setDrawable((Drawable) animation.getKeyFrame(elapsedTime,false));
+        setDrawable((Drawable) animation.getKeyFrame(elapsedTime, false));
         setSize(getDrawable().getMinWidth(), getDrawable().getMinHeight());
     }
 
@@ -100,28 +101,30 @@ public class AnimatedEntity extends Image {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if(animation.isAnimationFinished(elapsedTime)){
-            elapsedTime =0;
-            isOnPlay =false;
-            setDrawable((Drawable) animation.getKeyFrame(elapsedTime,false));
+        if (animation.isAnimationFinished(elapsedTime) && isOnPlay) {
+//            elapsedTime = 0;
+            isOnPlay = false;
+//            setDrawable((Drawable) animation.getKeyFrame(elapsedTime, false));
+            onEnd();
+        }
 
-        }
         if (isOnPlay) {
+//        if (animation.isAnimationFinished(elapsedTime)) {
+//            onEnd();
+//        } else {
             elapsedTime += delta;
-            setDrawable((Drawable) animation.getKeyFrame(elapsedTime,false));
+            setDrawable((Drawable) animation.getKeyFrame(elapsedTime, false));
         }
+//        }
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        if(!isOnPlay){
+        if(!invalidated)
             updatePosition();
-            lastX = getX();
-            lastY = getY();
-        }
-        else
-            setPosition(lastX,lastY);
-        setDrawable((Drawable) animation.getKeyFrame(elapsedTime,false));
+
+        setDrawable((Drawable) animation.getKeyFrame(elapsedTime, false));
+
         super.draw(batch, parentAlpha);
     }
 
@@ -140,7 +143,19 @@ public class AnimatedEntity extends Image {
         isOnPlay = onPlay;
     }
 
-    public float getDuration(){
+    public float getDuration() {
         return animation.getAnimationDuration();
+    }
+
+    public void onEnd() {
+
+    }
+
+    public boolean isInvalidated() {
+        return invalidated;
+    }
+
+    public void setInvalidated(boolean invalidated) {
+        this.invalidated = invalidated;
     }
 }

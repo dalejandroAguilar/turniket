@@ -26,7 +26,7 @@ public class BoardEntity extends Layout {
     private ArrayList<BladeEntity> blades;
     private Game game;
 
-    public BoardEntity(File file, BasicStage basicStage) {
+    public BoardEntity(FileHandle file, BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
         Stack stack = new Stack();

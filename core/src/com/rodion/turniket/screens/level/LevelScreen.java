@@ -23,10 +23,6 @@ public class LevelScreen extends BasicScreen {
         final InputMultiplexer multiplexer;
         multiplexer = new InputMultiplexer();
 
-
-
-
-
         bookLevel = new BookLevel(screenViewport,  this){
             @Override
             public void onPickLevel() {

@@ -10,7 +10,7 @@ import java.io.File;
 
 public class GameStage extends BasicStage {
     private GameLayout gameLayout;
-    public GameStage(File file, int index, Viewport viewport, BasicScreen basicScreen) {
+    public GameStage(FileHandle file, int index, Viewport viewport, BasicScreen basicScreen) {
         super(viewport, basicScreen);
         gameLayout = new GameLayout(file,index,this){
             @Override
@@ -30,13 +30,17 @@ public class GameStage extends BasicStage {
                 onInput();
             }
 
+            @Override
+            public void onReturn() {
+                super.onReturn();
+                GameStage.this.onReturn();
+            }
         };
         addActor(gameLayout);
     }
 
     public void onWin(){
         System.out.println("Win GAMELAYOUT");
-
     }
 
     public void onBegin(){
@@ -51,5 +55,9 @@ public class GameStage extends BasicStage {
     public void resize(int width, int height) {
         super.resize(width, height);
         gameLayout.resize(width, height);
+    }
+
+    public void onReturn(){
+
     }
 }

@@ -33,7 +33,7 @@ public class LevelEntity extends Layout {
     private Difficulty difficulty;
     private int index;
 
-    public LevelEntity(int index, File file, Difficulty difficulty, BasicStage basicStage) {
+    public LevelEntity(int index, FileHandle file, Difficulty difficulty, BasicStage basicStage) {
         super(basicStage);
         this.difficulty = difficulty;
         this.index = index;

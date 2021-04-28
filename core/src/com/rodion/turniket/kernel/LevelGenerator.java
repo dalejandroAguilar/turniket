@@ -4,6 +4,11 @@ import com.rodion.turniket.kernel.constants.Direction;
 import com.rodion.turniket.kernel.constants.TokenColor;
 import com.rodion.turniket.kernel.constants.TurnId;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -131,8 +136,10 @@ public class LevelGenerator {
                     if (board[affY][affX] != null) {
                         Direction oppDir = dirAff.getOpposite();
                         Blade blade = (Blade) board[affY][affX];
-                        TurnId id = blade.getId();
-                        turnstiles[id.index].rotate(blade.getDirection().spinValue(oppDir), board);
+                        if(blade.getDirection() == dir.getOpposite()) {
+                            TurnId id = blade.getId();
+                            turnstiles[id.index].rotate(blade.getDirection().spinValue(oppDir), board);
+                        }
                     }
             }
             return true;
@@ -146,6 +153,7 @@ public class LevelGenerator {
                     Blade blade = (Blade) board[halfStepY][halfStepX];
                     TurnId id = blade.getId();
                     Blade bladeAff = (Blade) board[affY][affX];
+
                     TurnId idAff = bladeAff.getId();
                     if (id == idAff) {
                         board[y][x] = null;
@@ -162,21 +170,21 @@ public class LevelGenerator {
         return false;
     }
 
-    public void print() {
+    public void print(PrintStream printStream) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (board[i][j] != null) {
                     if (board[i][j].getClass() == Token.class)
-                        System.out.print(((Token) board[i][j]).getColor().value);
+                       printStream.print(((Token) board[i][j]).getColor().value);
                     if (board[i][j].getClass() == Blade.class)
-                        System.out.print(((Blade) board[i][j]).getId().value);
+                        printStream.print(((Blade) board[i][j]).getId().value);
                 } else if (TurnId.get(j, i) != null) {
-                    System.out.print(TurnId.get(j, i).index + 1);
+                    printStream.print(TurnId.get(j, i).index + 1);
                 } else
-                    System.out.print(" ");
+                    printStream.print(" ");
             }
-            System.out.println();
+            printStream.println();
         }
-        System.out.println("-----");
+        printStream.println("-----");
     }
 }

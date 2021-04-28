@@ -25,6 +25,12 @@ public class TopMenuLayout extends Layout {
                 setAssetPath("game");
                 setAssetName("button_back");
             }
+
+            @Override
+            public void onAction() {
+                super.onAction();
+                onReturn();
+            }
         };
         backButton.setFillParent(false);
         settingsButton = new BackgraundedLabelButton("Settings", FontManagerMaster.helveticaStyle, getParentStage()) {
@@ -65,5 +71,9 @@ public class TopMenuLayout extends Layout {
         score.resize(width, height);
         backButton.resize(width, height);
         settingsButton.resize(width, height);
+    }
+
+    public void onReturn(){
+
     }
 }
