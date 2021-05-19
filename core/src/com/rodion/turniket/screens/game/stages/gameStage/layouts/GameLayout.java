@@ -7,10 +7,16 @@ import com.badlogic.gdx.utils.Align;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.basics.Layout;
+import com.rodion.turniket.kernel.Token;
+import com.rodion.turniket.kernel.constants.Direction;
+import com.rodion.turniket.kernel.constants.TokenColor;
 import com.rodion.turniket.screens.game.layouts.TopMenuLayout;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.LevelTitleBarEntity;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.LockEntity;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.LevelManagerMaster;
+
+import java.io.FileNotFoundException;
 
 public class GameLayout extends Layout {
     private TopMenuLayout topMenu;
@@ -29,11 +35,10 @@ public class GameLayout extends Layout {
         setFillParent(true);
 
         lockedStatus = true;
-        topMenu = new TopMenuLayout(getParentStage()){
+        topMenu = new TopMenuLayout(getParentStage()) {
             @Override
             public void onReturn() {
                 super.onReturn();
-                GameLayout.this.onReturn();
             }
         };
 
@@ -42,9 +47,10 @@ public class GameLayout extends Layout {
         score = new ScoreLayout(getParentStage());
         status = new StatusLayout(getParentStage());
 
-        board = new BoardLayout(file, getParentStage()){
+        board = new BoardLayout(file, getParentStage()) {
             @Override
             public void onMove() {
+                super.onMove();
                 status.setSteps(board.getSteps());
             }
 
@@ -65,7 +71,7 @@ public class GameLayout extends Layout {
                 status.stop();
             }
         };
-        bottomMenu = new BottomMenuLayout(getParentStage()){
+        bottomMenu = new BottomMenuLayout(getParentStage()) {
             @Override
             public void onUndo() {
                 board.onUndo();
@@ -84,26 +90,33 @@ public class GameLayout extends Layout {
                 status.setSteps(board.getSteps());
                 status.resetTimer();
             }
+
+            @Override
+            public void onHint() {
+                super.onHint();
+                GameLayout.this.onHint();
+
+            }
         };
 
-        lockEntity = new LockEntity(){
+        lockEntity = new LockEntity() {
             @Override
             public void updatePosition() {
                 super.updatePosition();
-                setX(board.getX(Align.center),Align.center);
-                setY(board.getY(Align.center),Align.center);
+                setX(board.getX(Align.center), Align.center);
+                setY(board.getY(Align.center), Align.center);
             }
 
             @Override
             public void onEnd() {
-                lockEntity.addAction(Actions.moveBy(500,0,0.4f));
+                lockEntity.addAction(Actions.moveBy(500, 0, 0.4f));
                 setInvalidated(true);
                 System.out.println("next");
             }
         };
 
         requirementsLabel = new LabelEntity("Requirementes: 10 stars.",
-                FontManagerMaster.nexaStyle){
+                FontManagerMaster.nexaStyle) {
             @Override
             public void updatePosition() {
                 super.updatePosition();
@@ -131,14 +144,14 @@ public class GameLayout extends Layout {
 
     }
 
-    public void onWin(){
+    public void onWin() {
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        lockEntity.draw(batch,parentAlpha);
-        requirementsLabel.draw(batch, parentAlpha);
+        lockEntity.draw(batch, parentAlpha);
+//        requirementsLabel.draw(batch, parentAlpha);
     }
 
     @Override
@@ -147,13 +160,13 @@ public class GameLayout extends Layout {
         lockEntity.act(delta);
     }
 
-    public void onBegin(){
+    public void onBegin() {
         status.onBegin();
         score.onBegin();
         lockEntity.addAction(Actions.fadeOut(.2f));
     }
 
-    public void onEnd(){
+    public void onEnd() {
         status.stop();
     }
 
@@ -166,29 +179,49 @@ public class GameLayout extends Layout {
         levelTitle.resize(width, height);
         status.resize(width, height);
         score.resize(width, height);
-        lockEntity.resize(width,height);
+        lockEntity.resize(width, height);
         requirementsLabel.resize(width, height);
-//        ScreenScale.resize(width, height);
+    }
+
+    public void moveFromSolver() {
+        board.moveFromSolution();
+
+    }
+
+    public void undoFromSolver() {
+        board.undoFromSolution();
     }
 
     public void onMoveTry() {
-
     }
 
-     public void onMoveFinish() {
-
+    public void onMoveFinish() {
     }
 
     public void onReturn() {
-
     }
 
-    public boolean isLocked(){
+    public void onHint() {
+        board.getGame().loadSolution();
+        status.onHint();
+        score.onHint();
+    }
+
+    public boolean isLocked() {
         return lockedStatus;
     }
 
-    public void setLockedStatus(boolean lockedStatus){
+    public void setLockedStatus(boolean lockedStatus) {
         this.lockedStatus = lockedStatus;
-
     }
+
+    public BoardLayout getBoard() {
+        return board;
+    }
+
+    public void onSaveSolution() throws FileNotFoundException {
+        System.out.println("Save solution game layout");
+        board.getGame().saveSolution(LevelManagerMaster.getLevel());
+    }
+
 }

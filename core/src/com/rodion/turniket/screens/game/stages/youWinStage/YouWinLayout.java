@@ -10,6 +10,8 @@ import com.rodion.turniket.screens.game.layouts.TopMenuLayout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
 
+import java.io.FileNotFoundException;
+
 public class YouWinLayout extends Layout {
     private LabelEntity label;
     private BackgroundedLayout popUpLayout;
@@ -24,6 +26,12 @@ public class YouWinLayout extends Layout {
             public void onContinue() {
                 super.onContinue();
                 YouWinLayout.this.onContinue();
+            }
+
+            @Override
+            public void onSaveSolution() throws FileNotFoundException {
+                super.onSaveSolution();
+                YouWinLayout.this.onSaveSolution();
             }
         };
         popUpLayout = new BackgroundedLayout (basicStage){
@@ -73,6 +81,10 @@ public class YouWinLayout extends Layout {
     }
 
     public void onContinue(){
+
+    }
+
+    public void onSaveSolution() throws FileNotFoundException {
 
     }
 }

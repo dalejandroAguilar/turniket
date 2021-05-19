@@ -14,6 +14,7 @@ public class BookGame {
     private GameStage nextGame;
     private ScreenViewport screenViewport;
     private BasicScreen basicScreen;
+//    private
 
     public BookGame(ScreenViewport screenViewport, BasicScreen basicScreen) {
         onMoving = false;
@@ -21,7 +22,6 @@ public class BookGame {
         this.basicScreen = basicScreen;
         System.out.println(LevelManagerMaster.getBookmark());
         System.out.println(LevelManagerMaster.getNLevels());
-
 
         if (LevelManagerMaster.getPreviousLevel() != null)
             previousGame = new GameStage(LevelManagerMaster.getPreviousLevel(),
@@ -52,19 +52,21 @@ public class BookGame {
                 BookGame.this.onReturn();
             }
         };
-
-        nextGame = new GameStage(LevelManagerMaster.getNextLevel(),
-                LevelManagerMaster.getBookmark() + 1, screenViewport, basicScreen) {
-            @Override
-            public void onWin() {
-                BookGame.this.onWin();
-            }
-            @Override
-            public void onReturn() {
-                super.onReturn();
-                BookGame.this.onReturn();
-            }
-        };
+        if (LevelManagerMaster.getNextLevel() != null)
+            nextGame = new GameStage(LevelManagerMaster.getNextLevel(),
+                    LevelManagerMaster.getBookmark() + 1, screenViewport, basicScreen) {
+                @Override
+                public void onWin() {
+                    BookGame.this.onWin();
+                }
+                @Override
+                public void onReturn() {
+                    super.onReturn();
+                    BookGame.this.onReturn();
+                }
+            };
+        else
+            nextGame=null;
     }
 
     public void onPrevious() {
@@ -181,6 +183,8 @@ public class BookGame {
     }
 
     public GameStage getGame() {
+//                System.out.println("retrun game");
+
         return game;
     }
 

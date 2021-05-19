@@ -59,12 +59,14 @@ public class BoardEntity extends Layout {
                 public void updatePosition() {
                     int i = finalI / 2;
                     int j = finalI % 2;
-                    axis[finalI].setPosition(0.5f * (burners[i][j].getAbsX() +
-                                    burners[i + 1][j + 1].getAbsX() +
-                                    burners[i + 1][j + 1].getDrawable().getMinWidth()),
-                            0.5f * (burners[i][j].getAbsY() + burners[i + 1][j + 1].getAbsY() +
-                                    burners[i + 1][j + 1].getDrawable().getMinHeight()),
-                            Align.center);
+//                    if (i)
+                    if (isVisible())
+                        setPosition(0.5f * (burners[i][j].getAbsX() +
+                                        burners[i + 1][j + 1].getAbsX() +
+                                        burners[i + 1][j + 1].getDrawable().getMinWidth()),
+                                0.5f * (burners[i][j].getAbsY() + burners[i + 1][j + 1].getAbsY() +
+                                        burners[i + 1][j + 1].getDrawable().getMinHeight()),
+                                Align.center);
                 }
             };
             axis[i].prepareAssets();
@@ -82,9 +84,9 @@ public class BoardEntity extends Layout {
 
         targets = new ImageEntity[4];
 
-        for (int i=0; i<4 ; i++){
+        for (int i = 0; i < 4; i++) {
             final int finalI = i;
-            targets[i]  = new ImageEntity() {
+            targets[i] = new ImageEntity() {
                 @Override
                 public void setAssetAddress() {
                     setAssetManager(AssetManagerMaster.game);
@@ -132,7 +134,7 @@ public class BoardEntity extends Layout {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         for (ImageEntity axisElement : axis)
-            if(axisElement.isVisible())
+            if (axisElement.isVisible())
                 axisElement.draw(batch, parentAlpha);
     }
 
@@ -165,8 +167,8 @@ public class BoardEntity extends Layout {
             target.setVisible(!lockedStatus);
     }
 
-    public void onSetLokedStatus(boolean lockedStatus){
-        if (lockedStatus){
+    public void onSetLokedStatus(boolean lockedStatus) {
+        if (lockedStatus) {
             grid.addAction(Actions.fadeOut(.2f));
             for (ImageEntity[] burnRow : burners)
                 for (ImageEntity burn : burnRow)
@@ -175,8 +177,7 @@ public class BoardEntity extends Layout {
                 ax.addAction(Actions.fadeOut(.2f));
             for (ImageEntity target : targets)
                 target.addAction(Actions.fadeOut(.2f));
-        }
-        else{
+        } else {
             grid.addAction(Actions.fadeIn(.2f));
             for (ImageEntity[] burnRow : burners)
                 for (ImageEntity burn : burnRow)

@@ -46,7 +46,8 @@ public class PreviewLayout extends Layout {
             }
         };
         previousMark.prepareAssets();
-        previousMark.addAction(Actions.forever(Actions.sequence(Actions.moveBy(0,10,0.5f),
+        previousMark.addAction(Actions.forever(Actions.sequence(
+                Actions.moveBy(0,10,0.5f),
                 Actions.moveBy(0,-10,0.5f))));
 
         nextMarK = new ImageEntity() {
@@ -58,7 +59,8 @@ public class PreviewLayout extends Layout {
             }
         };
         nextMarK.prepareAssets();
-        nextMarK.addAction(Actions.forever(Actions.sequence(Actions.moveBy(0,10,0.5f),
+        nextMarK.addAction(Actions.forever(Actions.sequence(
+                Actions.moveBy(0,10,0.5f),
                 Actions.moveBy(0,-10,0.5f))));
 
         Table table = new Table();

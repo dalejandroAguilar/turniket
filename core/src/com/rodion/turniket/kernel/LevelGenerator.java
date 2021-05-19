@@ -138,7 +138,8 @@ public class LevelGenerator {
                         Blade blade = (Blade) board[affY][affX];
                         if(blade.getDirection() == dir.getOpposite()) {
                             TurnId id = blade.getId();
-                            turnstiles[id.index].rotate(blade.getDirection().spinValue(oppDir), board);
+                            turnstiles[id.index].rotate(blade.getDirection().spinValue(oppDir),
+                                board);
                         }
                     }
             }
@@ -153,18 +154,19 @@ public class LevelGenerator {
                     Blade blade = (Blade) board[halfStepY][halfStepX];
                     TurnId id = blade.getId();
                     Blade bladeAff = (Blade) board[affY][affX];
-
                     TurnId idAff = bladeAff.getId();
-                    if (id == idAff) {
-                        board[y][x] = null;
-                        if (turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), board)) {
-                            token.setPosition(stepX, stepY);
-                            board[stepY][stepX] = token;
-                            return true;
-                        } else {
-                            board[y][x] = token;
-                        }
-                    }
+                     if(blade.getDirection() == dir.getOpposite()) {
+                         if (id == idAff) {
+                             board[y][x] = null;
+                             if (turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), board)) {
+                                 token.setPosition(stepX, stepY);
+                                 board[stepY][stepX] = token;
+                                 return true;
+                             } else {
+                                 board[y][x] = token;
+                             }
+                         }
+                     }
                 }
         }
         return false;

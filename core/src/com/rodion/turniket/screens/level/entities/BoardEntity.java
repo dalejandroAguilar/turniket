@@ -37,11 +37,7 @@ public class BoardEntity extends Layout {
         Table tokensLayout = new Table();
         blades = new ArrayList<>();
         game = new Game();
-        try {
-            game.readFile(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        game.readFile(file);
         game.setFromMap();
         axis = new ImageEntity[4];
         backboard = new ImageEntity() {
@@ -111,23 +107,27 @@ public class BoardEntity extends Layout {
 
                 @Override
                 public void updatePosition() {
-                    int i = finalI / 2;
-                    int j = finalI % 2;
-                    axis[finalI].setPosition(0.5f * (tokens[i][j].getAbsX() + tokens[i + 1][j + 1].getAbsX() + tokens[i + 1][j + 1].getDrawable().getMinWidth()),
-                            0.5f * (tokens[i][j].getAbsY() + tokens[i + 1][j + 1].getAbsY() + tokens[i + 1][j + 1].getDrawable().getMinHeight()),
-                            Align.center);
+                    if(isVisible()) {
+                        int i = finalI / 2;
+                        int j = finalI % 2;
+                        setPosition(0.5f * (tokens[i][j].getAbsX() + tokens[i + 1][j + 1].getAbsX() + tokens[i + 1][j + 1].getDrawable().getMinWidth()),
+                                0.5f * (tokens[i][j].getAbsY() + tokens[i + 1][j + 1].getAbsY() + tokens[i + 1][j + 1].getDrawable().getMinHeight()),
+                                Align.center);
+                    }
                 }
             };
             axis[i].prepareAssets();
         }
 
         for (Turnstile turnstile : game.getTurnstiles()) {
+            final ImageEntity axis1 = axis[turnstile.getId().index];
+            if(turnstile.getBlades().size() == 0)
+                axis1.setVisible(false);
             for (final Blade blade : turnstile.getBlades()) {
                 BladeEntity bladeEntity = new BladeEntity(blade) {
                     @Override
                     public void updatePosition() {
                         super.updatePosition();
-                        ImageEntity axis1 = axis[blade.getId().index];
                         float x;
                         float y;
                         x = axis1.getX(Align.topLeft);

@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import java.io.FileNotFoundException;
+
 public class BackgraundedLabelButton extends BackgroundedLayout {
     private LabelEntity labelEntity;
     public BackgraundedLabelButton(CharSequence text, Label.LabelStyle[] style, BasicStage basicStage) {
@@ -30,7 +32,11 @@ public class BackgraundedLabelButton extends BackgroundedLayout {
                             if (button == 0) {
                                 addAction(Actions.color(Color.WHITE, .2f));
                                 if (isPressed) {
-                                    onAction();
+                                    try {
+                                        onAction ();
+                                    } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                         }
@@ -56,7 +62,7 @@ public class BackgraundedLabelButton extends BackgroundedLayout {
         labelEntity.resize(width, height);
     }
 
-    public void onAction() {
+    public void onAction() throws FileNotFoundException {
     }
 
 }

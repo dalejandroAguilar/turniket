@@ -113,6 +113,8 @@ public class LevelEntity extends Layout {
                     isPressed = true;
                     isClicked = false;
                     frame.addAction(Actions.color(Color.GRAY, .2f));
+                    frame.addAction(Actions.rotateTo(2, .2f));
+
                 }
                 return true;
             }
@@ -121,6 +123,8 @@ public class LevelEntity extends Layout {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if (button == 0) {
                     frame.addAction(Actions.color(difficultyColor, .2f));
+                    frame.addAction(Actions.rotateTo(0, .2f));
+
                     if (isPressed) {
                         onAction();
                     }
@@ -132,6 +136,7 @@ public class LevelEntity extends Layout {
                 if (pointer == 0) {
 //                                System.out.println("dragged");
                     if (!isOver() && isPressed) {
+                        frame.addAction(Actions.rotateTo(0, .2f));
                         frame.addAction(Actions.color(difficultyColor, .2f));
                         isPressed = false;
                     }

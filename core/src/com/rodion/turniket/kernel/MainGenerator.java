@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MainGenerator {
-    private static Random random = new Random();
+        private static Random random = new Random();
 
     public static void main(String[] args) throws IOException {
-        int maxIt = 100000;
-        int maxTry = 1000;
+        int maxIt = 1000000;
+        int maxTry = 10000;
         ArrayList<String> movements = new ArrayList<>();
         String path = "C:\\Users\\Daniel\\Documents\\Android_Studio_Projects\\turniket\\" +
                 "android\\assets\\maps\\Beginner\\";
@@ -38,23 +38,17 @@ public class MainGenerator {
                 Direction dirAff = Direction.random();
 
                 if (levelGenerator.reverseMove(color, dir, isAff, dirAff)) {
-//                System.out.println(dir);
-                    movements.add(0, dir.name());
+//                    movements.add(0, dir.name());
                     if (nTry++ > maxTry)
                         break;
                 }
             }
 
-//            System.out.println("Working Directory = " + System.getProperty("user.dir"));
-            PrintStream file = new PrintStream(path + "map" + String.format("%03d", i) + ".dat");
+            PrintStream file = new PrintStream(path + "4map" + String.format("%03d", i+1) + ".dat");
             levelGenerator.print(file);
-            file.println(movements);
+//            file.println(movements);
             file.close();
-
         }
-//
-//        PrintStream file = new PrintStream("hola.txt");
-//        file.println(2);
-//        file.close();
+
     }
 }

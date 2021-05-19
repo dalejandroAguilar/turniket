@@ -8,14 +8,18 @@ import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
 
+import java.io.FileNotFoundException;
+
 public class BottomMenuLayout extends Layout {
     private BackgraundedLabelButton continueButton;
+    private BackgraundedLabelButton saveSolutionButton;
 
     public BottomMenuLayout(BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
 
-        continueButton = new BackgraundedLabelButton("Continue", FontManagerMaster.nexaStyle,basicStage){
+        continueButton = new BackgraundedLabelButton("Continue",
+                FontManagerMaster.nexaStyle,basicStage){
             @Override
             public void setAssetAddress() {
                 setAssetManger(AssetManagerMaster.game);
@@ -30,7 +34,26 @@ public class BottomMenuLayout extends Layout {
         };
         continueButton.setFillParent(false);
 
+        saveSolutionButton = new BackgraundedLabelButton("Save Solution",
+                FontManagerMaster.nexaStyle,basicStage){
+            @Override
+            public void setAssetAddress() {
+                setAssetManger(AssetManagerMaster.game);
+                setAssetPath("game");
+                setAssetName("button_label_frame");
+            }
+
+            @Override
+            public void onAction() throws FileNotFoundException {
+                onSaveSolution();
+            }
+        };
+        saveSolutionButton.setFillParent(false);
+
+
         add(continueButton).padBottom(10).padTop(10).expand();
+        add(saveSolutionButton).padBottom(10).padTop(10).expand();
+
         setBackground(ColorManagerMaster.grayBg);
     }
 
@@ -38,9 +61,14 @@ public class BottomMenuLayout extends Layout {
     public void resize(int width, int height) {
         super.resize(width, height);
         continueButton.resize(width, height);
+        saveSolutionButton.resize(width, height);
     }
 
     public void onContinue(){
+
+    }
+
+    public void onSaveSolution() throws FileNotFoundException {
 
     }
 

@@ -93,4 +93,7 @@ public class Turnstile extends Node {
         return true;
     }
 
+    public TurnId getId() {
+        return id;
+    }
 }

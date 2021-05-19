@@ -10,6 +10,8 @@ import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
 
+import java.io.FileNotFoundException;
+
 public class TopMenuLayout extends Layout {
     private BackgraundedLabelButton backButton;
     private BackgraundedLabelButton settingsButton;
@@ -27,7 +29,7 @@ public class TopMenuLayout extends Layout {
             }
 
             @Override
-            public void onAction() {
+            public void onAction() throws FileNotFoundException {
                 super.onAction();
                 onReturn();
             }

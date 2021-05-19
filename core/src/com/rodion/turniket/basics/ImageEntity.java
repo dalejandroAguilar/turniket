@@ -38,10 +38,18 @@ public class ImageEntity extends Image {
 
     }
 
+    @Override
+    public void act(float delta) {
+//        if(isVisible())
+            super.act(delta);
+    }
+
     public void resize(int width, int height) {
+//        if(isVisible()) {
         updatePosition();
-        setDrawable(textures[ScreenScale.getFactorScale().index]);
-        setSize(getDrawable().getMinWidth(), getDrawable().getMinHeight());
+            setDrawable(textures[ScreenScale.getFactorScale().index]);
+            setSize(getDrawable().getMinWidth(), getDrawable().getMinHeight());
+//        }
     }
 
     public AssetManager getAssetManager() {
@@ -80,8 +88,10 @@ public class ImageEntity extends Image {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        updatePosition();
-        super.draw(batch, parentAlpha);
+//        if(isVisible()) {
+            updatePosition();
+            super.draw(batch, parentAlpha);
+//        }
     }
 
     public void updatePosition(){

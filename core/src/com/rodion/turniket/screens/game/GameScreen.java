@@ -6,16 +6,20 @@ import com.rodion.turniket.MainGame;
 import com.rodion.turniket.basics.BasicScreen;
 import com.rodion.turniket.screens.game.stages.ConfettiStage;
 import com.rodion.turniket.screens.game.stages.previewStage.PreviewStage;
+import com.rodion.turniket.screens.game.stages.solverStage.SolverStage;
 import com.rodion.turniket.screens.game.stages.youWinStage.YouWinStage;
 import com.rodion.turniket.screens.level.LevelScreen;
 import com.rodion.turniket.utilities.LevelManagerMaster;
 import com.rodion.turniket.utilities.ScreenScale;
+
+import java.io.FileNotFoundException;
 
 public class GameScreen extends BasicScreen {
     private PreviewStage preview;
     private BookGame bookGame;
     private ConfettiStage confettiStage;
     private YouWinStage youWinPopUpStage;
+    private SolverStage solverStage;
     private final ScreenViewport screenViewport = new ScreenViewport();
 
     public GameScreen(MainGame mainGame) {
@@ -24,7 +28,7 @@ public class GameScreen extends BasicScreen {
         bookGame = new BookGame(screenViewport, this) {
             @Override
             public void onWin() {
-                System.out.println("onWin MainGame");
+//                System.out.println("onWin MainGame");
                 confettiStage.onThrow();
             }
 
@@ -72,13 +76,21 @@ public class GameScreen extends BasicScreen {
                 preview.show();
                 preview.onInput();
             }
+
+            @Override
+            public void onSaveSolution() throws FileNotFoundException {
+                super.onSaveSolution();
+                bookGame.getGame().onSaveSolution();
+            }
         };
+
+        solverStage = new SolverStage(screenViewport, this);
+
+        solverStage.hide();
         youWinPopUpStage.hide();
         preview.offInput();
         preview.onInput();
     }
-
-
 
     private void onNext() {
         if (!bookGame.isOnMoving())
@@ -101,6 +113,8 @@ public class GameScreen extends BasicScreen {
         youWinPopUpStage.draw();
         preview.act();
         preview.draw();
+        solverStage.act();
+        solverStage.draw();
     }
 
     @Override
@@ -111,9 +125,10 @@ public class GameScreen extends BasicScreen {
         youWinPopUpStage.resize(width, height);
         preview.resize(width, height);
         bookGame.resize(width, height);
+        solverStage.resize(width, height);
     }
 
-    public void onReturn(){
+    public void onReturn() {
         mainGame.setScreen(new LevelScreen(mainGame));
     }
 }

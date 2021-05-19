@@ -14,7 +14,7 @@ public class ScoreLayout extends Layout {
         super(basicStage);
         setFillParent(false);
         stars = new ImageEntity[3];
-        for (int i = 0; i<3; i++){
+        for (int i = 0; i < 3; i++) {
             stars[i] = new ImageEntity() {
                 @Override
                 public void setAssetAddress() {
@@ -31,9 +31,14 @@ public class ScoreLayout extends Layout {
         stars[1].setColor(Color.YELLOW);
     }
 
-    public void onBegin(){
+    public void onBegin() {
         stars[0].addAction(Actions.color(Color.GRAY));
         stars[1].addAction(Actions.color(Color.GRAY));
+    }
+
+    public void onHint() {
+        for(ImageEntity star : stars)
+            star.addAction(Actions.fadeOut(.5f));
     }
 
     @Override

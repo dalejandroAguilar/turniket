@@ -22,6 +22,12 @@ public class BottomMenuLayout extends Layout {
                 assetPath = "game";
                 assetName = "button_help";
             }
+
+            @Override
+            public void onAction() {
+                super.onAction();
+                onHint();
+            }
         };
         hintButton.prepareAssets();
 
@@ -95,5 +101,9 @@ public class BottomMenuLayout extends Layout {
     }
 
     public void onRestart(){
+    }
+
+    public void onHint(){
+
     }
 }

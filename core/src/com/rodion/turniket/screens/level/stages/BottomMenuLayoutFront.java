@@ -65,6 +65,7 @@ public class BottomMenuLayoutFront extends Layout {
         super.resize(width, height);
         previousButton.resize(width, height);
         nextButton.resize(width, height);
+        levelStatus.resize(width, height);
     }
 
     public void onContinue() {

@@ -6,6 +6,7 @@ import com.rodion.turniket.kernel.constants.TokenColor;
 import com.rodion.turniket.kernel.constants.TurnId;
 
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -19,6 +20,7 @@ public class Game implements Command {
     final private static Node[] tokenTargets = {new Node(0, 0), new Node(4, 0),
             new Node(4, 4), new Node(0, 4)};
     private Listener listener;
+    private Solution solutionRead, solutionWrite;
 
     public Game() {
         initState = new State();
@@ -34,6 +36,8 @@ public class Game implements Command {
             initState.turnstiles[id.index] = new Turnstile(id);
             initState.turnstiles[id.index].setPosition(turnPositions.get(id.index));
         }
+        solutionRead = new Solution();
+        solutionWrite = new Solution();
     }
 
     public boolean move(TokenColor color, Direction dir) {
@@ -47,6 +51,8 @@ public class Game implements Command {
         if (!(halfStepY < 5 && halfStepX < 5 && halfStepX >= 0 && halfStepY >= 0))
             return false;
 
+        Step step = Step.getStep(color, dir, this);
+
         if (state.board[halfStepY][halfStepX] == null && state.board[stepY][stepX] == null) {
             state.previousState = new State(state);
             state.board[token.getY()][token.getX()] = null;
@@ -58,6 +64,9 @@ public class Game implements Command {
                 listener.onWin();
             }
             state.setStep(state.getSteps() + 1);
+            solutionWrite.writeStep(step);
+//            step.print(Sys);
+
             return true;
         }
         if (state.board[stepY][stepX] != null && state.board[halfStepY][halfStepX] == null) {
@@ -67,37 +76,38 @@ public class Game implements Command {
 
         if (state.board[halfStepY][halfStepX] != null)
             if (state.board[halfStepY][halfStepX].getClass() == Blade.class) {
-            State dummyPreviousState = new State(state);
-            state.board[token.getY()][token.getX()] = null;
-            Blade blade = (Blade) state.board[halfStepY][halfStepX];
-            TurnId id = blade.getId();
-            if (state.turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), state.board)) {
-                state.board[stepY][stepX] = token;
-                token.setPosition(stepX, stepY);
-                if (token.listener != null)
-                    token.listener.onMove(dir, Token.Status.Ok);
-                state.previousState = dummyPreviousState;
-                if (isWin())
-                    listener.onWin();
-                state.setStep(state.getSteps() + 1);
-                return true;
-            } else {
-                state.board[token.getY()][token.getX()] = token;
-                if (token.listener != null)
-                    token.listener.onMove(dir, Token.Status.BladeTokenCollision);
-                return false;
+                State dummyPreviousState = new State(state);
+                state.board[token.getY()][token.getX()] = null;
+                Blade blade = (Blade) state.board[halfStepY][halfStepX];
+                TurnId id = blade.getId();
+                if (state.turnstiles[id.index].rotate(blade.getDirection().spinValue(dir),
+                        state.board)) {
+                    state.board[stepY][stepX] = token;
+                    token.setPosition(stepX, stepY);
+                    if (token.listener != null)
+                        token.listener.onMove(dir, Token.Status.Ok);
+                    state.previousState = dummyPreviousState;
+                    if (isWin())
+                        listener.onWin();
+                    state.setStep(state.getSteps() + 1);
+                    solutionWrite.writeStep(step);
+//                    step.print();
+                    return true;
+                } else {
+                    state.board[token.getY()][token.getX()] = token;
+                    if (token.listener != null)
+                        token.listener.onMove(dir, Token.Status.BladeTokenCollision);
+                    return false;
+                }
             }
-        }
         return false;
     }
 
-    public void readFile(FileHandle file) throws FileNotFoundException {
-//        Scanner reader = new Scanner(file);
+    public void readFile(FileHandle file) {
         int i = 0;
         String text = file.readString();
         String[] lines = text.split("\n");
         while (i < 5) {
-//            System.out.println("line: " + line);
             int j;
             for (j = 0; j < 5; j++) {
                 if (j < lines[i].length())
@@ -107,7 +117,21 @@ public class Game implements Command {
             }
             i++;
         }
-//        file.close();
+        System.out.println(lines.length );
+
+        for (int j = 5; j < lines.length; j++){
+            if (lines[j].startsWith("Solution")){
+                if(lines[j].split(" ").length > 1){
+                String[] strSolution = new String[2];
+                strSolution[0] = lines[j];
+                strSolution[1] = lines[j+1];
+                System.out.println(strSolution[0]);
+                System.out.println(strSolution[1]);
+                solutionRead.readSolution(strSolution);
+                }
+            }
+        }
+
     }
 
     public void setFromMap() {
@@ -132,22 +156,22 @@ public class Game implements Command {
         state = new State(initState);
     }
 
-    public void print() {
+    public void printInit(PrintStream printStream) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                if (state.board[i][j] != null) {
-                    if (state.board[i][j].getClass() == Token.class)
-                        System.out.print(((Token) state.board[i][j]).getColor().value);
-                    if (state.board[i][j].getClass() == Blade.class)
-                        System.out.print(((Blade) state.board[i][j]).getId().value);
-                } else if (turnPositions.contains(Node.dummy(j, i))) {
-                    System.out.print(turnPositions.indexOf(Node.getDummyNode()) + 1);
+                if (initState.board[i][j] != null) {
+                    if (initState.board[i][j].getClass() == Token.class)
+                        printStream.print(((Token) initState.board[i][j]).getColor().value);
+                    if (initState.board[i][j].getClass() == Blade.class)
+                        printStream.print(((Blade) initState.board[i][j]).getId().value);
+                } else if (TurnId.get(j, i) != null) {
+                    printStream.print(TurnId.get(j, i).index + 1);
                 } else
-                    System.out.print(" ");
+                    printStream.print(" ");
             }
-            System.out.println();
+            printStream.println();
         }
-        System.out.println("-----");
+        printStream.println("-----");
     }
 
     public Token[] getTokens() {
@@ -172,12 +196,14 @@ public class Game implements Command {
             else
                 state.nextState.set(dummyState);
         }
+        solutionRead.goBackward();
     }
 
     @Override
     public void redo() {
         if (state.nextState != null)
             state.set(state.nextState);
+        solutionRead.goForward();
     }
 
     @Override
@@ -188,13 +214,11 @@ public class Game implements Command {
     private boolean isWin() {
         for (int i = 0; i < 4; i++) {
             Token token = getTokens()[i];
-            System.out.println("isWin : color " + token.getColor());
             if (token.getX() != -1 && token.getY() != -1)
                 if (token.getX() != TokenColor.getTarget(token.getColor()).getX()
                         || token.getY() != TokenColor.getTarget(token.getColor()).getY())
                     return false;
         }
-        System.out.println("isWin : You win");
         return true;
     }
 
@@ -214,6 +238,33 @@ public class Game implements Command {
         return state.getSteps();
     }
 
+    public State getState() {
+        return state;
+    }
 
+    public void saveSolution(FileHandle fileHandle) throws FileNotFoundException {
+        PrintStream printStream = new PrintStream(String.valueOf(fileHandle));
+        printInit(printStream);
+        solutionWrite.print(printStream);
+        solutionRead.readSolution(solutionWrite);
+    }
 
+    public void loadSolution() {
+//        solutionRead.readSolution(solutionWrite);
+        solutionRead.goToBegin();
+    }
+
+    public boolean moveFromSolution() {
+        Step step = solutionRead.getStep();
+        solutionRead.goForward();
+        step.print(System.out);
+        System.out.println("Color " + step.getTokenColor(state) + " " + step.getDirection());
+        move(step.getTokenColor(state), step.getDirection());
+        return true;
+    }
+
+    public void undoFromSolution() {
+        solutionRead.goBackward();
+        undo();
+    }
 }
