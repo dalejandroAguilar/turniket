@@ -12,6 +12,8 @@ import com.rodion.turniket.utilities.LevelManagerMaster;
 import java.io.File;
 import java.util.ArrayList;
 
+import sun.jvm.hotspot.debugger.Page;
+
 public class PageLayout extends Layout {
     private TopMenuLayout topMenu;
     private DifficultyMenuLayoutBack changeLevelMenu;
@@ -31,6 +33,13 @@ public class PageLayout extends Layout {
             levels.add(
                     new LevelEntity(index, files.get(i), LevelManagerMaster.getDifficulty(page)
                             , getParentStage()) {
+
+                        @Override
+                        public void onBeginAction() {
+                            super.onBeginAction();
+                            PageLayout.this.onClose();
+                        }
+
                         @Override
                         public void onAction() {
                             super.onAction();
@@ -61,6 +70,10 @@ public class PageLayout extends Layout {
         bottomMenu.resize(width, height);
     }
 
+    public void onClose(){
+        addAction(Actions.fadeOut(0.2f));
+    }
+
     public void onPickLevel(){
         System.out.println("onPick");
 //         for (LevelEntity level : levels ) {
@@ -71,4 +84,6 @@ public class PageLayout extends Layout {
     public ArrayList<LevelEntity> getLevels() {
         return levels;
     }
+
+
 }

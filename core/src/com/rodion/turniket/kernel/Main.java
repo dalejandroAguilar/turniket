@@ -8,42 +8,48 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 
 public class Main {
-    private static Random random = new Random();
+//    private static Random random = new Random();
 
     public static void main(String[] args) throws FileNotFoundException {
-        int maxIt = 100000;
-        int maxTry = 1000;
-        int nTry = 0;
-        Game game = new Game();
-        File file = new File("maps/map.dat");
-        LevelGenerator levelGenerator = new LevelGenerator();
-        levelGenerator
-                .setMaxNDummyTokens(4)
-                .setMaxNTokens(4)
-                .setMaxNBlades(6);
-        levelGenerator.generate();
+        System.out.println("Hola mundo");
 
-        levelGenerator.print(System.out);
-        for (int i = 0; i < maxIt; i++) {
+        for (int i = 0; i<200; i++) {
+            System.out.println("id: " + LevelGenerator.getRandomHex());
+        }
 
-
-            TokenColor color = TokenColor.random();
-            Direction dir = Direction.random();
-            boolean isAff = random.nextBoolean();
-            Direction dirAff = Direction.random();
-//            System.out.println(color + " " + dir + " " + isAff + " " + dirAff);
-
-            if (levelGenerator.reverseMove(color, dir, isAff, dirAff))
-                if (nTry++ > maxTry)
-                    break;
+//        int maxIt = 100000;
+//        int maxTry = 1000;
+//        int nTry = 0;
+//        Game game = new Game();
+//        File file = new File("maps/map.dat");
+//        LevelGenerator levelGenerator = new LevelGenerator();
+//        levelGenerator
+//                .setMaxNDummyTokens(4)
+//                .setMaxNTokens(4)
+//                .setMaxNBlades(6);
+//        levelGenerator.generate();
+//
+//        levelGenerator.print(System.out);
+//        for (int i = 0; i < maxIt; i++) {
+//
+//
+//            TokenColor color = TokenColor.random();
+//            Direction dir = Direction.random();
+//            boolean isAff = random.nextBoolean();
+//            Direction dirAff = Direction.random();
+////            System.out.println(color + " " + dir + " " + isAff + " " + dirAff);
+//
+//            if (levelGenerator.reverseMove(color, dir, isAff, dirAff))
+//                if (nTry++ > maxTry)
+//                    break;
 
 //            if (levelGenerator.reverseMove(color, dir, isAff, dirAff))
 //                levelGenerator.print();
 //            else
 //                System.out.println("false");
-        }
-        System.out.println(nTry);
-        levelGenerator.print(System.out);
+//        }
+//        System.out.println(nTry);
+//        levelGenerator.print(System.out);
 
 
 //        game.readFile(file);
@@ -63,7 +69,7 @@ public class Main {
 //        game.print();
 //        game.move(TokenColor.Dummy1, Direction.Up);
 //        game.print();
-                    System.out.println("Working Directory = " + System.getProperty("user.dir"));
+//                    System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
     }
 }

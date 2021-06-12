@@ -39,11 +39,24 @@ public class BoardEntity extends Layout {
                         super.onAction(burner, direction);
                         onBurnerAction(burner, direction);
                     }
+
+                    @Override
+                    public void onPressed(BurnerEntity burner) {
+                        super.onPressed(burner);
+                        onBurnerPressed(burner);
+                    }
+
+                    @Override
+                    public void onUnpressed(BurnerEntity burner) {
+                        super.onUnpressed(burner);
+                        onBurnerUnpressed(burner);
+                    }
                 };
                 burnersLayout.add(burners[i][j]).expand();
             }
             burnersLayout.row();
         }
+//    burnersLayout. debug();
 
         for (int i = 0; i < 4; i++) {
             final int finalI = i;
@@ -156,36 +169,31 @@ public class BoardEntity extends Layout {
     public void onBurnerAction(BurnerEntity burner, Direction direction) {
     }
 
-    public void setLockedStatus(boolean lockedStatus) {
-        grid.setVisible(!lockedStatus);
-        for (ImageEntity[] burnRow : burners)
-            for (ImageEntity burn : burnRow)
-                burn.setVisible(!lockedStatus);
-        for (ImageEntity ax : axis)
-            ax.setVisible(!lockedStatus);
-        for (ImageEntity target : targets)
-            target.setVisible(!lockedStatus);
+    public void onBurnerPressed(BurnerEntity burner) {
     }
 
-    public void onSetLokedStatus(boolean lockedStatus) {
-        if (lockedStatus) {
-            grid.addAction(Actions.fadeOut(.2f));
-            for (ImageEntity[] burnRow : burners)
-                for (ImageEntity burn : burnRow)
-                    burn.addAction(Actions.fadeOut(.2f));
-            for (ImageEntity ax : axis)
-                ax.addAction(Actions.fadeOut(.2f));
-            for (ImageEntity target : targets)
-                target.addAction(Actions.fadeOut(.2f));
-        } else {
-            grid.addAction(Actions.fadeIn(.2f));
-            for (ImageEntity[] burnRow : burners)
-                for (ImageEntity burn : burnRow)
-                    burn.addAction(Actions.fadeIn(.2f));
-            for (ImageEntity ax : axis)
-                ax.addAction(Actions.fadeIn(.2f));
-            for (ImageEntity target : targets)
-                target.addAction(Actions.fadeIn(.2f));
-        }
+    public void onBurnerUnpressed(BurnerEntity burner) {
+    }
+
+    public void setToLock(){
+        grid.getColor().a = 0;
+        for (ImageEntity[] burnRow : burners)
+            for (ImageEntity burn : burnRow)
+                burn.getColor().a = 0;
+//        for (ImageEntity ax : axis)
+//            ax.getColor().a = 0.01f;
+        for (ImageEntity target : targets)
+            target.getColor().a = 0;
+    }
+
+    public void onUnlock(){
+        grid.addAction(Actions.fadeIn(0.3f));
+        for (ImageEntity[] burnRow : burners)
+            for (ImageEntity burn : burnRow)
+                burn.addAction(Actions.fadeIn(0.3f));
+//        for (ImageEntity ax : axis)
+//            ax.addAction(Actions.fadeIn(0.3f));
+        for (ImageEntity target : targets)
+            target.addAction(Actions.fadeIn(0.3f));
     }
 }

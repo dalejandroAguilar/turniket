@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Game implements Command {
+    private int id;
     private State state;
     private State initState;
     private Character[][] map;
@@ -107,11 +108,14 @@ public class Game implements Command {
         int i = 0;
         String text = file.readString();
         String[] lines = text.split("\n");
+        System.out.println(lines[0]);
+        i = 0;
         while (i < 5) {
             int j;
+            System.out.println(lines[i+1]);
             for (j = 0; j < 5; j++) {
-                if (j < lines[i].length())
-                    map[i][j] = lines[i].charAt(j);
+                if (j < lines[i+1].length())
+                    map[i][j] = lines[i+1].charAt(j);
                 else
                     map[i][j] = ' ';
             }
@@ -266,5 +270,9 @@ public class Game implements Command {
     public void undoFromSolution() {
         solutionRead.goBackward();
         undo();
+    }
+
+    public boolean isOnBegin(){
+        return (initState == state);
     }
 }

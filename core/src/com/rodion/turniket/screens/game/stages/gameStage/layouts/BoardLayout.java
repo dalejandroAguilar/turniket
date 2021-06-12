@@ -1,7 +1,9 @@
 package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.ImageEntity;
@@ -33,12 +35,36 @@ public class BoardLayout extends Layout {
         game = new Game();
         game.readFile(file);
         game.setFromMap();
+
         board = new BoardEntity(getParentStage()) {
             @Override
             public void onBurnerAction(BurnerEntity burner, Direction direction) {
                 Token selectToken = game.getToken(burner.getI(), burner.getJ());
-                if (selectToken != null)
+                if (selectToken != null) {
+//                    TokenEntity tokenEntity = tokens.get(selectToken.getColor().index);
+//                    tokenEntity.addAction(Actions.scaleBy(2,2,1));
                     move(selectToken.getColor(), direction);
+                }
+            }
+
+            @Override
+            public void onBurnerPressed(BurnerEntity burner) {
+                super.onBurnerPressed(burner);
+                Token token = game.getToken(burner.getI(), burner.getJ());
+                if (token != null) {
+                    TokenEntity tokenEntity = getTokenEntity(token);
+                    tokenEntity.addAction(Actions.color(Color.WHITE,0.25f));
+                }
+            }
+
+            @Override
+            public void onBurnerUnpressed(BurnerEntity burner) {
+                super.onBurnerUnpressed(burner);
+                Token token = game.getToken(burner.getI(), burner.getJ());
+                if (token != null) {
+                    TokenEntity tokenEntity = getTokenEntity(token);
+                    tokenEntity.addAction(Actions.color(token.getColor().getColor(), 0.25f));
+                }
             }
         };
 
@@ -175,7 +201,7 @@ public class BoardLayout extends Layout {
 //        }
     }
 
-    public void moveFromSolver(){
+    public void moveFromSolver() {
 
     }
 
@@ -199,29 +225,57 @@ public class BoardLayout extends Layout {
 
     }
 
-    public void setLockedStatus(boolean lockedStatus) {
-        board.setLockedStatus(lockedStatus);
-        for (TokenEntity token : tokens)
-            token.setVisible(!lockedStatus);
-        for (BladeEntity blade : blades)
-            blade.setVisible(!lockedStatus);
-    }
 
     public Game getGame() {
         return game;
     }
 
-    public void moveFromSolution(){
+    public void moveFromSolution() {
         if (game.moveFromSolution()) {
             onMoveTry();
             onMove();
         }
     }
 
-    public void undoFromSolution(){
+    public void undoFromSolution() {
         game.undoFromSolution();
         for (BladeEntity blade : blades)
             blade.updateRotation();
     }
 
+    public boolean isOnBegin() {
+        return game.isOnBegin();
+    }
+
+    public void setToLock() {
+        for (TokenEntity token : tokens)
+            token.getColor().a = 0;
+        for (BladeEntity blade : blades)
+            blade.getColor().a = 0;
+        board.setToLock();
+
+    }
+
+    public void setToUnlock() {
+
+    }
+
+    public void onUnlock() {
+        board.onUnlock();
+        for (TokenEntity token : tokens)
+            token.addAction(Actions.fadeIn(0.3f));
+        for (BladeEntity blade : blades)
+            blade.addAction(Actions.fadeIn(0.3f));
+    }
+
+    public BoardEntity getBoard() {
+        return board;
+    }
+
+    private TokenEntity getTokenEntity(Token token) {
+        for (TokenEntity tokenEntity : tokens)
+            if (tokenEntity.getToken() == token)
+                return tokenEntity;
+        return null;
+    }
 }

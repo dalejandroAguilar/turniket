@@ -189,4 +189,10 @@ public class LevelGenerator {
         }
         printStream.println("-----");
     }
+
+    public static String getRandomHex(){
+        int myRandomNumber = random.nextInt(0xFFFFFF); // Generates a random number between 0x10 and 0x20
+        String result = String.format("%06X",myRandomNumber);
+        return result;
+    }
 }

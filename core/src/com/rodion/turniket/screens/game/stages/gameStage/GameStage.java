@@ -1,21 +1,26 @@
 package com.rodion.turniket.screens.game.stages.gameStage;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rodion.turniket.basics.BasicScreen;
 import com.rodion.turniket.basics.BasicStage;
-import com.rodion.turniket.kernel.constants.Direction;
-import com.rodion.turniket.kernel.constants.TokenColor;
+import com.rodion.turniket.screens.game.stages.gameStage.layouts.ConfirmationGameLayout;
+import com.rodion.turniket.screens.game.stages.gameStage.layouts.ConfirmationSolutionLayout;
 import com.rodion.turniket.screens.game.stages.gameStage.layouts.GameLayout;
-import com.rodion.turniket.screens.game.stages.solverStage.SolverLayout;
+import com.rodion.turniket.screens.game.stages.gameStage.layouts.LockLayout;
+import com.rodion.turniket.screens.game.stages.gameStage.layouts.SolverLayout;
 //import com.rodion.turniket.screens.game.stages.gameStage.layouts.SolverLayout;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 
 public class GameStage extends BasicStage {
     private GameLayout gameLayout;
     private SolverLayout solverLayout;
+    private ConfirmationGameLayout confirmationGameToSolver;
+    private ConfirmationSolutionLayout confirmationSolverToGame;
+    private LockLayout lockLayout;
     public GameStage(FileHandle file, int index, Viewport viewport, BasicScreen basicScreen) {
         super(viewport, basicScreen);
         gameLayout = new GameLayout(file,index,this){
@@ -42,11 +47,48 @@ public class GameStage extends BasicStage {
             }
 
             @Override
-            public void onHint() {
-                super.onHint();
-                solverLayout.onShow();
+            public void onSolve() {
+                super.onSolve();
+                if(gameLayout.isOnBegin())
+                    solverLayout.onShow();
+                else
+                    confirmationGameToSolver.onShow();
+//                solverLayout.show();
+            }
+
+        };
+
+        lockLayout = new LockLayout(this){
+            @Override
+            public void updateLockEntityPosition() {
+                super.updateLockEntityPosition();
+//                Vector2 boardPosition = gameLayout.getBoard().get(Align.center);
+                getLockEntity().setX(gameLayout.getBoard().getX(Align.center), Align.center);
+                getLockEntity().setY(gameLayout.getBoard().getY(Align.center), Align.center);
+            }
+
+            @Override
+            public void onEnd() {
+                super.onEnd();
+                gameLayout.onUnlock();
             }
         };
+
+        confirmationGameToSolver = new ConfirmationGameLayout(this){
+            @Override
+            public void onOk() {
+                super.onOk();
+                gameLayout.restart();
+                solverLayout.show();
+            }
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+            }
+
+        };
+
         solverLayout = new SolverLayout(this){
             @Override
             public void onNext() {
@@ -60,26 +102,48 @@ public class GameStage extends BasicStage {
                 super.onPrevious();
                 System.out.println("onPrevious gamestage");
                 gameLayout.undoFromSolver();
-//                gameLayout.getBoard().onUndo();
-//                if (gameLayout.getBoard().getGame().move(TokenColor.Magenta, Direction.Up)) {
-//                    gameLayout.getBoard().onMoveTry();
-//                    gameLayout.getBoard().onMove();
-//                }
+            }
+
+            @Override
+            public void onBack() {
+                super.onBack();
+                confirmationSolverToGame.onShow();
+            }
+        };
+
+        confirmationSolverToGame = new ConfirmationSolutionLayout(this){
+            @Override
+            public void onOk() {
+                solverLayout.hide();
+                super.onOk();
+            }
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
             }
         };
 
         addActor(gameLayout);
         addActor(solverLayout);
-        solverLayout.onHide();
+        addActor(confirmationGameToSolver);
+        addActor(confirmationSolverToGame);
+        addActor(lockLayout);
+
+        solverLayout.hide();
+        confirmationGameToSolver.hide();
+        confirmationSolverToGame.hide();
+//        gameLayout.setLockedStatus(true);
+        gameLayout.setToPreview();
+
+
+
     }
 
     public void onWin(){
         System.out.println("Win GAMELAYOUT");
     }
 
-    public void onBegin(){
-        gameLayout.onBegin();
-    }
 
     public void onEnd(){
         gameLayout.onEnd();
@@ -90,6 +154,9 @@ public class GameStage extends BasicStage {
         super.resize(width, height);
         gameLayout.resize(width, height);
         solverLayout.resize(width, height);
+        confirmationGameToSolver.resize(width, height);
+        confirmationSolverToGame.resize(width, height);
+        lockLayout.resize(width, height);
     }
 
     public void onReturn(){
@@ -101,5 +168,7 @@ public class GameStage extends BasicStage {
         gameLayout.onSaveSolution();
     }
 
-
+    public void onUnlock(){
+        lockLayout.onUnlock();
+    }
 }

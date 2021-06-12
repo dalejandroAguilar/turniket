@@ -1,6 +1,7 @@
 package com.rodion.turniket.basics;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -34,15 +35,22 @@ public class ImageButtonEntity extends ImageEntity {
                             }
                         }
 
+//                        @Override
+//                        public void touchDragged(InputEvent event, float x, float y, int pointer) {
+//                            if (pointer == 0) {
+////                                System.out.println("dragged");
+//                                if (!isOver() && isPressed) {
+//                                    addAction(Actions.color(Color.WHITE, .2f));
+//                                    isPressed = false;
+//                                }
+//                            }
+//                        }
+
                         @Override
-                        public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                            if (pointer == 0) {
-//                                System.out.println("dragged");
-                                if (!isOver() && isPressed) {
-                                    addAction(Actions.color(Color.WHITE, .2f));
-                                    isPressed = false;
-                                }
-                            }
+                        public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                            super.exit(event, x, y, pointer, toActor);
+                            addAction(Actions.color(Color.WHITE, .2f));
+                            isPressed = false;
                         }
                     }
         );

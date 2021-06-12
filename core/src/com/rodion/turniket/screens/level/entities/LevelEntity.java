@@ -3,26 +3,22 @@ package com.rodion.turniket.screens.level.entities;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.rodion.turniket.basics.BackgroundedLayout;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.ImageEntity;
 import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
-import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.Difficulty;
 import com.rodion.turniket.utilities.FontManagerMaster;
 import com.rodion.turniket.utilities.LevelManagerMaster;
-
-import java.io.File;
 
 public class LevelEntity extends Layout {
     private BoardEntity board;
@@ -61,6 +57,7 @@ public class LevelEntity extends Layout {
         }
 
         board = new BoardEntity(file, basicStage);
+        board.setTouchable(Touchable.disabled);
         frame = new ImageEntity() {
             @Override
             public void setAssetAddress() {
@@ -100,7 +97,7 @@ public class LevelEntity extends Layout {
         add(stack);
 
 
-        final  Color difficultyColor = difficulty.getColor();
+        final Color difficultyColor = difficulty.getColor();
 
         setTouchable(Touchable.enabled);
         addListener(new ClickListener() {
@@ -109,40 +106,53 @@ public class LevelEntity extends Layout {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("pointer " + pointer);
                 if (button == 0) {
                     isPressed = true;
                     isClicked = false;
                     frame.addAction(Actions.color(Color.GRAY, .2f));
                     frame.addAction(Actions.rotateTo(2, .2f));
-
                 }
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Touch up pointer " + pointer);
                 if (button == 0) {
-                    frame.addAction(Actions.color(difficultyColor, .2f));
-                    frame.addAction(Actions.rotateTo(0, .2f));
-
                     if (isPressed) {
-                        onAction();
+                        onBeginAction();
+                        frame.addAction(Actions.sequence(
+                                Actions.parallel(
+                                        Actions.color(difficultyColor, 0.2f),
+                                        Actions.rotateTo(0, 0.2f)
+                                ),
+                                Actions.run(
+                                        new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                onAction();
+                                            }
+                                        }
+                                )
+                        ));
+                    }
+                    else {
+                        frame.addAction(Actions.color(difficultyColor, 0.2f));
+                        frame.addAction(Actions.rotateTo(0, 0.2f));
                     }
                 }
             }
 
             @Override
-            public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                if (pointer == 0) {
-//                                System.out.println("dragged");
-                    if (!isOver() && isPressed) {
-                        frame.addAction(Actions.rotateTo(0, .2f));
-                        frame.addAction(Actions.color(difficultyColor, .2f));
-                        isPressed = false;
-                    }
-                }
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                super.exit(event, x, y, pointer, toActor);
+                frame.addAction(Actions.rotateTo(0, .2f));
+                frame.addAction(Actions.color(difficultyColor, .2f));
+                isPressed = false;
             }
         });
+
     }
 
     @Override
@@ -168,6 +178,10 @@ public class LevelEntity extends Layout {
             star.resize(width, height);
         numberFrame.resize(width, height);
         numberLevel.resize(width, height);
+    }
+
+    public void onBeginAction(){
+
     }
 
     public void onAction() {

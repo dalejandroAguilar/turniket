@@ -3,7 +3,6 @@ package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.rodion.turniket.basics.BackgroundedLayout;
 import com.rodion.turniket.basics.BasicStage;
@@ -19,8 +18,8 @@ public class StatusLayout extends Layout {
     private LabelEntity labelTime;
     private LabelEntity labelSteps;
     private ImageEntity crown;
-    private Timer.Task myTimerTask;
-    private LabelEntity labelSolution;
+
+    private Timer.Task timer;
 
     private int counterTime;
 
@@ -28,7 +27,7 @@ public class StatusLayout extends Layout {
         super(basicStage);
         counterTime = 0;
         setFillParent(false);
-        myTimerTask = new Timer.Task() {
+        timer = new Timer.Task() {
             @Override
             public void run() {
                 labelTime.setText(counterTime + " sec.");
@@ -45,7 +44,6 @@ public class StatusLayout extends Layout {
             }
         };
         steps.prepareAssets();
-        steps.setColor(Color.ORANGE);
         steps.setFillParent(false);
 
         time = new BackgroundedLayout(basicStage) {
@@ -57,7 +55,6 @@ public class StatusLayout extends Layout {
             }
         };
         time.prepareAssets();
-        time.setColor(Color.ORANGE);
         time.setFillParent(false);
         labelSteps = new LabelEntity("10", FontManagerMaster.nexaStyle);
 
@@ -72,24 +69,14 @@ public class StatusLayout extends Layout {
         crown.prepareAssets();
         crown.setColor(Color.ORANGE);
 
-        labelSolution = new LabelEntity("Solution", FontManagerMaster.nexaStyle) {
-            @Override
-            public void updatePosition() {
-                super.updatePosition();
-                setPosition(
-                        crown.getAbsX() + crown.getWidth() * 0.5f,
-                        crown.getAbsY() + crown.getHeight() * 0.5f, Align.center
-                );
-            }
-        };
-
-
         steps.add(labelSteps).expandX().center();
         time.add(labelTime);
         add(time).bottom();
         add(crown).bottom();
         add(steps).bottom();
         setSteps(0);
+
+        setToPreview();
 //        setDebug(true);
     }
 
@@ -103,7 +90,7 @@ public class StatusLayout extends Layout {
     }
 
     public void stop() {
-        myTimerTask.cancel();
+        timer.cancel();
     }
 
     public void onBegin() {
@@ -116,7 +103,6 @@ public class StatusLayout extends Layout {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        labelSolution.draw(batch, parentAlpha);
     }
 
     @Override
@@ -127,11 +113,10 @@ public class StatusLayout extends Layout {
         labelSteps.resize(width, height);
         labelTime.resize(width, height);
         crown.resize(width, height);
-        labelSolution.resize(width, height);
     }
 
     public void startTimer() {
-        Timer.schedule(myTimerTask, 1f, 1f);
+        Timer.schedule(timer, 1f, 1f);
     }
 
     public void onHint() {
@@ -140,5 +125,26 @@ public class StatusLayout extends Layout {
         labelSteps.addAction(Actions.fadeOut(.5f));
         labelTime.addAction(Actions.fadeOut(.5f));
         crown.addAction(Actions.fadeOut(.5f));
+    }
+
+    public void onSetToActive() {
+        steps.addAction(Actions.color(Color.BLACK));
+        time.addAction(Actions.color(Color.BLACK));
+        crown.getColor().a = 0;
+        labelSteps.getColor().a = 1; // labels of level
+        labelTime.getColor().a = 1;  // labels of level
+    }
+
+    public void onSetToInactive() {
+
+    }
+
+    public void setToPreview() {
+        steps.setColor(Color.ORANGE);
+        time.setColor(Color.ORANGE);
+        labelSteps.getColor().a = 1;
+        labelTime.getColor().a = 1;
+        crown.getColor().a = 1;
+        timer.cancel();
     }
 }

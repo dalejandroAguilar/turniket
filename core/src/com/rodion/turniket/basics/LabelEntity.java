@@ -1,5 +1,6 @@
 package com.rodion.turniket.basics;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -24,6 +25,13 @@ public class LabelEntity extends Label {
 //        System.out.println(ScreenScale.getFactorScale().index);
         setStyle(style[ScreenScale.getFactorScale().index]);
     }
+
+    public void setAlpha(float a){
+        Color color = getColor();
+        color.set(getColor().r, getColor().g, getColor().b, a);
+        setColor(color);
+    }
+
 
     public void updatePosition(){
 

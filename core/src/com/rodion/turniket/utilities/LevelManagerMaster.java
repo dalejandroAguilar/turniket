@@ -27,13 +27,15 @@ public class LevelManagerMaster {
         maps = new ArrayList<>();
         for (Difficulty difficulty : Difficulty.values()) {
             FileHandle dir = Gdx.files.internal("maps/"+  difficulty.name()) ; //new File(Gdx.files.path()+"maps\\" +  difficulty.name()); //File("maps\\" + difficulty.name());
-            System.out.println("dir aqui" + Gdx.files.toString());
+//            System.out.println("dir aqui" + Gdx.files.toString());
 //            FileHandle fileHandle = new FileHandle();
 //            fileHandle.lis
             nmapsPerDiff[difficulty.index] = dir.list().length;
 //            nmaps += nmapsPerDiff[difficulty.index];
-            for (int i = 0; i < nmapsPerDiff[difficulty.index]; i++)
+            for (int i = 0; i < nmapsPerDiff[difficulty.index]; i++) {
+                System.out.println(i);
                 maps.add(dir.list()[i]);
+            }
             npagesPerDiff[difficulty.index] = nmapsPerDiff[difficulty.index] / mapsPerPage + 1;
             npages += npagesPerDiff[difficulty.index];
             System.out.println(difficulty.name() +" " + nmapsPerDiff[difficulty.index]);

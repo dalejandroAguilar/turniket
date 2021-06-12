@@ -27,14 +27,14 @@ blade
   index: -1
 bladea01
   rotate: false
-  xy: 666, 413
+  xy: 596, 16
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
   index: -1
 bladea01m
   rotate: false
-  xy: 495, 136
+  xy: 388, 29
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
@@ -48,7 +48,7 @@ bladea02
   index: -1
 bladea02m
   rotate: false
-  xy: 666, 829
+  xy: 666, 725
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
@@ -69,7 +69,7 @@ bladea03m
   index: -1
 bladea04
   rotate: false
-  xy: 666, 1141
+  xy: 666, 1037
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
@@ -111,7 +111,7 @@ bladea06m
   index: -1
 bladea07
   rotate: false
-  xy: 495, 240
+  xy: 495, 173
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
@@ -132,14 +132,14 @@ bladea08
   index: -1
 bladea08m
   rotate: false
-  xy: 666, 1037
+  xy: 666, 933
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
   index: -1
 bladea09
   rotate: false
-  xy: 666, 517
+  xy: 666, 413
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
@@ -181,14 +181,14 @@ bladea11m
   index: -1
 bladea12
   rotate: false
-  xy: 599, 240
+  xy: 492, 16
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
   index: -1
 bladea12m
   rotate: false
-  xy: 666, 1245
+  xy: 666, 1141
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
@@ -223,7 +223,7 @@ bladea14m
   index: -1
 bladeb01
   rotate: false
-  xy: 666, 621
+  xy: 666, 517
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
@@ -244,7 +244,7 @@ bladeb02
   index: -1
 bladeb02m
   rotate: false
-  xy: 388, 29
+  xy: 599, 173
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
@@ -258,14 +258,14 @@ bladeb03
   index: -1
 bladeb03m
   rotate: false
-  xy: 666, 725
+  xy: 666, 621
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
   index: -1
 bladeb04
   rotate: false
-  xy: 599, 136
+  xy: 666, 1245
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
@@ -279,7 +279,7 @@ bladeb04m
   index: -1
 bladec01
   rotate: false
-  xy: 666, 933
+  xy: 666, 829
   size: 102, 102
   orig: 102, 102
   offset: 0, 0
@@ -293,6 +293,13 @@ bladec01m
   index: -1
 burner
   rotate: false
+  xy: 1452, 1630
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+burnera
+  rotate: false
   xy: 724, 1353
   size: 65, 65
   orig: 65, 65
@@ -300,14 +307,14 @@ burner
   index: -1
 button_back
   rotate: false
-  xy: 492, 36
+  xy: 791, 1373
   size: 85, 45
   orig: 85, 45
   offset: 0, 0
   index: -1
 button_help
   rotate: false
-  xy: 629, 59
+  xy: 1348, 1447
   size: 75, 75
   orig: 75, 75
   offset: 0, 0
@@ -321,51 +328,128 @@ button_label_frame
   index: -1
 button_next
   rotate: false
-  xy: 1529, 1655
+  xy: 1708, 1655
   size: 75, 75
   orig: 75, 75
   offset: 0, 0
   index: -1
 button_play
   rotate: false
-  xy: 1452, 1655
+  xy: 1452, 1553
   size: 75, 75
   orig: 75, 75
   offset: 0, 0
   index: -1
 button_previous
   rotate: false
-  xy: 1348, 1447
+  xy: 1554, 1655
   size: 75, 75
   orig: 75, 75
   offset: 0, 0
   index: -1
 button_redo
   rotate: false
-  xy: 1606, 1655
+  xy: 1862, 1655
   size: 75, 75
   orig: 75, 75
   offset: 0, 0
   index: -1
 button_restart
   rotate: false
-  xy: 1452, 1578
+  xy: 1631, 1655
   size: 75, 75
   orig: 75, 75
   offset: 0, 0
   index: -1
 button_settings
   rotate: false
-  xy: 1452, 1531
+  xy: 629, 126
   size: 78, 45
   orig: 78, 45
   offset: 0, 0
   index: -1
 button_undo
   rotate: false
-  xy: 1529, 1578
+  xy: 1785, 1655
   size: 75, 75
   orig: 75, 75
+  offset: 0, 0
+  index: -1
+check01
+  rotate: false
+  xy: 1178, 1373
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+check02
+  rotate: false
+  xy: 990, 1373
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+check03
+  rotate: false
+  xy: 1452, 1506
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+check04
+  rotate: false
+  xy: 1084, 1373
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+check05
+  rotate: false
+  xy: 1319, 1373
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+check06
+  rotate: false
+  xy: 1225, 1373
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+check07
+  rotate: false
+  xy: 1037, 1373
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+check08
+  rotate: false
+  xy: 1499, 1506
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+check09
+  rotate: false
+  xy: 1131, 1373
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+check10
+  rotate: false
+  xy: 943, 1373
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+check11
+  rotate: false
+  xy: 1272, 1373
+  size: 45, 45
+  orig: 45, 45
   offset: 0, 0
   index: -1
 crown
@@ -377,7 +461,7 @@ crown
   index: -1
 frame_score
   rotate: false
-  xy: 495, 83
+  xy: 495, 120
   size: 132, 51
   orig: 132, 51
   offset: 0, 0
@@ -396,9 +480,16 @@ lb
   orig: 139, 139
   offset: 0, 0
   index: -1
+little_button_label_frame
+  rotate: false
+  xy: 379, 1674
+  size: 171, 75
+  orig: 171, 75
+  offset: 0, 0
+  index: -1
 little_star
   rotate: false
-  xy: 1348, 1425
+  xy: 1529, 1608
   size: 21, 20
   orig: 21, 20
   offset: 0, 0
@@ -524,7 +615,7 @@ lu
   index: -1
 next_mark
   rotate: false
-  xy: 579, 58
+  xy: 1425, 1499
   size: 20, 23
   orig: 20, 23
   offset: 0, 0
@@ -538,7 +629,7 @@ popup_frame
   index: -1
 previous_mark
   rotate: false
-  xy: 379, 1659
+  xy: 1554, 1630
   size: 20, 23
   orig: 20, 23
   offset: 0, 0
@@ -559,182 +650,182 @@ ru
   index: -1
 star
   rotate: false
-  xy: 1683, 1667
+  xy: 878, 1355
   size: 63, 63
   orig: 63, 63
   offset: 0, 0
   index: -1
 token
   rotate: false
-  xy: 1606, 1588
+  xy: 1939, 1665
   size: 65, 65
   orig: 65, 65
   offset: 0, 0
   index: -1
 tokena00
   rotate: false
-  xy: 556, 1483
+  xy: 556, 1416
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena01
   rotate: false
-  xy: 498, 478
+  xy: 498, 411
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena02
   rotate: false
-  xy: 498, 1148
+  xy: 498, 1081
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena03
   rotate: false
-  xy: 547, 1684
+  xy: 556, 1617
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena04
   rotate: false
-  xy: 498, 813
+  xy: 498, 746
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena05
   rotate: false
-  xy: 556, 1349
+  xy: 498, 1282
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena08
   rotate: false
-  xy: 556, 1550
+  xy: 556, 1483
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena09
   rotate: false
-  xy: 498, 545
+  xy: 498, 478
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena10
   rotate: false
-  xy: 498, 1215
+  xy: 498, 1148
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena11
   rotate: false
-  xy: 379, 1684
+  xy: 552, 1684
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena12
   rotate: false
-  xy: 498, 947
+  xy: 498, 880
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena13
   rotate: false
-  xy: 556, 1416
+  xy: 556, 1349
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena14
   rotate: false
-  xy: 498, 411
+  xy: 495, 344
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena15
   rotate: false
-  xy: 498, 1081
+  xy: 498, 1014
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena16
   rotate: false
-  xy: 556, 1617
+  xy: 556, 1550
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena17
   rotate: false
-  xy: 498, 679
+  xy: 498, 612
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokenb01
   rotate: false
-  xy: 498, 612
+  xy: 498, 545
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokenc01
   rotate: false
-  xy: 498, 746
+  xy: 498, 679
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena06
   rotate: false
-  xy: 498, 746
+  xy: 498, 679
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokenc02
   rotate: false
-  xy: 498, 1282
+  xy: 498, 1215
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokena07
   rotate: false
-  xy: 498, 1282
+  xy: 498, 1215
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokenc03
   rotate: false
-  xy: 495, 344
+  xy: 495, 277
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokenc04
   rotate: false
-  xy: 498, 1014
+  xy: 498, 947
   size: 166, 65
   orig: 166, 65
   offset: 0, 0
   index: -1
 tokend01
   rotate: false
-  xy: 498, 880
+  xy: 498, 813
   size: 166, 65
   orig: 166, 65
   offset: 0, 0

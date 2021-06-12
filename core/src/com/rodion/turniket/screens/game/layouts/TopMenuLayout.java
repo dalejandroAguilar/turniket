@@ -1,7 +1,7 @@
 package com.rodion.turniket.screens.game.layouts;
 
 import com.badlogic.gdx.graphics.Color;
-import com.rodion.turniket.basics.BackgraundedLabelButton;
+import com.rodion.turniket.basics.BackgroundedLabelButton;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.ImageEntity;
 import com.rodion.turniket.basics.LabelEntity;
@@ -13,14 +13,14 @@ import com.rodion.turniket.utilities.FontManagerMaster;
 import java.io.FileNotFoundException;
 
 public class TopMenuLayout extends Layout {
-    private BackgraundedLabelButton backButton;
-    private BackgraundedLabelButton settingsButton;
+    private BackgroundedLabelButton backButton;
+    private BackgroundedLabelButton settingsButton;
     private LabelEntity score;
     private ImageEntity star;
 
     public TopMenuLayout(BasicStage basicStage) {
         super(basicStage);
-        backButton = new BackgraundedLabelButton("Back", FontManagerMaster.helveticaStyle, getParentStage()) {
+        backButton = new BackgroundedLabelButton("Back", FontManagerMaster.helveticaStyle, getParentStage()) {
             @Override
             public void setAssetAddress() {
                 setAssetManger(AssetManagerMaster.game);
@@ -35,7 +35,7 @@ public class TopMenuLayout extends Layout {
             }
         };
         backButton.setFillParent(false);
-        settingsButton = new BackgraundedLabelButton("Settings", FontManagerMaster.helveticaStyle, getParentStage()) {
+        settingsButton = new BackgroundedLabelButton("Settings", FontManagerMaster.helveticaStyle, getParentStage()) {
             @Override
             public void setAssetAddress() {
                 setAssetManger(AssetManagerMaster.game);

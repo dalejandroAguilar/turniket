@@ -138,7 +138,7 @@ public enum TokenColor {
             case Green:
                 return Color.GREEN;
             default:
-                return null;
+                return Color.DARK_GRAY;
         }
     }
 

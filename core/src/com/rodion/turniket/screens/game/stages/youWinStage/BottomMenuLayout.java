@@ -1,8 +1,7 @@
 package com.rodion.turniket.screens.game.stages.youWinStage;
 
-import com.rodion.turniket.basics.BackgraundedLabelButton;
+import com.rodion.turniket.basics.BackgroundedLabelButton;
 import com.rodion.turniket.basics.BasicStage;
-import com.rodion.turniket.basics.ImageButtonEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
@@ -11,14 +10,14 @@ import com.rodion.turniket.utilities.FontManagerMaster;
 import java.io.FileNotFoundException;
 
 public class BottomMenuLayout extends Layout {
-    private BackgraundedLabelButton continueButton;
-    private BackgraundedLabelButton saveSolutionButton;
+    private BackgroundedLabelButton continueButton;
+    private BackgroundedLabelButton saveSolutionButton;
 
     public BottomMenuLayout(BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
 
-        continueButton = new BackgraundedLabelButton("Continue",
+        continueButton = new BackgroundedLabelButton("Continue",
                 FontManagerMaster.nexaStyle,basicStage){
             @Override
             public void setAssetAddress() {
@@ -34,7 +33,7 @@ public class BottomMenuLayout extends Layout {
         };
         continueButton.setFillParent(false);
 
-        saveSolutionButton = new BackgraundedLabelButton("Save Solution",
+        saveSolutionButton = new BackgroundedLabelButton("Save Solution",
                 FontManagerMaster.nexaStyle,basicStage){
             @Override
             public void setAssetAddress() {

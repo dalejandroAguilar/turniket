@@ -36,6 +36,11 @@ public class ScoreLayout extends Layout {
         stars[1].addAction(Actions.color(Color.GRAY));
     }
 
+    public void setToPreview() {
+        stars[0].addAction(Actions.color(Color.YELLOW));
+        stars[1].addAction(Actions.color(Color.YELLOW));
+    }
+
     public void onHint() {
         for(ImageEntity star : stars)
             star.addAction(Actions.fadeOut(.5f));

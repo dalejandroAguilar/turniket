@@ -2,17 +2,18 @@ package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.rodion.turniket.basics.BasicStage;
+import com.rodion.turniket.basics.ImageEntity;
 import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.basics.Layout;
-import com.rodion.turniket.kernel.Token;
-import com.rodion.turniket.kernel.constants.Direction;
-import com.rodion.turniket.kernel.constants.TokenColor;
+import com.rodion.turniket.kernel.Node;
 import com.rodion.turniket.screens.game.layouts.TopMenuLayout;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.LevelTitleBarEntity;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.LockEntity;
+import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
 import com.rodion.turniket.utilities.LevelManagerMaster;
 
@@ -25,23 +26,20 @@ public class GameLayout extends Layout {
     private BottomMenuLayout bottomMenu;
     private LevelTitleBarEntity levelTitle;
     private StatusLayout status;
-    private LockEntity lockEntity;
-    private LabelEntity requirementsLabel;
-
     private boolean lockedStatus;
 
     public GameLayout(FileHandle file, int index, BasicStage basicStage) {
         super(basicStage);
         setFillParent(true);
 
-        lockedStatus = true;
+        lockedStatus = false;
         topMenu = new TopMenuLayout(getParentStage()) {
             @Override
             public void onReturn() {
                 super.onReturn();
+                GameLayout.this.onReturn();
             }
         };
-
 
         levelTitle = new LevelTitleBarEntity(index, getParentStage());
         score = new ScoreLayout(getParentStage());
@@ -86,45 +84,17 @@ public class GameLayout extends Layout {
 
             @Override
             public void onRestart() {
-                board.onRestart();
-                status.setSteps(board.getSteps());
-                status.resetTimer();
+                GameLayout.this.restart();
+
             }
 
             @Override
             public void onHint() {
                 super.onHint();
-                GameLayout.this.onHint();
+                GameLayout.this.onSolve();
 
             }
         };
-
-        lockEntity = new LockEntity() {
-            @Override
-            public void updatePosition() {
-                super.updatePosition();
-                setX(board.getX(Align.center), Align.center);
-                setY(board.getY(Align.center), Align.center);
-            }
-
-            @Override
-            public void onEnd() {
-                lockEntity.addAction(Actions.moveBy(500, 0, 0.4f));
-                setInvalidated(true);
-                System.out.println("next");
-            }
-        };
-
-        requirementsLabel = new LabelEntity("Requirementes: 10 stars.",
-                FontManagerMaster.nexaStyle) {
-            @Override
-            public void updatePosition() {
-                super.updatePosition();
-                requirementsLabel.setX(board.getX(Align.center), Align.center);
-                requirementsLabel.setY(status.getY(Align.center), Align.center);
-            }
-        };
-
         add(topMenu).expandX().fillX().row();
         add(levelTitle).padTop(40)
                 .padBottom(40).expandX().fillX().row();
@@ -133,14 +103,14 @@ public class GameLayout extends Layout {
         add(board).expandX().fillX().row();
         add(bottomMenu).bottom().expand().fillX();
 
-//        add(lockEntity);
-//        lockEntity.setOnPlay(true);
+        lockedStatus = true;
 
-        board.setLockedStatus(false);
+//        setX(board.getX(Align.center), Align.center);
+//        setY(board.getY(Align.center), Align.center);
 
-//        if(lockedStatus){
-//            board.setVisible(false);
-//        }
+        background(ColorManagerMaster.grayBg);
+
+
 
     }
 
@@ -150,24 +120,22 @@ public class GameLayout extends Layout {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        lockEntity.draw(batch, parentAlpha);
+//        lockEntity.draw(batch, parentAlpha);
 //        requirementsLabel.draw(batch, parentAlpha);
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        lockEntity.act(delta);
-    }
-
-    public void onBegin() {
-        status.onBegin();
-        score.onBegin();
-        lockEntity.addAction(Actions.fadeOut(.2f));
+//        lockEntity.act(delta);
     }
 
     public void onEnd() {
         status.stop();
+    }
+
+    public boolean isOnBegin() {
+        return board.isOnBegin();
     }
 
     @Override
@@ -179,13 +147,11 @@ public class GameLayout extends Layout {
         levelTitle.resize(width, height);
         status.resize(width, height);
         score.resize(width, height);
-        lockEntity.resize(width, height);
-        requirementsLabel.resize(width, height);
+//        lockEntity.resize(width, height);
     }
 
     public void moveFromSolver() {
         board.moveFromSolution();
-
     }
 
     public void undoFromSolver() {
@@ -199,21 +165,21 @@ public class GameLayout extends Layout {
     }
 
     public void onReturn() {
+
     }
 
-    public void onHint() {
+    public void onSolve() {
         board.getGame().loadSolution();
         status.onHint();
         score.onHint();
     }
 
-    public boolean isLocked() {
-        return lockedStatus;
+    public void restart() {
+        board.onRestart();
+        status.setSteps(board.getSteps());
+        status.resetTimer();
     }
 
-    public void setLockedStatus(boolean lockedStatus) {
-        this.lockedStatus = lockedStatus;
-    }
 
     public BoardLayout getBoard() {
         return board;
@@ -224,4 +190,24 @@ public class GameLayout extends Layout {
         board.getGame().saveSolution(LevelManagerMaster.getLevel());
     }
 
+    public void setToPreview(){
+        if (lockedStatus) {
+            status.hide();
+            score.hide();
+//            lockEntity.getColor().a = 1;
+            board.setToLock();
+        }
+        else {
+            status.setToPreview();
+            score.setToPreview();
+//            lockEntity.getColor().a = 0;
+            board.setToUnlock();
+        }
+    }
+
+    public void onUnlock(){
+        board.onUnlock();
+        score.show();
+        status.show();
+    }
 }

@@ -14,15 +14,16 @@ public class BookGame {
     private GameStage nextGame;
     private ScreenViewport screenViewport;
     private BasicScreen basicScreen;
-//    private
 
     public BookGame(ScreenViewport screenViewport, BasicScreen basicScreen) {
-        onMoving = false;
         this.screenViewport = screenViewport;
         this.basicScreen = basicScreen;
-        System.out.println(LevelManagerMaster.getBookmark());
-        System.out.println(LevelManagerMaster.getNLevels());
+        init();
+    }
 
+    public void init() {
+        onMoving = false;
+        previousGame = null;
         if (LevelManagerMaster.getPreviousLevel() != null)
             previousGame = new GameStage(LevelManagerMaster.getPreviousLevel(),
                     LevelManagerMaster.getBookmark() - 1, screenViewport, basicScreen) {
@@ -37,21 +38,20 @@ public class BookGame {
                     BookGame.this.onReturn();
                 }
             };
-        else
-            previousGame = null;
-
         game = new GameStage(LevelManagerMaster.getLevel(),
                 LevelManagerMaster.getBookmark(), screenViewport, basicScreen) {
             @Override
             public void onWin() {
                 BookGame.this.onWin();
             }
+
             @Override
             public void onReturn() {
                 super.onReturn();
                 BookGame.this.onReturn();
             }
         };
+        nextGame = null;
         if (LevelManagerMaster.getNextLevel() != null)
             nextGame = new GameStage(LevelManagerMaster.getNextLevel(),
                     LevelManagerMaster.getBookmark() + 1, screenViewport, basicScreen) {
@@ -59,14 +59,13 @@ public class BookGame {
                 public void onWin() {
                     BookGame.this.onWin();
                 }
+
                 @Override
                 public void onReturn() {
                     super.onReturn();
                     BookGame.this.onReturn();
                 }
             };
-        else
-            nextGame=null;
     }
 
     public void onPrevious() {
@@ -91,6 +90,7 @@ public class BookGame {
                                     public void onWin() {
                                         BookGame.this.onWin();
                                     }
+
                                     @Override
                                     public void onReturn() {
                                         super.onReturn();
@@ -131,6 +131,7 @@ public class BookGame {
                                     public void onWin() {
                                         BookGame.this.onWin();
                                     }
+
                                     @Override
                                     public void onReturn() {
                                         super.onReturn();
@@ -196,7 +197,11 @@ public class BookGame {
         return onMoving;
     }
 
-    public void onReturn(){
+    public void onReturn() {
 
+    }
+
+    public void onUnlock() {
+        game.onUnlock();
     }
 }

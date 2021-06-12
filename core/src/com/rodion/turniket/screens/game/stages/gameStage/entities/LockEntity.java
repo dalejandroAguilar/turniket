@@ -5,7 +5,7 @@ import com.rodion.turniket.utilities.AssetManagerMaster;
 
 public class LockEntity extends AnimatedEntity {
     public LockEntity() {
-        super(.02f);
+        super(.016f);
         prepareAssets();
     }
 
@@ -32,9 +32,5 @@ public class LockEntity extends AnimatedEntity {
         assetNames[13] = "lock14";
         assetNames[14] = "lock15";
         assetNames[15] = "lock16";
-//        assetNames[16] = "lock17";
     }
-
-//    on
-
 }

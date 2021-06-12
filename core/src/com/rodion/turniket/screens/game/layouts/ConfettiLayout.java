@@ -11,16 +11,16 @@ public class ConfettiLayout extends Layout {
     public ConfettiLayout(BasicStage basicStage) {
         super(basicStage);
         setFillParent(true);
-        confettiEntity = new AnimatedRasterEntity(0.06f) {
+        confettiEntity = new AnimatedRasterEntity(0.02f) {
             @Override
             public void setAssetAddress() {
                 setAssetManager(AssetManagerMaster.game);
                 assetPath = "game";
-                assetNames = new String[24];
+                assetNames = new String[69];
                 for (int i = 0; i < 10; i++) {
                     assetNames[i] = "confetti0" + i;
                 }
-                for (int i = 10; i < 24; i++) {
+                for (int i = 10; i < 69; i++) {
                     assetNames[i] = "confetti" + i;
                 }
             }

@@ -21,30 +21,47 @@ public class BookLevel {
         this.screenViewport = screenViewport;
         this.basicScreen = basicScreen;
 
-
-
-        if(LevelManagerMaster.getPreviousPage() > -1)
+        previousPage = null;
+        if (LevelManagerMaster.getPreviousPage() > -1)
             previousPage = new PageStage(LevelManagerMaster.getPreviousPage(), screenViewport,
-                    basicScreen){
+                    basicScreen) {
+
+                @Override
+                public void onClose() {
+                    super.onClose();
+                    BookLevel.this.onClose();
+                }
+
+                @Override
+                public void onPickLevel() {
+                    super.onPickLevel();
+                    BookLevel.this.onPickLevel();
+                }
+            };
+
+        page = new PageStage(LevelManagerMaster.getPage(), screenViewport, basicScreen) {
+            @Override
+            public void onClose() {
+                super.onClose();
+                BookLevel.this.onClose();
+            }
+
             @Override
             public void onPickLevel() {
                 super.onPickLevel();
                 BookLevel.this.onPickLevel();
             }
         };
-        else
-            previousPage = null;
 
-
-        page = new PageStage(LevelManagerMaster.getPage(), screenViewport, basicScreen){
+        nextPage = new PageStage(LevelManagerMaster.getNextPage(), screenViewport, basicScreen) {
             @Override
-            public void onPickLevel() {
-                super.onPickLevel();
-                BookLevel.this.onPickLevel();
+            public void onClose() {
+                super.onClose();
+                BookLevel.this.onClose();
             }
-        };
-        nextPage = new PageStage(LevelManagerMaster.getNextPage(), screenViewport, basicScreen){
+
             @Override
+
             public void onPickLevel() {
                 super.onPickLevel();
                 BookLevel.this.onPickLevel();
@@ -71,7 +88,14 @@ public class BookLevel {
                             previousPage = null;
                             if (LevelManagerMaster.getPreviousPage() != -2) {
                                 previousPage = new PageStage(LevelManagerMaster.getPreviousPage(),
-                                        screenViewport, basicScreen){
+                                        screenViewport, basicScreen) {
+
+                                    @Override
+                                    public void onClose() {
+                                        super.onClose();
+                                        BookLevel.this.onClose();
+                                    }
+
                                     @Override
                                     public void onPickLevel() {
                                         super.onPickLevel();
@@ -107,7 +131,14 @@ public class BookLevel {
                             nextPage = null;
                             if (LevelManagerMaster.getNextPage() != -2) {
                                 nextPage = new PageStage(LevelManagerMaster.getNextPage(),
-                                        screenViewport, basicScreen){
+                                        screenViewport, basicScreen) {
+
+                                    @Override
+                                    public void onClose() {
+                                        super.onClose();
+                                        BookLevel.this.onClose();
+                                    }
+
                                     @Override
                                     public void onPickLevel() {
                                         super.onPickLevel();
@@ -169,7 +200,13 @@ public class BookLevel {
         return onMoving;
     }
 
-    public void onPickLevel(){
+    public void onPickLevel() {
         System.out.println("external onpick");
+//        page.addAction(Actions.rotateBy(30,0.5f));
+
     }
+
+    public void onClose() {
+    }
+
 }

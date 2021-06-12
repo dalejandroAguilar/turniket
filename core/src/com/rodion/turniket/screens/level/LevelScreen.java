@@ -20,15 +20,29 @@ public class LevelScreen extends BasicScreen {
 
     public LevelScreen(MainGame mainGame) {
         super(mainGame);
+        init();
+
+    }
+
+    public void init(){
+
         final InputMultiplexer multiplexer;
         multiplexer = new InputMultiplexer();
 
         bookLevel = new BookLevel(screenViewport,  this){
+
+            @Override
+            public void onClose() {
+                super.onClose();
+                LevelScreen.this.onClose();
+            }
+
             @Override
             public void onPickLevel() {
                 super.onPickLevel();
                 LevelScreen.this.onPickLevel();
             }
+
         };
         uiStage = new UILevelStage(screenViewport, this) {
             @Override
@@ -67,6 +81,7 @@ public class LevelScreen extends BasicScreen {
         multiplexer.addProcessor(uiStage);
         multiplexer.addProcessor(bookLevel.getPage());
         Gdx.input.setInputProcessor(multiplexer);
+
     }
 
     @Override
@@ -86,13 +101,19 @@ public class LevelScreen extends BasicScreen {
         bookLevel.resize(width, height);
     }
 
+    public void onClose(){
+        uiStage.addAction(Actions.fadeOut(.2f));
+    }
+
     public void onPickLevel(){
-//        mainGame.gameScreen.onInput();
-//        Gdx.input.setInputProcessor(mainGame.gameScreen);
-        System.out.println("Boookmark "+LevelManagerMaster.getBookmark());
-//        mainGame.gameScreen.ini();
-//        bookLevel.getPage().getLevelLayout().getLevels().get(1).addAction(Actions.moveBy(10,10,0.5f));
-        System.out.println(LevelManagerMaster.getNLevels());
-        mainGame.setScreen(new GameScreen(mainGame));
+//        bookLevel.onExit();
+        onGoToGameScreen();
+//        mainGame.gameScreen.onEnter();
+//        bookGame.getGame().addAction(Actions.rotateTo(-100));
+//        preview.addAction(Actions.rotateTo(-100));
+    }
+
+    public void onGoToGameScreen(){
+        System.out.println("on Go to game screen");
     }
 }

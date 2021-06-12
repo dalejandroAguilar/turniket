@@ -1,6 +1,7 @@
 package com.rodion.turniket.basics;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -8,11 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.io.FileNotFoundException;
 
-public class BackgraundedLabelButton extends BackgroundedLayout {
+public class BackgroundedLabelButton extends BackgroundedLayout {
     private LabelEntity labelEntity;
-    public BackgraundedLabelButton(CharSequence text, Label.LabelStyle[] style, BasicStage basicStage) {
+
+    public BackgroundedLabelButton(CharSequence text, Label.LabelStyle[] style, BasicStage basicStage) {
         super(basicStage);
         labelEntity = new LabelEntity(text, style);
+        setFillParent(false);
         addListener(new ClickListener() {
                         boolean isPressed;
                         boolean isClicked;
@@ -33,7 +36,7 @@ public class BackgraundedLabelButton extends BackgroundedLayout {
                                 addAction(Actions.color(Color.WHITE, .2f));
                                 if (isPressed) {
                                     try {
-                                        onAction ();
+                                        onAction();
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
@@ -41,16 +44,24 @@ public class BackgraundedLabelButton extends BackgroundedLayout {
                             }
                         }
 
+                        //                        @Override
+//                        public void touchDragged(InputEvent event, float x, float y, int pointer) {
+//                            if (pointer == 0) {
+//                                if (!isOver() && isPressed) {
+//                                    addAction(Actions.color(Color.WHITE, .2f));
+//                                    isPressed = false;
+//                                }
+//                            }
+//                        }
+//
                         @Override
-                        public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                            if (pointer == 0) {
-                                if (!isOver() && isPressed) {
-                                    addAction(Actions.color(Color.WHITE, .2f));
-                                    isPressed = false;
-                                }
-                            }
+                        public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                            super.exit(event, x, y, pointer, toActor);
+                            addAction(Actions.color(Color.WHITE, .2f));
+                            isPressed = false;
                         }
                     }
+
         );
         add(labelEntity).expand().fill();
 
