@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 public class LevelManagerMaster {
     public static final int mapsPerPage = 9;
-    private static ArrayList<FileHandle> maps;
+    private static ArrayList<Level> maps;
     private static int bookmark;
     private static int pageMark;
-    private static int nmapsPerDiff[];
-    private static int npagesPerDiff[];
+    private static int[] nmapsPerDiff;
+    private static int[] npagesPerDiff;
     private static int nmaps;
     private static int npages;
 
@@ -23,44 +23,37 @@ public class LevelManagerMaster {
         nmaps = 0;
         npagesPerDiff = new int[Difficulty.values().length];
         nmapsPerDiff = new int[Difficulty.values().length];
-//        maps = new File[nmapsPerDiff[difficulty.index]];
         maps = new ArrayList<>();
         for (Difficulty difficulty : Difficulty.values()) {
-            FileHandle dir = Gdx.files.internal("maps/"+  difficulty.name()) ; //new File(Gdx.files.path()+"maps\\" +  difficulty.name()); //File("maps\\" + difficulty.name());
-//            System.out.println("dir aqui" + Gdx.files.toString());
-//            FileHandle fileHandle = new FileHandle();
-//            fileHandle.lis
+            FileHandle dir = Gdx.files.local("maps/"+  difficulty.name()) ; //new File(Gdx.files.path()+"maps\\" +  difficulty.name()); //File("maps\\" + difficulty.name());
             nmapsPerDiff[difficulty.index] = dir.list().length;
-//            nmaps += nmapsPerDiff[difficulty.index];
             for (int i = 0; i < nmapsPerDiff[difficulty.index]; i++) {
                 System.out.println(i);
-                maps.add(dir.list()[i]);
+                maps.add(new Level(dir.list()[i]));
+                maps.get(i).loadSolution();
             }
             npagesPerDiff[difficulty.index] = nmapsPerDiff[difficulty.index] / mapsPerPage + 1;
             npages += npagesPerDiff[difficulty.index];
             System.out.println(difficulty.name() +" " + nmapsPerDiff[difficulty.index]);
         }
-
         nmaps = maps.size();
-//        npages = nmaps / mapsPerPage + 1;
-
     }
 
-    public static FileHandle getPreviousLevel() {
+    public static Level getPreviousLevel() {
         if (bookmark > 0 && bookmark < nmaps)
             return maps.get(bookmark - 1);
         else
             return null;
     }
 
-    public static FileHandle getNextLevel() {
+    public static Level getNextLevel() {
         if (bookmark >= 0 && bookmark < nmaps - 1)
             return maps.get(bookmark + 1);
         else
             return null;
     }
 
-    public static FileHandle getLevel() {
+    public static Level getLevel() {
         if (bookmark >= 0 && bookmark < nmaps)
             return maps.get(bookmark);
         else
@@ -83,7 +76,7 @@ public class LevelManagerMaster {
             return false;
     }
 
-    public static ArrayList<FileHandle> getLevels() {
+    public static ArrayList<Level> getLevels() {
         return maps;
     }
 
@@ -151,11 +144,9 @@ public class LevelManagerMaster {
         return nmapsaccum + (page - npagesaccum) * mapsPerPage;
     }
 
-    public static ArrayList<FileHandle> getLevels(int page) {
-        ArrayList<FileHandle> levels = new ArrayList<>();
+    public static ArrayList<Level> getLevels(int page) {
+        ArrayList<Level> levels = new ArrayList<>();
         Difficulty difficulty = getDifficulty(page);
-
-
         int nmapsaccum = 0;
         int npagesaccum = 0;
         for (int i = 0; i < difficulty.index; i++) {
@@ -191,7 +182,7 @@ public class LevelManagerMaster {
         LevelManagerMaster.bookmark = bookmark;
     }
 
-    public static Difficulty getDifficultOfLelve(int index){
+    public static Difficulty getDifficultOfLevel(int index){
         int acumLevel = 0;
         for (Difficulty difficulty : Difficulty.values()) {
             acumLevel += nmapsPerDiff[difficulty.index];

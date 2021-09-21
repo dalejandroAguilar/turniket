@@ -15,7 +15,6 @@ public class PageStage extends BasicStage {
     public PageStage(int page, Viewport viewport, BasicScreen basicScreen) {
         super(viewport, basicScreen);
             levelLayout = new PageLayout(page, LevelManagerMaster.getLevels(page), this){
-
                 @Override
                 public void onClose() {
                     super.onClose();

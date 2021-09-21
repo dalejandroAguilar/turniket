@@ -24,7 +24,6 @@ public class ConfettiLayout extends Layout {
                     assetNames[i] = "confetti" + i;
                 }
             }
-
             @Override
             public void onFinish() {
                 setOnPlay(false);

@@ -11,15 +11,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Game implements Command {
-    private int id;
     private State state;
     private State initState;
     private Character[][] map;
     final private static ArrayList<Node> turnPositions = new ArrayList<>(
             Arrays.asList(new Node(1, 1), new Node(3, 1),
                     new Node(1, 3), new Node(3, 3)));
-    final private static Node[] tokenTargets = {new Node(0, 0), new Node(4, 0),
-            new Node(4, 4), new Node(0, 4)};
     private Listener listener;
     private Solution solutionRead, solutionWrite;
 
@@ -66,8 +63,6 @@ public class Game implements Command {
             }
             state.setStep(state.getSteps() + 1);
             solutionWrite.writeStep(step);
-//            step.print(Sys);
-
             return true;
         }
         if (state.board[stepY][stepX] != null && state.board[halfStepY][halfStepX] == null) {
@@ -104,38 +99,34 @@ public class Game implements Command {
         return false;
     }
 
-    public void readFile(FileHandle file) {
-        int i = 0;
-        String text = file.readString();
-        String[] lines = text.split("\n");
-        System.out.println(lines[0]);
-        i = 0;
-        while (i < 5) {
-            int j;
-            System.out.println(lines[i+1]);
-            for (j = 0; j < 5; j++) {
-                if (j < lines[i+1].length())
-                    map[i][j] = lines[i+1].charAt(j);
-                else
-                    map[i][j] = ' ';
-            }
-            i++;
-        }
-        System.out.println(lines.length );
-
-        for (int j = 5; j < lines.length; j++){
-            if (lines[j].startsWith("Solution")){
-                if(lines[j].split(" ").length > 1){
-                String[] strSolution = new String[2];
-                strSolution[0] = lines[j];
-                strSolution[1] = lines[j+1];
-                System.out.println(strSolution[0]);
-                System.out.println(strSolution[1]);
-                solutionRead.readSolution(strSolution);
-                }
-            }
-        }
-
+    public void readFile(Character[][] map) {
+//        int i = 0;
+//        while (i < 5) {
+//            int j;
+//            System.out.println(map[i]);
+//            for (j = 0; j < 5; j++) {
+//                if (j < map[i].length())
+//                    this.map[i][j] = map[i].charAt(j);
+//                else
+//                    this.map[i][j] = ' ';
+//            }
+//            i++;
+//        }
+//        System.out.println(map.length);
+//
+//        for (int j = 5; j < map.length; j++) {
+//            if (map[j].startsWith("Solution")) {
+//                if (map[j].split(" ").length > 1) {
+//                    String[] strSolution = new String[2];
+//                    strSolution[0] = map[j];
+//                    strSolution[1] = map[j + 1];
+//                    System.out.println(strSolution[0]);
+//                    System.out.println(strSolution[1]);
+//                    solutionRead.readSolution(strSolution);
+//                }
+//            }
+//        }
+        this.map = map;
     }
 
     public void setFromMap() {
@@ -162,7 +153,7 @@ public class Game implements Command {
 
     public void printInit(PrintStream printStream) {
         for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < 5; j++)
                 if (initState.board[i][j] != null) {
                     if (initState.board[i][j].getClass() == Token.class)
                         printStream.print(((Token) initState.board[i][j]).getColor().value);
@@ -172,7 +163,6 @@ public class Game implements Command {
                     printStream.print(TurnId.get(j, i).index + 1);
                 } else
                     printStream.print(" ");
-            }
             printStream.println();
         }
         printStream.println("-----");
@@ -226,10 +216,6 @@ public class Game implements Command {
         return true;
     }
 
-    public void removeListener() {
-        this.listener = null;
-    }
-
     public void addListener(Listener listener) {
         this.listener = listener;
     }
@@ -258,21 +244,26 @@ public class Game implements Command {
         solutionRead.goToBegin();
     }
 
-    public boolean moveFromSolution() {
-        Step step = solutionRead.getStep();
-        solutionRead.goForward();
-        step.print(System.out);
-        System.out.println("Color " + step.getTokenColor(state) + " " + step.getDirection());
+    public boolean move(Step step){
         move(step.getTokenColor(state), step.getDirection());
         return true;
     }
+
+//    public boolean moveFromSolution() {
+//        Step step = solutionRead.getStep();
+//        solutionRead.goForward();
+//        step.print(System.out);
+//        System.out.println("Color " + step.getTokenColor(state) + " " + step.getDirection());
+//        move(step.getTokenColor(state), step.getDirection());
+//        return true;
+//    }
 
     public void undoFromSolution() {
         solutionRead.goBackward();
         undo();
     }
 
-    public boolean isOnBegin(){
+    public boolean isOnBegin() {
         return (initState == state);
     }
 }

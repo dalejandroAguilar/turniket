@@ -1,21 +1,14 @@
 package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.utils.Align;
 import com.rodion.turniket.basics.BasicStage;
-import com.rodion.turniket.basics.ImageEntity;
-import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.basics.Layout;
-import com.rodion.turniket.kernel.Node;
 import com.rodion.turniket.screens.game.layouts.TopMenuLayout;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.LevelTitleBarEntity;
-import com.rodion.turniket.screens.game.stages.gameStage.entities.LockEntity;
 import com.rodion.turniket.utilities.ColorManagerMaster;
-import com.rodion.turniket.utilities.FontManagerMaster;
-import com.rodion.turniket.utilities.LevelManagerMaster;
+import com.rodion.turniket.utilities.Level;
+import com.rodion.turniket.utilities.Solution;
+
 
 import java.io.FileNotFoundException;
 
@@ -28,7 +21,7 @@ public class GameLayout extends Layout {
     private StatusLayout status;
     private boolean lockedStatus;
 
-    public GameLayout(FileHandle file, int index, BasicStage basicStage) {
+    public GameLayout(final Level level, int index, BasicStage basicStage) {
         super(basicStage);
         setFillParent(true);
 
@@ -45,7 +38,7 @@ public class GameLayout extends Layout {
         score = new ScoreLayout(getParentStage());
         status = new StatusLayout(getParentStage());
 
-        board = new BoardLayout(file, getParentStage()) {
+        board = new BoardLayout(level, getParentStage()) {
             @Override
             public void onMove() {
                 super.onMove();
@@ -68,6 +61,24 @@ public class GameLayout extends Layout {
                 GameLayout.this.onWin();
                 status.stop();
             }
+
+            @Override
+            public void moveFromSolution() {
+                super.moveFromSolution();
+                level.loadSolution();
+                System.out.println(level.getSolutionRead().getNSteps());
+                Solution.Step step = level.getSolutionRead().getStep();
+                getGame().move(step.getTokenColor(getGame().getState()), step.getDirection());
+                onMoveTry();
+                onMove();
+                level.getSolutionRead().goForward();
+            }
+
+            @Override
+            public void undoFromSolution() {
+                level.getSolutionRead().goBackward();
+                super.undoFromSolution();
+            }
         };
         bottomMenu = new BottomMenuLayout(getParentStage()) {
             @Override
@@ -85,14 +96,12 @@ public class GameLayout extends Layout {
             @Override
             public void onRestart() {
                 GameLayout.this.restart();
-
             }
 
             @Override
             public void onHint() {
                 super.onHint();
                 GameLayout.this.onSolve();
-
             }
         };
         add(topMenu).expandX().fillX().row();
@@ -109,7 +118,6 @@ public class GameLayout extends Layout {
 //        setY(board.getY(Align.center), Align.center);
 
         background(ColorManagerMaster.grayBg);
-
 
 
     }
@@ -180,24 +188,22 @@ public class GameLayout extends Layout {
         status.resetTimer();
     }
 
-
     public BoardLayout getBoard() {
         return board;
     }
 
     public void onSaveSolution() throws FileNotFoundException {
         System.out.println("Save solution game layout");
-        board.getGame().saveSolution(LevelManagerMaster.getLevel());
+//        board.getGame().saveSolution(LevelManagerMaster.getLevel());
     }
 
-    public void setToPreview(){
+    public void setToPreview() {
         if (lockedStatus) {
             status.hide();
             score.hide();
 //            lockEntity.getColor().a = 1;
             board.setToLock();
-        }
-        else {
+        } else {
             status.setToPreview();
             score.setToPreview();
 //            lockEntity.getColor().a = 0;
@@ -205,7 +211,7 @@ public class GameLayout extends Layout {
         }
     }
 
-    public void onUnlock(){
+    public void onUnlock() {
         board.onUnlock();
         score.show();
         status.show();

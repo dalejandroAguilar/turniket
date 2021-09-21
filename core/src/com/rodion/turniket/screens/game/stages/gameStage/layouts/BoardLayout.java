@@ -17,7 +17,9 @@ import com.rodion.turniket.kernel.constants.TokenColor;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.BladeEntity;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.BoardEntity;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.BurnerEntity;
+import com.rodion.turniket.screens.game.stages.gameStage.entities.BurnerExternalEntity;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.TokenEntity;
+import com.rodion.turniket.utilities.Level;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,16 +31,15 @@ public class BoardLayout extends Layout {
     private ArrayList<TokenEntity> tokens;
     private ArrayList<BladeEntity> blades;
 
-    public BoardLayout(FileHandle file, BasicStage basicStage) {
+    public BoardLayout(Level level, BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
         game = new Game();
-        game.readFile(file);
+        game.readFile(level.getMap());
         game.setFromMap();
-
         board = new BoardEntity(getParentStage()) {
             @Override
-            public void onBurnerAction(BurnerEntity burner, Direction direction) {
+            public void onBurnerAction(BurnerExternalEntity burner, Direction direction) {
                 Token selectToken = game.getToken(burner.getI(), burner.getJ());
                 if (selectToken != null) {
 //                    TokenEntity tokenEntity = tokens.get(selectToken.getColor().index);
@@ -48,7 +49,7 @@ public class BoardLayout extends Layout {
             }
 
             @Override
-            public void onBurnerPressed(BurnerEntity burner) {
+            public void onBurnerPressed(BurnerExternalEntity burner) {
                 super.onBurnerPressed(burner);
                 Token token = game.getToken(burner.getI(), burner.getJ());
                 if (token != null) {
@@ -58,7 +59,7 @@ public class BoardLayout extends Layout {
             }
 
             @Override
-            public void onBurnerUnpressed(BurnerEntity burner) {
+            public void onBurnerUnpressed(BurnerExternalEntity burner) {
                 super.onBurnerUnpressed(burner);
                 Token token = game.getToken(burner.getI(), burner.getJ());
                 if (token != null) {
@@ -132,7 +133,6 @@ public class BoardLayout extends Layout {
                 BoardLayout.this.onWin();
             }
         });
-
     }
 
     @Override
@@ -201,20 +201,13 @@ public class BoardLayout extends Layout {
 //        }
     }
 
-    public void moveFromSolver() {
-
-    }
-
     public void onMove() {
-
     }
 
     public void onMoveTry() {
-
     }
 
     public void onMoveFinish() {
-
     }
 
     public int getSteps() {
@@ -225,22 +218,22 @@ public class BoardLayout extends Layout {
 
     }
 
-
     public Game getGame() {
         return game;
     }
 
     public void moveFromSolution() {
-        if (game.moveFromSolution()) {
-            onMoveTry();
-            onMove();
-        }
+//        if (game.moveFromSolution()) {
+//            onMoveTry();
+//            onMove();
+//        }
     }
 
     public void undoFromSolution() {
-        game.undoFromSolution();
-        for (BladeEntity blade : blades)
-            blade.updateRotation();
+//        game.undoFromSolution();
+//        for (BladeEntity blade : blades)
+//            blade.updateRotation();
+            game.undo();
     }
 
     public boolean isOnBegin() {
@@ -257,7 +250,6 @@ public class BoardLayout extends Layout {
     }
 
     public void setToUnlock() {
-
     }
 
     public void onUnlock() {
@@ -278,4 +270,6 @@ public class BoardLayout extends Layout {
                 return tokenEntity;
         return null;
     }
+
+
 }

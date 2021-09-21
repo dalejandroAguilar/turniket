@@ -29,7 +29,7 @@ public class LevelEntity extends Layout {
     private Difficulty difficulty;
     private int index;
 
-    public LevelEntity(int index, FileHandle file, Difficulty difficulty, BasicStage basicStage) {
+    public LevelEntity(int index, Character[][] map, Difficulty difficulty, BasicStage basicStage) {
         super(basicStage);
         this.difficulty = difficulty;
         this.index = index;
@@ -56,7 +56,7 @@ public class LevelEntity extends Layout {
             starTable.add();
         }
 
-        board = new BoardEntity(file, basicStage);
+        board = new BoardEntity(map, basicStage);
         board.setTouchable(Touchable.disabled);
         frame = new ImageEntity() {
             @Override

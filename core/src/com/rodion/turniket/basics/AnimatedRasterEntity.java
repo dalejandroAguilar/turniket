@@ -19,8 +19,10 @@ public class AnimatedRasterEntity extends Image {
     private float lastX;
     private float lastY;
     protected String assetPath;
+    private boolean isLooping;
 
     public AnimatedRasterEntity(float keyDuration) {
+        isLooping = false;
         elapsedTime = 0;
         this.frameDuration = keyDuration;
         isOnPlay = false;
@@ -49,13 +51,19 @@ public class AnimatedRasterEntity extends Image {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if(animation.isAnimationFinished(elapsedTime)){
-            elapsedTime = 0;
-            onFinish();
+        if(!isLooping) {
+            if (animation.isAnimationFinished(elapsedTime)) {
+                elapsedTime = 0;
+                onFinish();
+            }
+            if (isOnPlay)
+                elapsedTime += delta;
+            setDrawable((Drawable) animation.getKeyFrame(elapsedTime, false));
         }
-        if (isOnPlay)
+        else {
             elapsedTime += delta;
-            setDrawable((Drawable) animation.getKeyFrame(elapsedTime,false));
+            setDrawable((Drawable) animation.getKeyFrame(elapsedTime, true));
+        }
     }
 
     @Override
@@ -66,6 +74,17 @@ public class AnimatedRasterEntity extends Image {
 
     public void setOnPlay(boolean onPlay) {
         isOnPlay = onPlay;
+    }
+
+    public void setLoop(boolean isLooping){
+            this.isLooping = isLooping;
+        if(isLooping) {
+            animation.setPlayMode(Animation.PlayMode.LOOP);
+        }
+        else {
+            animation.setPlayMode(Animation.PlayMode.NORMAL);
+        }
+
     }
 
     public void onFinish(){

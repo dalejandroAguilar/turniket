@@ -4,9 +4,20 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class AssetManagerMaster {
+    public final static AssetManager loading = new AssetManager();
+    public final static AssetManager title = new AssetManager();
     public final static AssetManager game = new AssetManager();
     public final static AssetManager level = new AssetManager();
 
+    public static void loadLoading(){
+        loading.load("loading/raster/pack.atlas", TextureAtlas.class);
+        loading.finishLoading();
+    }
+
+    public static void loadTitle(){
+        load(title,"title");
+        title.finishLoading();
+    }
 
     public static void loadGame() {
         load(game,"game");
@@ -30,7 +41,9 @@ public class AssetManagerMaster {
     }
 
     public static void dispose(){
+        loading.dispose();
         game.dispose();
         level.dispose();
+        title.dispose();
     }
 }

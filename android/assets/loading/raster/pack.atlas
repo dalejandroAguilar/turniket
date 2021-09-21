@@ -1,0 +1,69 @@
+
+pack.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+turbine00
+  rotate: false
+  xy: 2, 576
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+turbine01
+  rotate: false
+  xy: 2, 289
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+turbine02
+  rotate: false
+  xy: 289, 576
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+turbine03
+  rotate: false
+  xy: 2, 2
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+turbine04
+  rotate: false
+  xy: 289, 289
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+turbine05
+  rotate: false
+  xy: 576, 576
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+turbine06
+  rotate: false
+  xy: 289, 2
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+turbine07
+  rotate: false
+  xy: 576, 289
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+turbine08
+  rotate: false
+  xy: 576, 2
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1

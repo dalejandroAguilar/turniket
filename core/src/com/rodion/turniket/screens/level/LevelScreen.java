@@ -25,7 +25,6 @@ public class LevelScreen extends BasicScreen {
     }
 
     public void init(){
-
         final InputMultiplexer multiplexer;
         multiplexer = new InputMultiplexer();
 

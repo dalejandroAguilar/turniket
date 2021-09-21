@@ -17,6 +17,7 @@ public class BoardEntity extends Layout {
     private ImageEntity[] targets;
     private ImageEntity grid;
     private BurnerEntity[][] burners;
+    private BurnerExternalEntity[][] burnersExternal;
     private ImageEntity[] axis;
 
     public BoardEntity(BasicStage basicStage) {
@@ -29,30 +30,37 @@ public class BoardEntity extends Layout {
         Table burnersLayout = new Table();
         Table table3 = new Table();
         burners = new BurnerEntity[3][3];
+        burnersExternal = new BurnerExternalEntity[3][3];
         axis = new ImageEntity[4];
-
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                burners[i][j] = new BurnerEntity(i, j) {
-                    @Override
-                    public void onAction(BurnerEntity burner, Direction direction) {
+                burners[i][j] = new BurnerEntity(i, j);
+                burnersExternal[i][j] = new BurnerExternalEntity(i,j){
+                     @Override
+                    public void onAction(BurnerExternalEntity burner, Direction direction) {
                         super.onAction(burner, direction);
                         onBurnerAction(burner, direction);
                     }
 
                     @Override
-                    public void onPressed(BurnerEntity burner) {
+                    public void onPressed(BurnerExternalEntity burner) {
                         super.onPressed(burner);
                         onBurnerPressed(burner);
                     }
 
                     @Override
-                    public void onUnpressed(BurnerEntity burner) {
+                    public void onUnpressed(BurnerExternalEntity burner) {
                         super.onUnpressed(burner);
                         onBurnerUnpressed(burner);
                     }
                 };
-                burnersLayout.add(burners[i][j]).expand();
+                Stack stack1 = new Stack();
+                Table table1 = new Table();
+                table1.add(burners[i][j]);
+
+                stack1.add(table1);
+                stack1.add(burnersExternal[i][j]);
+                burnersLayout.add(stack1).expand();
             }
             burnersLayout.row();
         }
@@ -162,17 +170,21 @@ public class BoardEntity extends Layout {
         for (ImageEntity[] burnRow : burners)
             for (ImageEntity burn : burnRow)
                 burn.resize(width, height);
+
+        for (ImageEntity[] burnRow : burnersExternal)
+            for (ImageEntity burn : burnRow)
+                burn.resize(width, height);
         for (ImageEntity axisElement : axis)
             axisElement.resize(width, height);
     }
 
-    public void onBurnerAction(BurnerEntity burner, Direction direction) {
+    public void onBurnerAction(BurnerExternalEntity burner, Direction direction) {
     }
 
-    public void onBurnerPressed(BurnerEntity burner) {
+    public void onBurnerPressed(BurnerExternalEntity burner) {
     }
 
-    public void onBurnerUnpressed(BurnerEntity burner) {
+    public void onBurnerUnpressed(BurnerExternalEntity burner) {
     }
 
     public void setToLock(){

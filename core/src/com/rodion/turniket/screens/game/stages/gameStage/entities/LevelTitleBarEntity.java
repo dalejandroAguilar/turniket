@@ -24,7 +24,7 @@ public class LevelTitleBarEntity extends Layout {
     public LevelTitleBarEntity(int index, BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
-        Difficulty difficulty = LevelManagerMaster.getDifficultOfLelve(index);
+        Difficulty difficulty = LevelManagerMaster.getDifficultOfLevel(index);
         left = new ImageEntity() {
             @Override
             public void setAssetAddress() {

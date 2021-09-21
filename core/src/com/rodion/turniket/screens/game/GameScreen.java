@@ -18,8 +18,6 @@ import com.rodion.turniket.utilities.ScreenShotManager;
 
 import java.io.FileNotFoundException;
 
-import jdk.javadoc.internal.doclets.formats.html.markup.Table;
-
 public class GameScreen extends BasicScreen {
 //    private BackBufferStage backBufferStage;
     private PreviewStage preview;

@@ -1,7 +1,6 @@
 package com.rodion.turniket.screens.game.stages.gameStage;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rodion.turniket.basics.BasicScreen;
@@ -11,7 +10,8 @@ import com.rodion.turniket.screens.game.stages.gameStage.layouts.ConfirmationSol
 import com.rodion.turniket.screens.game.stages.gameStage.layouts.GameLayout;
 import com.rodion.turniket.screens.game.stages.gameStage.layouts.LockLayout;
 import com.rodion.turniket.screens.game.stages.gameStage.layouts.SolverLayout;
-//import com.rodion.turniket.screens.game.stages.gameStage.layouts.SolverLayout;
+import com.rodion.turniket.utilities.Level;
+import com.rodion.turniket.utilities.Solution;
 
 import java.io.FileNotFoundException;
 
@@ -21,9 +21,10 @@ public class GameStage extends BasicStage {
     private ConfirmationGameLayout confirmationGameToSolver;
     private ConfirmationSolutionLayout confirmationSolverToGame;
     private LockLayout lockLayout;
-    public GameStage(FileHandle file, int index, Viewport viewport, BasicScreen basicScreen) {
+
+    public GameStage(Level level, int index, Viewport viewport, BasicScreen basicScreen) {
         super(viewport, basicScreen);
-        gameLayout = new GameLayout(file,index,this){
+        gameLayout = new GameLayout(level, index, this) {
             @Override
             public void onWin() {
                 super.onWin();
@@ -49,16 +50,15 @@ public class GameStage extends BasicStage {
             @Override
             public void onSolve() {
                 super.onSolve();
-                if(gameLayout.isOnBegin())
+                if (gameLayout.isOnBegin())
                     solverLayout.onShow();
                 else
                     confirmationGameToSolver.onShow();
 //                solverLayout.show();
             }
-
         };
 
-        lockLayout = new LockLayout(this){
+        lockLayout = new LockLayout(this) {
             @Override
             public void updateLockEntityPosition() {
                 super.updateLockEntityPosition();
@@ -74,7 +74,7 @@ public class GameStage extends BasicStage {
             }
         };
 
-        confirmationGameToSolver = new ConfirmationGameLayout(this){
+        confirmationGameToSolver = new ConfirmationGameLayout(this) {
             @Override
             public void onOk() {
                 super.onOk();
@@ -89,18 +89,16 @@ public class GameStage extends BasicStage {
 
         };
 
-        solverLayout = new SolverLayout(this){
+        solverLayout = new SolverLayout(this) {
             @Override
             public void onNext() {
                 super.onNext();
-                System.out.println("onNext gamestage");
                 gameLayout.moveFromSolver();
             }
 
             @Override
             public void onPrevious() {
                 super.onPrevious();
-                System.out.println("onPrevious gamestage");
                 gameLayout.undoFromSolver();
             }
 
@@ -111,7 +109,7 @@ public class GameStage extends BasicStage {
             }
         };
 
-        confirmationSolverToGame = new ConfirmationSolutionLayout(this){
+        confirmationSolverToGame = new ConfirmationSolutionLayout(this) {
             @Override
             public void onOk() {
                 solverLayout.hide();
@@ -133,19 +131,15 @@ public class GameStage extends BasicStage {
         solverLayout.hide();
         confirmationGameToSolver.hide();
         confirmationSolverToGame.hide();
-//        gameLayout.setLockedStatus(true);
         gameLayout.setToPreview();
-
-
-
     }
 
-    public void onWin(){
+    public void onWin() {
         System.out.println("Win GAMELAYOUT");
     }
 
 
-    public void onEnd(){
+    public void onEnd() {
         gameLayout.onEnd();
     }
 
@@ -159,7 +153,7 @@ public class GameStage extends BasicStage {
         lockLayout.resize(width, height);
     }
 
-    public void onReturn(){
+    public void onReturn() {
 
     }
 
@@ -168,7 +162,7 @@ public class GameStage extends BasicStage {
         gameLayout.onSaveSolution();
     }
 
-    public void onUnlock(){
+    public void onUnlock() {
         lockLayout.onUnlock();
     }
 }

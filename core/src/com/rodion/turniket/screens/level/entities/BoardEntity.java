@@ -26,7 +26,7 @@ public class BoardEntity extends Layout {
     private ArrayList<BladeEntity> blades;
     private Game game;
 
-    public BoardEntity(FileHandle file, BasicStage basicStage) {
+    public BoardEntity(Character[][] map, BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
         Stack stack = new Stack();
@@ -37,7 +37,7 @@ public class BoardEntity extends Layout {
         Table tokensLayout = new Table();
         blades = new ArrayList<>();
         game = new Game();
-        game.readFile(file);
+        game.readFile(map);
         game.setFromMap();
         axis = new ImageEntity[4];
         backboard = new ImageEntity() {

@@ -7,12 +7,12 @@ import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.screens.level.entities.LevelEntity;
 import com.rodion.turniket.utilities.Difficulty;
+import com.rodion.turniket.utilities.Level;
 import com.rodion.turniket.utilities.LevelManagerMaster;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import sun.jvm.hotspot.debugger.Page;
 
 public class PageLayout extends Layout {
     private TopMenuLayout topMenu;
@@ -20,18 +20,27 @@ public class PageLayout extends Layout {
     private ArrayList<LevelEntity> levels;
     private BottomMenuLayoutBack bottomMenu;
 
-    public PageLayout(int page, ArrayList<FileHandle> files, BasicStage basicStage) {
+    public PageLayout(int page, ArrayList<Level> files, BasicStage basicStage) {
         super(basicStage);
         setFillParent(true);
         Table levelsLayout = new Table();
 
         levels = new ArrayList<>();
         for(int i = 0; i < files.size(); i++){
+            System.out.println(" asdfa sdfasdfasdfads fadsf asd fadsf asd f<<<<<<<<<<<<<<<<<<");
             if( i % 3==0 && i>0)
                 levelsLayout.row();
             int index = LevelManagerMaster.getIniForPage(page) + i;
+//            String[] lines = files.get(i).readString().split("\n");
+//            String[] map = new String[lines.length - 1];
+//                    for (int j = 0; j < map.length; j++) {
+//                        map[j] = lines[j + 1].replace("\n","");
+//                        System.out.println(map[j]);
+//                    }
+
+            Character[][] map = files.get(i).getMap();
             levels.add(
-                    new LevelEntity(index, files.get(i), LevelManagerMaster.getDifficulty(page)
+                    new LevelEntity(index, map, LevelManagerMaster.getDifficulty(page)
                             , getParentStage()) {
 
                         @Override

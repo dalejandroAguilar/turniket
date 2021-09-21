@@ -8,7 +8,6 @@ public class State {
     public State previousState;
     private int step;
 
-
     public State() {
         step = 0;
     }
