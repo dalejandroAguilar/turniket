@@ -1,0 +1,146 @@
+
+pack.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+axis
+  rotate: false
+  xy: 130, 14
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+back_board
+  rotate: false
+  xy: 2, 2
+  size: 126, 126
+  orig: 126, 126
+  offset: 0, 0
+  index: -1
+blade
+  rotate: false
+  xy: 978, 468
+  size: 10, 35
+  orig: 10, 35
+  offset: 0, 0
+  index: -1
+board
+  rotate: false
+  xy: 703, 377
+  size: 126, 126
+  orig: 126, 126
+  offset: 0, 0
+  index: -1
+button_back
+  rotate: false
+  xy: 504, 158
+  size: 113, 61
+  orig: 113, 61
+  offset: 0, 0
+  index: -1
+button_label_frame
+  rotate: false
+  xy: 2, 130
+  size: 500, 100
+  orig: 500, 100
+  offset: 0, 0
+  index: -1
+button_next
+  rotate: false
+  xy: 337, 27
+  size: 101, 101
+  orig: 101, 101
+  offset: 0, 0
+  index: -1
+button_previous
+  rotate: false
+  xy: 234, 27
+  size: 101, 101
+  orig: 101, 101
+  offset: 0, 0
+  index: -1
+button_redo
+  rotate: false
+  xy: 626, 221
+  size: 101, 101
+  orig: 101, 101
+  offset: 0, 0
+  index: -1
+button_settings
+  rotate: false
+  xy: 619, 158
+  size: 104, 61
+  orig: 104, 61
+  offset: 0, 0
+  index: -1
+button_undo
+  rotate: false
+  xy: 523, 221
+  size: 101, 101
+  orig: 101, 101
+  offset: 0, 0
+  index: -1
+gid
+  rotate: false
+  xy: 831, 401
+  size: 102, 102
+  orig: 102, 102
+  offset: 0, 0
+  index: -1
+grid
+  rotate: false
+  xy: 130, 26
+  size: 102, 102
+  orig: 102, 102
+  offset: 0, 0
+  index: -1
+level_frame
+  rotate: false
+  xy: 523, 324
+  size: 178, 179
+  orig: 178, 179
+  offset: 0, 0
+  index: -1
+little_star
+  rotate: false
+  xy: 935, 432
+  size: 27, 27
+  orig: 27, 27
+  offset: 0, 0
+  index: -1
+next_mark
+  rotate: false
+  xy: 703, 344
+  size: 27, 31
+  orig: 27, 31
+  offset: 0, 0
+  index: -1
+number_level_frame
+  rotate: false
+  xy: 935, 461
+  size: 41, 42
+  orig: 41, 42
+  offset: 0, 0
+  index: -1
+popup_frame
+  rotate: false
+  xy: 2, 232
+  size: 519, 271
+  orig: 519, 271
+  offset: 0, 0
+  index: -1
+previous_mark
+  rotate: false
+  xy: 440, 97
+  size: 28, 31
+  orig: 28, 31
+  offset: 0, 0
+  index: -1
+token
+  rotate: false
+  xy: 504, 132
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1

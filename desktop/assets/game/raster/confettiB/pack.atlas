@@ -1,0 +1,562 @@
+
+pack.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+confetti04
+  rotate: false
+  xy: 2, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti17
+  rotate: false
+  xy: 804, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti30
+  rotate: false
+  xy: 2, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti43
+  rotate: false
+  xy: 2, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti56
+  rotate: false
+  xy: 804, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti69
+  rotate: false
+  xy: 804, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+
+pack2.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+confetti01
+  rotate: false
+  xy: 804, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti09
+  rotate: false
+  xy: 2, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti22
+  rotate: false
+  xy: 2, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti35
+  rotate: false
+  xy: 804, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti48
+  rotate: false
+  xy: 2, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti61
+  rotate: false
+  xy: 804, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+
+pack3.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+confetti06
+  rotate: false
+  xy: 804, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti14
+  rotate: false
+  xy: 2, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti27
+  rotate: false
+  xy: 2, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti40
+  rotate: false
+  xy: 804, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti53
+  rotate: false
+  xy: 2, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti66
+  rotate: false
+  xy: 804, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+
+pack4.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+confetti11
+  rotate: false
+  xy: 804, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti19
+  rotate: false
+  xy: 2, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti24
+  rotate: false
+  xy: 804, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti32
+  rotate: false
+  xy: 2, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti45
+  rotate: false
+  xy: 804, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti58
+  rotate: false
+  xy: 2, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+
+pack5.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+confetti03
+  rotate: false
+  xy: 2, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti16
+  rotate: false
+  xy: 804, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti37
+  rotate: false
+  xy: 2, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti42
+  rotate: false
+  xy: 804, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti50
+  rotate: false
+  xy: 2, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti63
+  rotate: false
+  xy: 804, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+
+pack6.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+confetti08
+  rotate: false
+  xy: 804, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti21
+  rotate: false
+  xy: 2, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti29
+  rotate: false
+  xy: 2, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti34
+  rotate: false
+  xy: 804, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti55
+  rotate: false
+  xy: 2, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti68
+  rotate: false
+  xy: 804, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+
+pack7.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+confetti00
+  rotate: false
+  xy: 804, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti13
+  rotate: false
+  xy: 2, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti26
+  rotate: false
+  xy: 804, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti47
+  rotate: false
+  xy: 2, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti52
+  rotate: false
+  xy: 804, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti60
+  rotate: false
+  xy: 2, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+
+pack8.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+confetti05
+  rotate: false
+  xy: 804, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti18
+  rotate: false
+  xy: 2, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti31
+  rotate: false
+  xy: 804, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti39
+  rotate: false
+  xy: 2, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti44
+  rotate: false
+  xy: 804, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti65
+  rotate: false
+  xy: 2, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+
+pack9.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+confetti10
+  rotate: false
+  xy: 2, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti23
+  rotate: false
+  xy: 804, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti36
+  rotate: false
+  xy: 2, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti49
+  rotate: false
+  xy: 804, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti57
+  rotate: false
+  xy: 2, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti62
+  rotate: false
+  xy: 804, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+
+pack10.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+confetti02
+  rotate: false
+  xy: 2, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti15
+  rotate: false
+  xy: 2, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti28
+  rotate: false
+  xy: 2, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti41
+  rotate: false
+  xy: 804, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti54
+  rotate: false
+  xy: 804, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti67
+  rotate: false
+  xy: 804, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+
+pack11.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+confetti07
+  rotate: false
+  xy: 2, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti12
+  rotate: false
+  xy: 804, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti20
+  rotate: false
+  xy: 2, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti33
+  rotate: false
+  xy: 804, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti46
+  rotate: false
+  xy: 2, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti59
+  rotate: false
+  xy: 804, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+
+pack12.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+confetti25
+  rotate: false
+  xy: 2, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti38
+  rotate: false
+  xy: 804, 1206
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti51
+  rotate: false
+  xy: 2, 604
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1
+confetti64
+  rotate: false
+  xy: 2, 2
+  size: 800, 600
+  orig: 800, 600
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,20 @@
+
+pack.png
+size: 2048,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+button_label_frame
+  rotate: false
+  xy: 2, 2
+  size: 1000, 200
+  orig: 1000, 200
+  offset: 0, 0
+  index: -1
+gametitle
+  rotate: false
+  xy: 2, 204
+  size: 1212, 777
+  orig: 1212, 777
+  offset: 0, 0
+  index: -1
