@@ -270,6 +270,4 @@ public class BoardLayout extends Layout {
                 return tokenEntity;
         return null;
     }
-
-
 }

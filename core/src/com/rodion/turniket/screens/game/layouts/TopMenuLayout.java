@@ -1,6 +1,9 @@
 package com.rodion.turniket.screens.game.layouts;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.rodion.turniket.basics.BackgroundedLabelButton;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.ImageEntity;
@@ -9,6 +12,7 @@ import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.LevelManagerMaster;
 
 import java.io.FileNotFoundException;
 
@@ -17,10 +21,13 @@ public class TopMenuLayout extends Layout {
     private BackgroundedLabelButton settingsButton;
     private LabelEntity score;
     private ImageEntity star;
+    private int nstars;
 
     public TopMenuLayout(BasicStage basicStage) {
         super(basicStage);
-        backButton = new BackgroundedLabelButton("Back", FontManagerMaster.helveticaStyle, getParentStage()) {
+        nstars = LevelManagerMaster.getNstars();
+        backButton = new BackgroundedLabelButton("Back", FontManagerMaster.helveticaStyle,
+                getParentStage()) {
             @Override
             public void setAssetAddress() {
                 setAssetManger(AssetManagerMaster.game);
@@ -54,13 +61,13 @@ public class TopMenuLayout extends Layout {
         star.prepareAssets();
         star.setColor(Color.YELLOW);
 
-        score = new LabelEntity("10", FontManagerMaster.nexaStyle);
+        score = new LabelEntity(nstars + "", FontManagerMaster.nexaStyle);
         score.setColor(Color.WHITE);
         settingsButton.setFillParent(false);
         setFillParent(false);
         add(backButton).left();
-        add(star).left();
-        add(score).left();
+        add(star).left().padLeft(20);
+        add(score).left().padLeft(20);
         add().expandX().fillX();
         add(settingsButton).right();
         setBackground(ColorManagerMaster.grayBg);
@@ -75,7 +82,34 @@ public class TopMenuLayout extends Layout {
         settingsButton.resize(width, height);
     }
 
-    public void onReturn(){
+    public void onReturn() {
 
+    }
+
+    public void onIncreasing(int amount) {
+
+        for (int i = 0; i < amount; i++) {
+            final int ii = i;
+            star.addAction(
+                    Actions.sequence(
+                            Actions.delay(0.4f * i),
+                            Actions.parallel(
+                                    Actions.scaleTo(2, 2, 0.2f),
+                                    Actions.scaleTo(1, 1, 0.2f),
+                                    Actions.run(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            score.setText((nstars + ii + 1) + " ");
+                                        }
+                                    })
+                            )
+                    )
+            );
+        }
+//            sequenceAction.addAction();
+//            Ac
+//        addAction(Actions.sequence(
+//
+//        ));
     }
 }

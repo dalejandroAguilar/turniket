@@ -2,6 +2,7 @@ package com.rodion.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.rodion.game.desktop.utilities.DesktopPlatformComponents;
 import com.rodion.turniket.MainGame;
 
 public class DesktopLauncher {
@@ -10,7 +11,7 @@ public class DesktopLauncher {
         config.width = 700;
         config.height = 950;
 //        config.fullscreen = true;
-        new LwjglApplication(new MainGame(), config);
+        new LwjglApplication(new MainGame(new DesktopPlatformComponents()), config);
 //        System.exit(0);
     }
 }

@@ -11,23 +11,30 @@ axis
   orig: 19, 19
   offset: 0, 0
   index: -1
-blade
-  rotate: false
-  xy: 1004, 407
-  size: 19, 69
-  orig: 19, 69
-  offset: 0, 0
-  index: -1
-board
+back_board
   rotate: false
   xy: 2, 23
   size: 251, 251
   orig: 251, 251
   offset: 0, 0
   index: -1
+blade
+  rotate: false
+  xy: 2023, 951
+  size: 19, 69
+  orig: 19, 69
+  offset: 0, 0
+  index: -1
+board
+  rotate: false
+  xy: 1400, 769
+  size: 251, 251
+  orig: 251, 251
+  offset: 0, 0
+  index: -1
 button_back
   rotate: false
-  xy: 1042, 541
+  xy: 1400, 646
   size: 226, 121
   orig: 226, 121
   offset: 0, 0
@@ -41,37 +48,44 @@ button_label_frame
   index: -1
 button_next
   rotate: false
-  xy: 255, 73
+  xy: 460, 73
   size: 201, 201
   orig: 201, 201
   offset: 0, 0
   index: -1
 button_previous
   rotate: false
-  xy: 1400, 819
+  xy: 1653, 819
   size: 201, 201
   orig: 201, 201
   offset: 0, 0
   index: -1
 button_redo
   rotate: false
-  xy: 458, 73
+  xy: 1042, 461
   size: 201, 201
   orig: 201, 201
   offset: 0, 0
   index: -1
 button_settings
   rotate: false
-  xy: 1400, 696
+  xy: 1004, 338
   size: 206, 121
   orig: 206, 121
   offset: 0, 0
   index: -1
 button_undo
   rotate: false
-  xy: 1603, 819
+  xy: 663, 73
   size: 201, 201
   orig: 201, 201
+  offset: 0, 0
+  index: -1
+grid
+  rotate: false
+  xy: 255, 71
+  size: 203, 203
+  orig: 203, 203
   offset: 0, 0
   index: -1
 level_frame
@@ -83,23 +97,30 @@ level_frame
   index: -1
 little_star
   rotate: false
-  xy: 1042, 487
+  xy: 1004, 284
   size: 54, 52
   orig: 54, 52
   offset: 0, 0
   index: -1
 next_mark
   rotate: false
-  xy: 1270, 600
+  xy: 866, 128
   size: 53, 62
   orig: 53, 62
   offset: 0, 0
   index: -1
 number_level_frame
   rotate: false
-  xy: 1806, 938
+  xy: 866, 192
   size: 82, 82
   orig: 82, 82
+  offset: 0, 0
+  index: -1
+padlock
+  rotate: false
+  xy: 1856, 819
+  size: 165, 201
+  orig: 165, 201
   offset: 0, 0
   index: -1
 popup_frame
@@ -111,15 +132,15 @@ popup_frame
   index: -1
 previous_mark
   rotate: false
-  xy: 661, 212
+  xy: 1245, 600
   size: 54, 62
   orig: 54, 62
   offset: 0, 0
   index: -1
 token
   rotate: false
-  xy: 255, 27
-  size: 44, 44
-  orig: 44, 44
+  xy: 255, 23
+  size: 46, 46
+  orig: 46, 46
   offset: 0, 0
   index: -1

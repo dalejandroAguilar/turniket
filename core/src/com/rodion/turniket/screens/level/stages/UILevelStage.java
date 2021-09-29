@@ -28,9 +28,20 @@ public class UILevelStage extends BasicStage {
             }
 
             @Override
-
             public void onNextPage() {
                 UILevelStage.this.onNextPage();
+            }
+
+            @Override
+            public void onBack() {
+                super.onBack();
+                UILevelStage.this.onBack();
+            }
+
+            @Override
+            public void onSettings() {
+                super.onSettings();
+                UILevelStage.this.onSettings();
             }
         };
         addActor(uiLevelLayout);
@@ -52,5 +63,13 @@ public class UILevelStage extends BasicStage {
     }
 
     public void onNextPage() {
+    }
+
+    public void onBack(){
+
+    }
+
+    public void onSettings(){
+
     }
 }

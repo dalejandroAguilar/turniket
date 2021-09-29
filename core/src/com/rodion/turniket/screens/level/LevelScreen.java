@@ -3,6 +3,7 @@ package com.rodion.turniket.screens.level;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.rodion.turniket.MainGame;
@@ -16,20 +17,18 @@ import com.rodion.turniket.utilities.ScreenScale;
 public class LevelScreen extends BasicScreen {
     private UILevelStage uiStage;
     private BookLevel bookLevel;
-    private final ScreenViewport screenViewport = new  ScreenViewport();
+    private final ScreenViewport screenViewport = new ScreenViewport();
 
     public LevelScreen(MainGame mainGame) {
         super(mainGame);
         init();
-
     }
 
-    public void init(){
+    public void init() {
         final InputMultiplexer multiplexer;
         multiplexer = new InputMultiplexer();
 
-        bookLevel = new BookLevel(screenViewport,  this){
-
+        bookLevel = new BookLevel(screenViewport, this) {
             @Override
             public void onClose() {
                 super.onClose();
@@ -47,7 +46,7 @@ public class LevelScreen extends BasicScreen {
             @Override
             public void onPreviousPage() {
                 if (!bookLevel.isOnMoving()) {
-                    if(bookLevel.onPrevious()) {
+                    if (bookLevel.onPrevious()) {
                         multiplexer.clear();
                         multiplexer.addProcessor(uiStage);
                         multiplexer.addProcessor(bookLevel.getPreviousPage());
@@ -58,7 +57,7 @@ public class LevelScreen extends BasicScreen {
             @Override
             public void onNextPage() {
                 if (!bookLevel.isOnMoving()) {
-                    if(bookLevel.onNext()) {
+                    if (bookLevel.onNext()) {
                         multiplexer.clear();
                         multiplexer.addProcessor(uiStage);
                         multiplexer.addProcessor(bookLevel.getNextPage());
@@ -75,12 +74,48 @@ public class LevelScreen extends BasicScreen {
             public void onNextDifficulty() {
                 System.out.println("onNextDifficulty");
             }
+
+            @Override
+            public void onBack() {
+                super.onBack();
+                uiStage.addAction(Actions.fadeOut(.2f));
+                bookLevel.getPage().addAction(Actions.fadeOut(.2f));
+                addAction(Actions.sequence(
+                        Actions.delay(.2f)
+                        ,
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                                LevelScreen.this.onBack();
+                            }
+                        })
+                ));
+            }
+
+            @Override
+            public void onSettings() {
+                super.onSettings();
+                LevelScreen.this.onSettings();
+            }
         };
 
         multiplexer.addProcessor(uiStage);
         multiplexer.addProcessor(bookLevel.getPage());
         Gdx.input.setInputProcessor(multiplexer);
+    }
 
+    public void onEnterForward() {
+        uiStage.addAction(Actions.rotateTo(-90, 0));
+        bookLevel.getPage().addAction(Actions.rotateTo(-90, 0));
+        uiStage.addAction(Actions.rotateBy(90, .2f));
+        bookLevel.getPage().addAction(Actions.rotateBy(90, .2f));
+    }
+
+    public void onEnterBackward() {
+        uiStage.addAction(Actions.rotateTo(90, 0));
+        bookLevel.getPage().addAction(Actions.rotateTo(90, 0));
+        uiStage.addAction(Actions.rotateBy(-90, .2f));
+        bookLevel.getPage().addAction(Actions.rotateBy(-90, .2f));
     }
 
     @Override
@@ -100,11 +135,11 @@ public class LevelScreen extends BasicScreen {
         bookLevel.resize(width, height);
     }
 
-    public void onClose(){
+    public void onClose() {
         uiStage.addAction(Actions.fadeOut(.2f));
     }
 
-    public void onPickLevel(){
+    public void onPickLevel() {
 //        bookLevel.onExit();
         onGoToGameScreen();
 //        mainGame.gameScreen.onEnter();
@@ -112,7 +147,15 @@ public class LevelScreen extends BasicScreen {
 //        preview.addAction(Actions.rotateTo(-100));
     }
 
-    public void onGoToGameScreen(){
+    public void onGoToGameScreen() {
         System.out.println("on Go to game screen");
+    }
+
+    public void onBack(){
+
+    }
+
+    public void onSettings(){
+
     }
 }

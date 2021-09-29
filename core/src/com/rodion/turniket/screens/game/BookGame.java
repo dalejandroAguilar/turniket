@@ -204,4 +204,8 @@ public class BookGame {
     public void onUnlock() {
         game.onUnlock();
     }
+
+    public void onPlay(){
+        game.onPlay();
+    }
 }

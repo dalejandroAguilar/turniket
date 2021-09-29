@@ -18,18 +18,21 @@ import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.Difficulty;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.Level;
 import com.rodion.turniket.utilities.LevelManagerMaster;
 
 public class LevelEntity extends Layout {
     private BoardEntity board;
     private ImageEntity frame;
+    private ImageEntity padlock;
     private ImageEntity[] stars;
     private ImageEntity numberFrame;
     private LabelEntity numberLevel;
     private Difficulty difficulty;
     private int index;
+    private boolean isUnlocked;
 
-    public LevelEntity(int index, Character[][] map, Difficulty difficulty, BasicStage basicStage) {
+    public LevelEntity(int index, Level level, Difficulty difficulty, BasicStage basicStage) {
         super(basicStage);
         this.difficulty = difficulty;
         this.index = index;
@@ -39,7 +42,10 @@ public class LevelEntity extends Layout {
         starTable.setFillParent(false);
         Table numberTable = new Table();
         numberTable.setFillParent(false);
+        Table lockTable = new Table();
         stars = new ImageEntity[3];
+        int nStars = level.getStars();
+        isUnlocked = level.isUnlocked();
 
         for (int i = 0; i < 3; i++) {
             stars[i] = new ImageEntity() {
@@ -51,12 +57,15 @@ public class LevelEntity extends Layout {
                 }
             };
             stars[i].prepareAssets();
-            stars[i].setColor(Color.YELLOW);
+            stars[i].setColor(Color.DARK_GRAY);
             starTable.add(stars[i]).top().expandY();
             starTable.add();
         }
 
-        board = new BoardEntity(map, basicStage);
+        for (int i = 0; i < nStars; i++)
+            stars[i].setColor(Color.YELLOW);
+
+        board = new BoardEntity(level.getMap(), basicStage);
         board.setTouchable(Touchable.disabled);
         frame = new ImageEntity() {
             @Override
@@ -84,16 +93,30 @@ public class LevelEntity extends Layout {
         };
         numberFrame.prepareAssets();
 
+        padlock = new ImageEntity()
+        {
+            @Override
+            public void setAssetAddress() {
+                setAssetManager(AssetManagerMaster.level);
+                assetPath = "level";
+                assetName = "padlock";
+            }
+        };
+        padlock.prepareAssets();
+        lockTable.add(padlock);
+
         numberLevel = new LabelEntity(Integer.toString(index + 1), FontManagerMaster.helveticaWhiteStyle) {
             @Override
             public void updatePosition() {
                 setPosition(numberFrame.getX(Align.center), numberFrame.getY(Align.center), Align.center);
             }
         };
+
         numberLevel.setAlignment(Align.center);
         stack.add(frame);
         stack.add(starTable);
         stack.add(board);
+        stack.add(lockTable);
         add(stack);
 
 
@@ -136,8 +159,7 @@ public class LevelEntity extends Layout {
                                         }
                                 )
                         ));
-                    }
-                    else {
+                    } else {
                         frame.addAction(Actions.color(difficultyColor, 0.2f));
                         frame.addAction(Actions.rotateTo(0, 0.2f));
                     }
@@ -152,6 +174,8 @@ public class LevelEntity extends Layout {
                 isPressed = false;
             }
         });
+
+        setLockedStatus();
 
     }
 
@@ -178,11 +202,24 @@ public class LevelEntity extends Layout {
             star.resize(width, height);
         numberFrame.resize(width, height);
         numberLevel.resize(width, height);
+        padlock.resize(width, height);
     }
 
-    public void onBeginAction(){
+    public void onBeginAction() {
 
     }
+
+    public void setLockedStatus() {
+        if (isUnlocked) {
+            padlock.getColor().a=0;
+        } else {
+            board.hide();
+        }
+    }
+
+//    public void set(){
+//
+//    }
 
     public void onAction() {
         System.out.println("onAction" + index);

@@ -15,22 +15,29 @@ public class LevelManagerMaster {
     private static int[] npagesPerDiff;
     private static int nmaps;
     private static int npages;
+    private static int nstars;
 
-    public static void init() {
+    public static void init(Multiplatform multiplatform) {
         bookmark = 0;
         pageMark = 0;
         npages = 0;
         nmaps = 0;
+        nstars = 0;
         npagesPerDiff = new int[Difficulty.values().length];
         nmapsPerDiff = new int[Difficulty.values().length];
         maps = new ArrayList<>();
         for (Difficulty difficulty : Difficulty.values()) {
-            FileHandle dir = Gdx.files.local("maps/"+  difficulty.name()) ; //new File(Gdx.files.path()+"maps\\" +  difficulty.name()); //File("maps\\" + difficulty.name());
+//            FileHandle dir = Gdx.files.local("maps/"+  difficulty.name()) ; //new File(Gdx.files.path()+"maps\\" +  difficulty.name()); //File("maps\\" + difficulty.name());
+            FileHandle dir = multiplatform.openFile("maps/"+  difficulty.name());
+//                    Gdx.files.internal() ; //new File(Gdx.files.path()+"maps\\" +  difficulty.name()); //File("maps\\" + difficulty.name());
             nmapsPerDiff[difficulty.index] = dir.list().length;
             for (int i = 0; i < nmapsPerDiff[difficulty.index]; i++) {
                 System.out.println(i);
                 maps.add(new Level(dir.list()[i]));
-                maps.get(i).loadSolution();
+                Level level = maps.get(i);
+                level.loadSolution(multiplatform);
+                level.loadStatus(multiplatform);
+                nstars += level.getStars();
             }
             npagesPerDiff[difficulty.index] = nmapsPerDiff[difficulty.index] / mapsPerPage + 1;
             npages += npagesPerDiff[difficulty.index];
@@ -182,6 +189,10 @@ public class LevelManagerMaster {
         LevelManagerMaster.bookmark = bookmark;
     }
 
+    public static int getNstars() {
+        return nstars;
+    }
+
     public static Difficulty getDifficultOfLevel(int index){
         int acumLevel = 0;
         for (Difficulty difficulty : Difficulty.values()) {
@@ -191,4 +202,6 @@ public class LevelManagerMaster {
         }
         return null;
     }
+
+
 }

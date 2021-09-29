@@ -24,8 +24,7 @@ public class GameLayout extends Layout {
     public GameLayout(final Level level, int index, BasicStage basicStage) {
         super(basicStage);
         setFillParent(true);
-
-        lockedStatus = false;
+        lockedStatus = !level.isUnlocked();
         topMenu = new TopMenuLayout(getParentStage()) {
             @Override
             public void onReturn() {
@@ -35,8 +34,8 @@ public class GameLayout extends Layout {
         };
 
         levelTitle = new LevelTitleBarEntity(index, getParentStage());
-        score = new ScoreLayout(getParentStage());
-        status = new StatusLayout(getParentStage());
+        score = new ScoreLayout(getParentStage(), level);
+        status = new StatusLayout(getParentStage(), level);
 
         board = new BoardLayout(level, getParentStage()) {
             @Override
@@ -60,12 +59,13 @@ public class GameLayout extends Layout {
                 super.onWin();
                 GameLayout.this.onWin();
                 status.stop();
+                score.onWin();
             }
 
             @Override
             public void moveFromSolution() {
                 super.moveFromSolution();
-                level.loadSolution();
+                level.loadSolution(getParentStage().getParentScreen().getMainGame().multiplatform);
                 System.out.println(level.getSolutionRead().getNSteps());
                 Solution.Step step = level.getSolutionRead().getStep();
                 getGame().move(step.getTokenColor(getGame().getState()), step.getDirection());
@@ -112,17 +112,17 @@ public class GameLayout extends Layout {
         add(board).expandX().fillX().row();
         add(bottomMenu).bottom().expand().fillX();
 
-        lockedStatus = true;
+//        lockedStatus = false;
 
 //        setX(board.getX(Align.center), Align.center);
 //        setY(board.getY(Align.center), Align.center);
 
         background(ColorManagerMaster.grayBg);
-
-
     }
 
+
     public void onWin() {
+        topMenu.onIncreasing(3);
     }
 
     @Override
@@ -201,14 +201,16 @@ public class GameLayout extends Layout {
         if (lockedStatus) {
             status.hide();
             score.hide();
-//            lockEntity.getColor().a = 1;
             board.setToLock();
         } else {
             status.setToPreview();
             score.setToPreview();
-//            lockEntity.getColor().a = 0;
             board.setToUnlock();
         }
+    }
+
+    public void onPlay() {
+        status.onPlay();
     }
 
     public void onUnlock() {
@@ -216,4 +218,10 @@ public class GameLayout extends Layout {
         score.show();
         status.show();
     }
+
+    public boolean isLockedStatus() {
+        return lockedStatus;
+    }
+
+
 }

@@ -11,7 +11,19 @@ public class UILevelLayout extends Layout {
     public UILevelLayout(BasicStage basicStage) {
         super(basicStage);
         setFillParent(true);
-        topMenu = new TopMenuLayout(basicStage);
+        topMenu = new TopMenuLayout(basicStage) {
+            @Override
+            public void onBack() {
+                super.onBack();
+                UILevelLayout.this.onBack();
+            }
+
+            @Override
+            public void onSettings() {
+                super.onSettings();
+                UILevelLayout.this.onSettings();
+            }
+        };
         difficultyMenu = new DifficultyMenuLayoutFront(basicStage) {
             @Override
             public void onPrevious() {
@@ -23,7 +35,7 @@ public class UILevelLayout extends Layout {
                 onNextDifficulty();
             }
         };
-        bottomMenu = new BottomMenuLayoutFront(basicStage){
+        bottomMenu = new BottomMenuLayoutFront(basicStage) {
             @Override
             public void onPrevious() {
                 onPreviousPage();
@@ -54,10 +66,18 @@ public class UILevelLayout extends Layout {
     public void onNextDifficulty() {
     }
 
-    public void onPreviousPage(){
+    public void onPreviousPage() {
     }
 
-    public void onNextPage(){
+    public void onNextPage() {
+    }
+
+    public void onBack() {
+
+    }
+
+    public void onSettings() {
+
     }
 }
 

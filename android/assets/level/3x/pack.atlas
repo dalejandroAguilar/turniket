@@ -6,7 +6,7 @@ filter: Nearest,Nearest
 repeat: none
 axis
   rotate: false
-  xy: 1868, 1625
+  xy: 1504, 956
   size: 28, 28
   orig: 28, 28
   offset: 0, 0
@@ -34,7 +34,7 @@ board
   index: -1
 button_back
   rotate: false
-  xy: 1504, 982
+  xy: 1504, 986
   size: 339, 181
   orig: 339, 181
   offset: 0, 0
@@ -48,44 +48,37 @@ button_label_frame
   index: -1
 button_next
   rotate: false
-  xy: 1148, 613
+  xy: 845, 613
   size: 301, 301
   orig: 301, 301
   offset: 0, 0
   index: -1
 button_previous
   rotate: false
-  xy: 845, 613
+  xy: 1561, 1352
   size: 301, 301
   orig: 301, 301
   offset: 0, 0
   index: -1
 button_redo
   rotate: false
-  xy: 381, 3
+  xy: 538, 306
   size: 301, 301
   orig: 301, 301
   offset: 0, 0
   index: -1
 button_settings
   rotate: false
-  xy: 1561, 1165
+  xy: 1561, 1169
   size: 310, 181
   orig: 310, 181
   offset: 0, 0
   index: -1
 button_undo
   rotate: false
-  xy: 538, 306
+  xy: 1148, 613
   size: 301, 301
   orig: 301, 301
-  offset: 0, 0
-  index: -1
-gid
-  rotate: false
-  xy: 1561, 1348
-  size: 305, 305
-  orig: 305, 305
   offset: 0, 0
   index: -1
 grid
@@ -104,23 +97,30 @@ level_frame
   index: -1
 little_star
   rotate: false
-  xy: 1940, 1860
+  xy: 754, 227
   size: 81, 77
   orig: 81, 77
   offset: 0, 0
   index: -1
 next_mark
   rotate: false
-  xy: 684, 87
+  xy: 630, 87
   size: 80, 92
   orig: 80, 92
   offset: 0, 0
   index: -1
 number_level_frame
   rotate: false
-  xy: 684, 181
+  xy: 630, 181
   size: 122, 123
   orig: 122, 123
+  offset: 0, 0
+  index: -1
+padlock
+  rotate: false
+  xy: 381, 3
+  size: 247, 301
+  orig: 247, 301
   offset: 0, 0
   index: -1
 popup_frame
@@ -139,7 +139,7 @@ previous_mark
   index: -1
 token
   rotate: false
-  xy: 381, 309
+  xy: 1864, 1584
   size: 69, 69
   orig: 69, 69
   offset: 0, 0

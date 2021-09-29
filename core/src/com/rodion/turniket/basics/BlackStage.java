@@ -11,15 +11,16 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class BlackStage extends BasicStage {
     private  Texture blackTexture;
-
+    private Image image;
     public BlackStage(Viewport viewport, BasicScreen screen) {
         super(viewport, screen);
         blackTexture = getTexture();
-        final Image image = new Image(new TextureRegion(blackTexture));
+        image = new Image(new TextureRegion(blackTexture));
         image.setSize(getWidth(), getHeight());
         image.setOrigin(getWidth() / 2, getHeight() / 2);
         image.setColor(Color.BLACK);
         addActor(image);
+//        image.debug();
     }
 
     public static Texture getTexture() {
@@ -35,18 +36,22 @@ public class BlackStage extends BasicStage {
     }
 
     public void resize(int width, int height) {
-        getViewport().update(width, height, true);
+        super.resize(width, height);
+        image.setSize(getWidth(), getHeight());
+        image.setOrigin(getWidth() / 2, getHeight() / 2);
+//        getViewport().update(width, height, true);
+
     }
 
     public void onShowing() {
         addAction(
                 Actions.sequence(
-                        Actions.fadeIn(0.2f),
+                        Actions.fadeIn(.2f),
                         Actions.run(new Runnable() {
                             @Override
                             public void run() {
                                 onShow();
-                                System.out.println("onShow");
+
                             }
                         })
                 )
@@ -68,7 +73,7 @@ public class BlackStage extends BasicStage {
     }
 
     public void onShow() {
-
+        System.out.println("onShow");
     }
 
     public void onHide() {

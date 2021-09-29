@@ -37,10 +37,9 @@ public class PageLayout extends Layout {
 //                        map[j] = lines[j + 1].replace("\n","");
 //                        System.out.println(map[j]);
 //                    }
-
-            Character[][] map = files.get(i).getMap();
+            Level level = files.get(i);
             levels.add(
-                    new LevelEntity(index, map, LevelManagerMaster.getDifficulty(page)
+                    new LevelEntity(index, level, LevelManagerMaster.getDifficulty(page)
                             , getParentStage()) {
 
                         @Override

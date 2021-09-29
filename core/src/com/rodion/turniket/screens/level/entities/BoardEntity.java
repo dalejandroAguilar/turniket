@@ -172,4 +172,12 @@ public class BoardEntity extends Layout {
         for (ImageEntity blade : blades)
             blade.resize(width, height);
     }
+
+    public void hide(){
+        getColor().a = 0;
+        for(BladeEntity blade: blades)
+            blade.getColor().a = 0;
+        for(ImageEntity axis1 : axis)
+            axis1.getColor().a=0;
+    }
 }

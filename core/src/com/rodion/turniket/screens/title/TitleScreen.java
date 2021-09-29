@@ -11,20 +11,34 @@ import com.rodion.turniket.utilities.ScreenScale;
 
 public class TitleScreen extends BasicScreen {
     private TitleStage stage;
-    private final ScreenViewport screenViewport = new  ScreenViewport();
+    private final ScreenViewport screenViewport = new ScreenViewport();
     private BlackStage blackStage;
-
 
     public TitleScreen(MainGame mainGame) {
         super(mainGame);
-        stage = new TitleStage(screenViewport, this){
+        stage = new TitleStage(screenViewport, this) {
             @Override
             public void onPlay() {
                 super.onPlay();
-                TitleScreen.this.onPlay();
+                stage.addAction(Actions.sequence(
+                        Actions.fadeOut(.2f),
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                TitleScreen.this.onPlay();
+                            }
+                        })
+                        )
+                );
+
             }
         };
         blackStage = new BlackStage(screenViewport, this);
+    }
+
+    public void init(){
+        stage.addAction(Actions.fadeIn(0f));
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -35,15 +49,22 @@ public class TitleScreen extends BasicScreen {
         stage.act();
         stage.draw();
         blackStage.act(delta);
-        blackStage.show();
+        blackStage.draw();
     }
 
-    public void onPlay(){
+    public void onPlay() {
 
     }
 
-    public void onEnter(){
+    public void onEnterForward() {
+        System.out.println("EnterTitle");
+        Gdx.input.setInputProcessor(stage);
         blackStage.onHiding();
+    }
+
+    public void onEnterBackward() {
+        stage.addAction(Actions.rotateTo(90, 0));
+        stage.addAction(Actions.rotateBy(-90, .2f));
     }
 
     @Override

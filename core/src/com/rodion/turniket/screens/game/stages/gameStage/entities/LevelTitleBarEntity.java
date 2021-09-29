@@ -20,7 +20,6 @@ public class LevelTitleBarEntity extends Layout {
     private LabelEntity levelLabel;
     private LabelEntity number;
 
-
     public LevelTitleBarEntity(int index, BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
@@ -48,7 +47,9 @@ public class LevelTitleBarEntity extends Layout {
         right.prepareAssets();
         right.setColor(ColorManagerMaster.green);
         final Layout table = new Layout(getParentStage());
-        levelLabel = new LabelEntity(difficulty.name(), FontManagerMaster.nexaStyle);
+        levelLabel = new LabelEntity(
+                difficulty.name()
+                , FontManagerMaster.nexaStyle);
         number = new LabelEntity(""+(index + 1) , FontManagerMaster.nexaStyle) {
             @Override
             public void updatePosition() {

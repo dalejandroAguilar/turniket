@@ -156,4 +156,10 @@ public class LockLayout extends Layout {
             assetNames[10] = "check11";
         }
     }
+
+    @Override
+    public void hide() {
+        super.hide();
+        lockEntity.getColor().a = 0;
+    }
 }

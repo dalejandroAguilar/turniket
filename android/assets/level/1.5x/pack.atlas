@@ -20,7 +20,7 @@ back_board
   index: -1
 blade
   rotate: false
-  xy: 1636, 60
+  xy: 1788, 108
   size: 14, 51
   orig: 14, 51
   offset: 0, 0
@@ -62,7 +62,7 @@ button_previous
   index: -1
 button_redo
   rotate: false
-  xy: 1674, 161
+  xy: 1636, 9
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
@@ -104,14 +104,14 @@ level_frame
   index: -1
 little_star
   rotate: false
-  xy: 1678, 120
+  xy: 478, 53
   size: 41, 39
   orig: 41, 39
   offset: 0, 0
   index: -1
 next_mark
   rotate: false
-  xy: 394, 46
+  xy: 436, 46
   size: 40, 46
   orig: 40, 46
   offset: 0, 0
@@ -123,6 +123,13 @@ number_level_frame
   orig: 61, 61
   offset: 0, 0
   index: -1
+padlock
+  rotate: false
+  xy: 1674, 161
+  size: 123, 150
+  orig: 123, 150
+  offset: 0, 0
+  index: -1
 popup_frame
   rotate: false
   xy: 2, 94
@@ -132,7 +139,7 @@ popup_frame
   index: -1
 previous_mark
   rotate: false
-  xy: 1636, 113
+  xy: 394, 46
   size: 40, 46
   orig: 40, 46
   offset: 0, 0

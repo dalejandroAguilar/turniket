@@ -10,6 +10,8 @@ import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
 
+import java.io.FileNotFoundException;
+
 public class TopMenuLayout extends Layout {
     private BackgroundedLabelButton backButton;
     private BackgroundedLabelButton settingsButton;
@@ -25,6 +27,13 @@ public class TopMenuLayout extends Layout {
                 setAssetPath("level");
                 setAssetName("button_back");
             }
+
+            @Override
+            public void onAction() throws FileNotFoundException {
+                super.onAction();
+                TopMenuLayout.this.onBack();
+            }
+
         };
         backButton.setFillParent(false);
         settingsButton = new BackgroundedLabelButton("Settings", FontManagerMaster.helveticaStyle, getParentStage()) {
@@ -34,6 +43,13 @@ public class TopMenuLayout extends Layout {
                 setAssetPath("level");
                 setAssetName("button_settings");
             }
+
+            @Override
+            public void onAction() throws FileNotFoundException {
+                super.onAction();
+                TopMenuLayout.this.onSettings();
+            }
+
         };
         settingsButton.setFillParent(false);
 
@@ -59,6 +75,14 @@ public class TopMenuLayout extends Layout {
         add().expandX().fillX();
         add(settingsButton).right();
         setBackground(ColorManagerMaster.grayBg);
+    }
+
+    public void onBack() {
+
+    }
+
+    public void onSettings() {
+
     }
 
     @Override

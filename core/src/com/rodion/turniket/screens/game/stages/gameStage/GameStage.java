@@ -54,7 +54,13 @@ public class GameStage extends BasicStage {
                     solverLayout.onShow();
                 else
                     confirmationGameToSolver.onShow();
-//                solverLayout.show();
+            }
+
+            @Override
+            public void setToPreview() {
+                super.setToPreview();
+                if(!isLockedStatus())
+                    lockLayout.hide();
             }
         };
 
@@ -62,7 +68,6 @@ public class GameStage extends BasicStage {
             @Override
             public void updateLockEntityPosition() {
                 super.updateLockEntityPosition();
-//                Vector2 boardPosition = gameLayout.getBoard().get(Align.center);
                 getLockEntity().setX(gameLayout.getBoard().getX(Align.center), Align.center);
                 getLockEntity().setY(gameLayout.getBoard().getY(Align.center), Align.center);
             }
@@ -134,8 +139,12 @@ public class GameStage extends BasicStage {
         gameLayout.setToPreview();
     }
 
+    public void onPlay(){
+        gameLayout.onPlay();
+    }
+
     public void onWin() {
-        System.out.println("Win GAMELAYOUT");
+
     }
 
 
@@ -165,4 +174,6 @@ public class GameStage extends BasicStage {
     public void onUnlock() {
         lockLayout.onUnlock();
     }
+
+
 }

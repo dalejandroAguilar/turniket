@@ -6,13 +6,15 @@ import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.ImageEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
+import com.rodion.turniket.utilities.Level;
 
 public class ScoreLayout extends Layout {
     private ImageEntity[] stars;
 
-    public ScoreLayout(BasicStage basicStage) {
+    public ScoreLayout(BasicStage basicStage, Level level) {
         super(basicStage);
         setFillParent(false);
+        int nStars = level.getStars();
         stars = new ImageEntity[3];
         for (int i = 0; i < 3; i++) {
             stars[i] = new ImageEntity() {
@@ -27,13 +29,26 @@ public class ScoreLayout extends Layout {
             stars[i].setColor(Color.DARK_GRAY);
             add(stars[i]).pad(10);
         }
-        stars[0].setColor(Color.YELLOW);
-        stars[1].setColor(Color.YELLOW);
+
+        for (int i = 0; i < nStars; i++)
+            stars[i].setColor(Color.YELLOW);
     }
 
     public void onBegin() {
         stars[0].addAction(Actions.color(Color.GRAY));
         stars[1].addAction(Actions.color(Color.GRAY));
+    }
+
+    public void onWin() {
+        for (int i = 0; i < 3; i++)
+            stars[i].addAction(Actions.sequence(
+                    Actions.delay(0.4f * i),
+                    Actions.parallel(
+                            Actions.scaleTo(5f, 5f, 0.2f),
+                            Actions.scaleTo(1f, 1f, 0.2f),
+                            Actions.color(Color.YELLOW, 0.4f)
+                    )
+            ));
     }
 
     public void setToPreview() {
@@ -42,7 +57,7 @@ public class ScoreLayout extends Layout {
     }
 
     public void onHint() {
-        for(ImageEntity star : stars)
+        for (ImageEntity star : stars)
             star.addAction(Actions.fadeOut(.5f));
     }
 

@@ -11,6 +11,7 @@ import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
 import com.rodion.turniket.utilities.LevelManagerMaster;
+import com.rodion.turniket.utilities.Multiplatform;
 import com.rodion.turniket.utilities.ScreenScale;
 
 public class MainGame extends Game {
@@ -20,31 +21,87 @@ public class MainGame extends Game {
     public GameScreen gameScreen;
     public LevelScreen levelScreen;
     public TitleScreen titleScreen;
+    public Multiplatform multiplatform;
+
+    public MainGame(Multiplatform multiplatform) {
+        super();
+        this.multiplatform = multiplatform;
+    }
 
     @Override
     public void create() {
-        System.out.println("init");
         AssetManagerMaster.loadLoading();
-        AssetManagerMaster.loadTitle();
-        AssetManagerMaster.loadLevels();
-        AssetManagerMaster.loadGame();
-        ColorManagerMaster.load();
-        FontManagerMaster.loadFonts();
-        LevelManagerMaster.init();
+        System.out.println("init");
 
+
+        LevelManagerMaster.init(multiplatform);
 //
         ScreenScale.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        loadingScreen = new LoadingScreen(this){
+
+        loadingScreen = new LoadingScreen(this) {
+            @Override
+            public void onActive() {
+                AssetManagerMaster.loadTitle();
+                AssetManagerMaster.loadLevels();
+                AssetManagerMaster.loadGame();
+                ColorManagerMaster.load();
+                FontManagerMaster.loadFonts();
+            }
+
+            @Override
+            public boolean hasFinishedLoading() {
+                return (AssetManagerMaster.game.update() && AssetManagerMaster.title.update() &&
+                        AssetManagerMaster.level.update());
+            }
+
             @Override
             public void onExit() {
                 super.onExit();
-                titleScreen.onEnter();
+                titleScreen = new TitleScreen(MainGame.this) {
+                    @Override
+                    public void onPlay() {
+                        super.onPlay();
+                        levelScreen = new LevelScreen(MainGame.this) {
+                            @Override
+                            public void onGoToGameScreen() {
+                                super.onGoToGameScreen();
+//                                System.out.println("onGoToGameScreen ext");
+                                gameScreen = new GameScreen(MainGame.this) {
+                                    @Override
+                                    public void onGoToLevelScreen() {
+                                        super.onGoToLevelScreen();
+                                        levelScreen.init();
+                                        levelScreen.onEnterBackward();
+                                        setScreen(levelScreen);
+                                    }
+                                };
+                                gameScreen.init();
+                                setScreen(gameScreen);
+                                gameScreen.onEnter();
+                            }
+
+                            @Override
+                            public void onBack() {
+                                super.onBack();
+                                System.out.println("back");
+                                titleScreen.init();
+                                setScreen(titleScreen);
+                                titleScreen.onEnterBackward();
+                            }
+                        };
+                        levelScreen.init();
+                        levelScreen.onEnterForward();
+                        setScreen(levelScreen);
+                    }
+                };
+                titleScreen.onEnterForward();
                 setScreen(titleScreen);
+//                AssetManagerMaster.game.up;
             }
         };
 
-        launchScreen = new LaunchScreen(this){
+        launchScreen = new LaunchScreen(this) {
             @Override
             public void onEnd() {
                 super.onEnd();
@@ -52,38 +109,7 @@ public class MainGame extends Game {
                 setScreen(loadingScreen);
             }
         };
-//
-        gameScreen = new GameScreen(this){
-            @Override
-            public void onGoToLevelScreen() {
-                super.onGoToLevelScreen();
-                levelScreen.init();
-                setScreen(levelScreen);
-//                levelScreen.onEnter();
-            }
-        };
-
-        levelScreen = new LevelScreen(this) {
-            @Override
-            public void onGoToGameScreen() {
-                super.onGoToGameScreen();
-                System.out.println("onGoToGameScreen ext");
-                gameScreen.init();
-                setScreen(gameScreen);
-                gameScreen.onEnter();
-            }
-        };
-
-        titleScreen = new TitleScreen(this){
-            @Override
-            public void onPlay() {
-                super.onPlay();
-                levelScreen.init();
-                setScreen(levelScreen);
-            }
-        };
         setScreen(launchScreen);
-//        setScreen(levelScreen);
     }
 
     @Override

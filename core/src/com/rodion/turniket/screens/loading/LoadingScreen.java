@@ -2,7 +2,6 @@ package com.rodion.turniket.screens.loading;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.rodion.turniket.MainGame;
 import com.rodion.turniket.basics.BasicScreen;
@@ -17,22 +16,11 @@ public class LoadingScreen extends BasicScreen {
     public LoadingScreen(MainGame mainGame) {
         super(mainGame);
         stage = new LoadingStage(screenViewport, this);
-        blackStage = new BlackStage(screenViewport, this){
+        blackStage = new BlackStage(screenViewport, this) {
             @Override
             public void onHide() {
                 super.onHide();
-                addAction(Actions.sequence(
-                        Actions.delay(2)
-                        ,
-                        Actions.run(
-                                new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        blackStage.onShowing();
-                                    }
-                                }
-                        )
-                ));
+                onActive();
             }
 
             @Override
@@ -43,12 +31,22 @@ public class LoadingScreen extends BasicScreen {
         };
     }
 
+    public void onActive(){
+
+    }
+
     public void onEnter(){
         System.out.println("entrando");
         blackStage.onHiding();
     }
 
+
+
     public void onExit(){
+    }
+
+    public boolean hasFinishedLoading(){
+        return false;
     }
 
     @Override
@@ -60,6 +58,9 @@ public class LoadingScreen extends BasicScreen {
         stage.draw();
         blackStage.act(delta);
         blackStage.draw();
+        if (hasFinishedLoading()){
+            blackStage.onShowing();
+        }
     }
 
     @Override

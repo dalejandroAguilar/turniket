@@ -6,7 +6,7 @@ filter: Nearest,Nearest
 repeat: none
 axis
   rotate: false
-  xy: 203, 15
+  xy: 473, 184
   size: 5, 5
   orig: 5, 5
   offset: 0, 0
@@ -20,7 +20,7 @@ back_board
   index: -1
 blade
   rotate: false
-  xy: 299, 41
+  xy: 298, 41
   size: 5, 17
   orig: 5, 17
   offset: 0, 0
@@ -83,7 +83,7 @@ button_redo
   index: -1
 button_restart
   rotate: false
-  xy: 247, 8
+  xy: 246, 8
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
@@ -125,14 +125,14 @@ level_frame
   index: -1
 little_star
   rotate: false
-  xy: 485, 218
+  xy: 18, 15
   size: 14, 13
   orig: 14, 13
   offset: 0, 0
   index: -1
 next_mark
   rotate: false
-  xy: 421, 121
+  xy: 485, 215
   size: 14, 16
   orig: 14, 16
   offset: 0, 0
@@ -142,6 +142,13 @@ number_level_frame
   xy: 485, 233
   size: 21, 21
   orig: 21, 21
+  offset: 0, 0
+  index: -1
+padlock
+  rotate: false
+  xy: 203, 14
+  size: 41, 50
+  orig: 41, 50
   offset: 0, 0
   index: -1
 popup_frame
@@ -160,7 +167,7 @@ previous_mark
   index: -1
 star
   rotate: false
-  xy: 203, 22
+  xy: 421, 95
   size: 42, 42
   orig: 42, 42
   offset: 0, 0

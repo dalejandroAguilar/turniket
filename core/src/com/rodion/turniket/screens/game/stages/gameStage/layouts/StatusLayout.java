@@ -11,6 +11,7 @@ import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.Level;
 
 public class StatusLayout extends Layout {
     private BackgroundedLayout time;
@@ -18,12 +19,10 @@ public class StatusLayout extends Layout {
     private LabelEntity labelTime;
     private LabelEntity labelSteps;
     private ImageEntity crown;
-
     private Timer.Task timer;
-
     private int counterTime;
 
-    public StatusLayout(BasicStage basicStage) {
+    public StatusLayout(BasicStage basicStage, Level level) {
         super(basicStage);
         counterTime = 0;
         setFillParent(false);
@@ -127,13 +126,13 @@ public class StatusLayout extends Layout {
         crown.addAction(Actions.fadeOut(.5f));
     }
 
-    public void onSetToActive() {
-        steps.addAction(Actions.color(Color.BLACK));
-        time.addAction(Actions.color(Color.BLACK));
-        crown.getColor().a = 0;
-        labelSteps.getColor().a = 1; // labels of level
-        labelTime.getColor().a = 1;  // labels of level
-    }
+//    public void onSetToActive() {
+//        steps.addAction(Actions.color(Color.BLACK));
+//        time.addAction(Actions.color(Color.BLACK));
+//        crown.getColor().a = 0;
+//        labelSteps.getColor().a = 1; // labels of level
+//        labelTime.getColor().a = 1;  // labels of level
+//    }
 
     public void onSetToInactive() {
 
@@ -147,4 +146,16 @@ public class StatusLayout extends Layout {
         crown.getColor().a = 1;
         timer.cancel();
     }
+
+    public void onPlay() {
+        steps.addAction(Actions.color(Color.BLACK,.2f));
+        time.addAction(Actions.color(Color.BLACK,.2f));
+        crown.addAction(Actions.fadeOut(.2f));
+//        crown.getColor().a = 0;
+
+//        labelSteps.getColor().a = 1; // labels of level
+//        labelTime.getColor().a = 1;  // labels of level
+        startTimer();
+    }
+
 }

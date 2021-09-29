@@ -29,7 +29,6 @@ public class GameScreen extends BasicScreen {
 
     public GameScreen(MainGame mainGame) {
         super(mainGame);
-
 //        backBufferStage = new BackBufferStage(screenViewport, this);
         bookGame = new BookGame(screenViewport, this) {
             @Override
@@ -50,6 +49,7 @@ public class GameScreen extends BasicScreen {
             public void onPlay() {
                 preview.hide();
                 bookGame.getGame().onInput();
+                bookGame.onPlay();
             }
 
             @Override
@@ -72,7 +72,19 @@ public class GameScreen extends BasicScreen {
             @Override
             public void onReturn() {
                 super.onReturn();
-                onGoToLevelScreen();
+                bookGame.getGame().addAction(Actions.fadeOut(0.2f));
+                preview.addAction(Actions.fadeOut(0.2f));
+
+                addAction(Actions.sequence(
+                        Actions.fadeOut(0.2f),
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                 onGoToLevelScreen();
+                            }
+                        })
+                ));
+
 //                GameScreen.this.onReturn();
             }
         };
@@ -149,15 +161,12 @@ public class GameScreen extends BasicScreen {
     }
 
     public void onEnter() {
-//        backBufferStage.onInit();
         bookGame.getGame().addAction(Actions.rotateTo(-90, 0));
         preview.addAction(Actions.rotateTo(-90, 0));
-        bookGame.getGame().addAction(Actions.rotateBy(90, .25f));
-        preview.addAction(Actions.rotateBy(90, .25f));
+        bookGame.getGame().addAction(Actions.rotateBy(90, .2f));
+        preview.addAction(Actions.rotateBy(90, .2f));
         preview.onInput();
         preview.onEnter();
-//        Table table = new Table(|);
-//        tabl
     }
 
     public void init() {
