@@ -1,0 +1,34 @@
+
+pack.png
+size: 512,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+large_button
+  rotate: false
+  xy: 2, 2
+  size: 243, 50
+  orig: 243, 50
+  offset: 0, 0
+  index: -1
+quit_button
+  rotate: false
+  xy: 264, 417
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+settings_frame
+  rotate: false
+  xy: 2, 54
+  size: 260, 439
+  orig: 260, 439
+  offset: 0, 0
+  index: -1
+switch
+  rotate: false
+  xy: 264, 459
+  size: 100, 34
+  orig: 100, 34
+  offset: 0, 0
+  index: -1
