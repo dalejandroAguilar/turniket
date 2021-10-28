@@ -9,6 +9,7 @@ import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.LevelManagerMaster;
 
 import java.io.FileNotFoundException;
 
@@ -64,14 +65,14 @@ public class TopMenuLayout extends Layout {
         star.prepareAssets();
         star.setColor(Color.YELLOW);
 
-        score = new LabelEntity("10", FontManagerMaster.nexaStyle);
+        score = new LabelEntity(LevelManagerMaster.getNstars() +"", FontManagerMaster.nexaStyle);
         score.setColor(Color.WHITE);
         settingsButton.setFillParent(false);
         setFillParent(false);
 
         add(backButton).left();
-        add(star).left();
-        add(score).left();
+        add(star).left().padLeft(20);
+        add(score).left().padLeft(20);
         add().expandX().fillX();
         add(settingsButton).right();
         setBackground(ColorManagerMaster.grayBg);
@@ -83,6 +84,10 @@ public class TopMenuLayout extends Layout {
 
     public void onSettings() {
 
+    }
+
+    public void update(){
+        score.setText(LevelManagerMaster.getNstars()+"");
     }
 
     @Override

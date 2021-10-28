@@ -62,12 +62,12 @@ public class YouWinLayout extends Layout {
 
     public void showUp(){
         popUpLayout.addAction(Actions.fadeIn(0.5f));
-//        bottomMenu.setVisible(true);
+        topMenu.update();
+
     }
 
     public void onHide(){
         popUpLayout.addAction(Actions.fadeOut(0.5f));
-//        clear();
     }
 
     @Override
@@ -81,10 +81,8 @@ public class YouWinLayout extends Layout {
     }
 
     public void onContinue(){
-
     }
 
     public void onSaveSolution() throws FileNotFoundException {
-
     }
 }

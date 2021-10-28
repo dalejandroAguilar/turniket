@@ -155,6 +155,10 @@ public class LevelScreen extends BasicScreen {
 
     }
 
+    public void update(){
+        uiStage.update();
+    }
+
     public void onSettings(){
 
     }

@@ -12,6 +12,7 @@ import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.Level;
 import com.rodion.turniket.utilities.LevelManagerMaster;
 
 import java.io.FileNotFoundException;
@@ -48,6 +49,12 @@ public class TopMenuLayout extends Layout {
                 setAssetManger(AssetManagerMaster.game);
                 setAssetPath("game");
                 setAssetName("button_settings");
+            }
+
+            @Override
+            public void onAction() throws FileNotFoundException {
+                super.onAction();
+                onSettings();
             }
         };
         star = new ImageEntity() {
@@ -86,6 +93,10 @@ public class TopMenuLayout extends Layout {
 
     }
 
+    public void onSettings() {
+
+    }
+
     public void onIncreasing(int amount) {
 
         for (int i = 0; i < amount; i++) {
@@ -106,10 +117,27 @@ public class TopMenuLayout extends Layout {
                     )
             );
         }
+        LevelManagerMaster.setNstars(LevelManagerMaster.getNstars() + amount);
+        addAction(Actions.sequence(
+                Actions.delay(0.4f * (amount)),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        update();
+
+                    }
+                })
+
+        ));
 //            sequenceAction.addAction();
 //            Ac
 //        addAction(Actions.sequence(
 //
 //        ));
+    }
+
+    public void update() {
+        nstars = LevelManagerMaster.getNstars();
+        score.setText(nstars + "");
     }
 }

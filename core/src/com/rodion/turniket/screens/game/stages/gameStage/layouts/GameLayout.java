@@ -31,6 +31,12 @@ public class GameLayout extends Layout {
                 super.onReturn();
                 GameLayout.this.onReturn();
             }
+
+            @Override
+            public void onSettings() {
+                super.onSettings();
+                GameLayout.this.onSettings();
+            }
         };
 
         levelTitle = new LevelTitleBarEntity(index, getParentStage());
@@ -176,6 +182,10 @@ public class GameLayout extends Layout {
 
     }
 
+    public void onSettings() {
+
+    }
+
     public void onSolve() {
         board.getGame().loadSolution();
         status.onHint();
@@ -223,5 +233,7 @@ public class GameLayout extends Layout {
         return lockedStatus;
     }
 
-
+    public void update(){
+        topMenu.update();
+    }
 }

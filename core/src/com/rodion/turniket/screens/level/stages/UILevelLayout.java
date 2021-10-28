@@ -79,5 +79,9 @@ public class UILevelLayout extends Layout {
     public void onSettings() {
 
     }
+
+    public void update(){
+        topMenu.update();
+    }
 }
 

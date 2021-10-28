@@ -46,14 +46,24 @@ public class PreviewStage extends BasicStage {
                 super.onReturn();
                 PreviewStage.this.onReturn();
             }
+
+            @Override
+            public void onSettings() {
+                super.onSettings();
+                PreviewStage.this.onSettings();
+            }
         };
         addActor(previewLayout);
 
     }
 
-    public void showUp(){
+    public void show(){
 //        previewStage.showUp();
+        super.show();
+        previewLayout.update();
+
     }
+
 
     public void onContinue(){
     }
@@ -85,6 +95,10 @@ public class PreviewStage extends BasicStage {
     }
 
     public void onEnter(){
+
+    }
+
+    public void onSettings(){
 
     }
 }

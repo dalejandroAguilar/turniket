@@ -48,6 +48,12 @@ public class GameStage extends BasicStage {
             }
 
             @Override
+            public void onSettings() {
+                super.onSettings();
+                GameStage.this.onSettings();
+            }
+
+            @Override
             public void onSolve() {
                 super.onSolve();
                 if (gameLayout.isOnBegin())
@@ -62,6 +68,7 @@ public class GameStage extends BasicStage {
                 if(!isLockedStatus())
                     lockLayout.hide();
             }
+
         };
 
         lockLayout = new LockLayout(this) {
@@ -111,6 +118,12 @@ public class GameStage extends BasicStage {
             public void onBack() {
                 super.onBack();
                 confirmationSolverToGame.onShow();
+            }
+
+            @Override
+            public void onSettings() {
+                super.onSettings();
+                GameStage.this.onSettings();
             }
         };
 
@@ -166,6 +179,10 @@ public class GameStage extends BasicStage {
 
     }
 
+    public void onSettings() {
+
+    }
+
     public void onSaveSolution() throws FileNotFoundException {
         System.out.println("Save solution game stage");
         gameLayout.onSaveSolution();
@@ -173,6 +190,10 @@ public class GameStage extends BasicStage {
 
     public void onUnlock() {
         lockLayout.onUnlock();
+    }
+
+    public void update(){
+        gameLayout.update();
     }
 
 

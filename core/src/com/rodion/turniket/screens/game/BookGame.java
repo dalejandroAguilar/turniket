@@ -37,6 +37,12 @@ public class BookGame {
                     super.onReturn();
                     BookGame.this.onReturn();
                 }
+
+                @Override
+                public void onSettings() {
+                    super.onSettings();
+                    BookGame.this.onSettings();
+                }
             };
         game = new GameStage(LevelManagerMaster.getLevel(),
                 LevelManagerMaster.getBookmark(), screenViewport, basicScreen) {
@@ -49,6 +55,12 @@ public class BookGame {
             public void onReturn() {
                 super.onReturn();
                 BookGame.this.onReturn();
+            }
+
+            @Override
+            public void onSettings() {
+                super.onSettings();
+                BookGame.this.onSettings();
             }
         };
         nextGame = null;
@@ -64,6 +76,12 @@ public class BookGame {
                 public void onReturn() {
                     super.onReturn();
                     BookGame.this.onReturn();
+                }
+
+                @Override
+                public void onSettings() {
+                    super.onSettings();
+                    BookGame.this.onSettings();
                 }
             };
     }
@@ -95,6 +113,12 @@ public class BookGame {
                                     public void onReturn() {
                                         super.onReturn();
                                         BookGame.this.onReturn();
+                                    }
+
+                                    @Override
+                                    public void onSettings() {
+                                        super.onSettings();
+                                        BookGame.this.onSettings();
                                     }
                                 };
                                 previousGame.resize(Gdx.graphics.getWidth(),
@@ -136,6 +160,12 @@ public class BookGame {
                                     public void onReturn() {
                                         super.onReturn();
                                         BookGame.this.onReturn();
+                                    }
+
+                                    @Override
+                                    public void onSettings() {
+                                        super.onSettings();
+                                        BookGame.this.onSettings();
                                     }
                                 };
                                 nextGame.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -193,6 +223,14 @@ public class BookGame {
         return nextGame;
     }
 
+    public void update() {
+        game.update();
+        if (nextGame != null)
+            nextGame.update();
+        if (previousGame != null)
+            previousGame.update();
+    }
+
     public boolean isOnMoving() {
         return onMoving;
     }
@@ -201,11 +239,15 @@ public class BookGame {
 
     }
 
+    public void onSettings(){
+
+    }
+
     public void onUnlock() {
         game.onUnlock();
     }
 
-    public void onPlay(){
+    public void onPlay() {
         game.onPlay();
     }
 }

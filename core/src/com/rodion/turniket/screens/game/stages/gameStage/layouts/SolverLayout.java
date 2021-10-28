@@ -19,7 +19,20 @@ public class SolverLayout extends Layout {
 
     public SolverLayout(BasicStage basicStage) {
         super(basicStage);
-        topMenu = new TopMenuLayout(basicStage);
+        topMenu = new TopMenuLayout(basicStage){
+            @Override
+            public void onReturn() {
+                super.onReturn();
+                SolverLayout.this.onReturn();
+            }
+
+            @Override
+            public void onSettings() {
+                super.onSettings();
+                SolverLayout.this.onSettings();
+
+            }
+        };
         bottomMenu = new BottomMenuLayout(basicStage);
         solutionLabel = new LabelEntity("Solution", FontManagerMaster.nexaStyle);
         add(topMenu).expandX().fillX().top().row();
@@ -49,6 +62,12 @@ public class SolverLayout extends Layout {
 
     public void onBack() {
 //        hide();
+    }
+    public void onReturn(){
+
+    }
+    public void  onSettings(){
+
     }
 
     @Override
@@ -181,5 +200,6 @@ public class SolverLayout extends Layout {
         public void onBack() {
             SolverLayout.this.onBack();
         }
+
     }
 }

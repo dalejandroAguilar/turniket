@@ -6,30 +6,26 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.rodion.turniket.MainGame;
 import com.rodion.turniket.basics.BasicScreen;
-import com.rodion.turniket.screens.game.stages.BackBufferStage;
 import com.rodion.turniket.screens.game.stages.ConfettiStage;
 import com.rodion.turniket.screens.game.stages.previewStage.PreviewStage;
 import com.rodion.turniket.screens.game.stages.solverStage.SolverStage;
 import com.rodion.turniket.screens.game.stages.youWinStage.YouWinStage;
-import com.rodion.turniket.screens.level.LevelScreen;
-import com.rodion.turniket.utilities.LevelManagerMaster;
+import com.rodion.turniket.stages.settings.SettingsStage;
 import com.rodion.turniket.utilities.ScreenScale;
-import com.rodion.turniket.utilities.ScreenShotManager;
 
 import java.io.FileNotFoundException;
 
 public class GameScreen extends BasicScreen {
-//    private BackBufferStage backBufferStage;
+    private final ScreenViewport screenViewport = new ScreenViewport();
     private PreviewStage preview;
     private BookGame bookGame;
     private ConfettiStage confettiStage;
     private YouWinStage youWinPopUpStage;
     private SolverStage solverStage;
-    private final ScreenViewport screenViewport = new ScreenViewport();
+    private SettingsStage settingsStage;
 
     public GameScreen(MainGame mainGame) {
         super(mainGame);
-//        backBufferStage = new BackBufferStage(screenViewport, this);
         bookGame = new BookGame(screenViewport, this) {
             @Override
             public void onWin() {
@@ -40,8 +36,13 @@ public class GameScreen extends BasicScreen {
             public void onReturn() {
                 super.onReturn();
                 onGoToLevelScreen();
-//                GameScreen.this.onReturn();
             }
+
+            public void onSettings() {
+                super.onSettings();
+                settingsStage.onEnter(getGame());
+            }
+
         };
 
         preview = new PreviewStage(screenViewport, this) {
@@ -84,8 +85,12 @@ public class GameScreen extends BasicScreen {
                             }
                         })
                 ));
+            }
 
-//                GameScreen.this.onReturn();
+            @Override
+            public void onSettings() {
+                super.onSettings();
+                settingsStage.onEnter(this);
             }
         };
 
@@ -105,6 +110,7 @@ public class GameScreen extends BasicScreen {
                 onNext();
                 preview.show();
                 preview.onInput();
+                bookGame.update();
             }
 
             @Override
@@ -114,7 +120,11 @@ public class GameScreen extends BasicScreen {
             }
         };
 
+        settingsStage = new SettingsStage(screenViewport,this);
+//        settingsStage.close();
+
         solverStage = new SolverStage(screenViewport, this);
+
     }
 
     private void onNext() {
@@ -143,6 +153,8 @@ public class GameScreen extends BasicScreen {
         preview.draw();
         solverStage.act();
         solverStage.draw();
+        settingsStage.act();
+        settingsStage.draw();
     }
 
     @Override
@@ -154,6 +166,7 @@ public class GameScreen extends BasicScreen {
         preview.resize(width, height);
         bookGame.resize(width, height);
         solverStage.resize(width, height);
+        settingsStage.resize(width, height);
     }
 
     public void onReturn() {
@@ -167,14 +180,18 @@ public class GameScreen extends BasicScreen {
         preview.addAction(Actions.rotateBy(90, .2f));
         preview.onInput();
         preview.onEnter();
+//        settingsStage.init();
+
     }
 
     public void init() {
         solverStage.hide();
         youWinPopUpStage.hide();
-        preview.offInput();
         preview.onInput();
         bookGame.init();
+//        settingsStage.init();
+        settingsStage.close();
+
     }
 
     public void onGoToLevelScreen() {

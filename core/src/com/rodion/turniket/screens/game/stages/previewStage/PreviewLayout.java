@@ -25,6 +25,12 @@ public class PreviewLayout extends Layout {
                 super.onReturn();
                 PreviewLayout.this.onReturn();
             }
+
+            @Override
+            public void onSettings() {
+                super.onSettings();
+                PreviewLayout.this.onSettings();
+            }
         };
         bottomMenu = new BottomMenuLayout(basicStage);
 
@@ -88,8 +94,17 @@ public class PreviewLayout extends Layout {
     public void onUnlock() {
 
     }
+
     public void onReturn() {
 
+    }
+
+    public void onSettings(){
+
+    }
+
+    public void update(){
+        topMenu.update();
     }
 
     class BottomMenuLayout extends Layout {

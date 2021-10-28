@@ -193,6 +193,10 @@ public class LevelManagerMaster {
         return nstars;
     }
 
+    public static void setNstars(int nstars) {
+        LevelManagerMaster.nstars = nstars;
+    }
+
     public static Difficulty getDifficultOfLevel(int index){
         int acumLevel = 0;
         for (Difficulty difficulty : Difficulty.values()) {

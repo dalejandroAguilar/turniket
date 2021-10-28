@@ -32,6 +32,7 @@ public class ImageEntity extends Image {
                     TextureAtlas.class);
             textures[factorScale.index] = new TextureRegionDrawable(atlas.findRegion(assetName));
         }
+
     }
 
     public void setAssetAddress() {
@@ -49,6 +50,7 @@ public class ImageEntity extends Image {
         updatePosition();
             setDrawable(textures[ScreenScale.getFactorScale().index]);
             setSize(getDrawable().getMinWidth(), getDrawable().getMinHeight());
+//            rotateBy(90);
 //        }
     }
 

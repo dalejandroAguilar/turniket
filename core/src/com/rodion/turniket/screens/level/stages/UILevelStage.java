@@ -72,4 +72,9 @@ public class UILevelStage extends BasicStage {
     public void onSettings(){
 
     }
+
+    public void update(){
+        uiLevelLayout.update();
+
+    }
 }

@@ -8,6 +8,7 @@ public class AssetManagerMaster {
     public final static AssetManager title = new AssetManager();
     public final static AssetManager game = new AssetManager();
     public final static AssetManager level = new AssetManager();
+    public final static AssetManager settings = new AssetManager();
 
     public static void loadLoading(){
         loading.load("loading/raster/pack.atlas", TextureAtlas.class);
@@ -21,13 +22,17 @@ public class AssetManagerMaster {
 
     public static void loadGame() {
         load(game,"game");
-//        game.load("sounds/pass.mp3", Sound.class);
         game.finishLoading();
     }
 
     public static void loadLevels(){
         load(level,"level");
         level.finishLoading();
+    }
+
+    public static void loadSettings(){
+        load(settings, "settings");
+        settings.finishLoading();
     }
 
     private static void load(AssetManager assetManager, String path) {
@@ -45,5 +50,6 @@ public class AssetManagerMaster {
         game.dispose();
         level.dispose();
         title.dispose();
+        settings.dispose();
     }
 }
