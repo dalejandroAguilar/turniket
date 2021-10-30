@@ -3,15 +3,22 @@ package com.rodion.turniket.stages.settings;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.Layout;
 
-public class SettingsLayout extends Layout {
-    PopUpLayout popUp;
+public class SettingsLayout extends Layout{
+    SettingsFrame popUp;
     public SettingsLayout(BasicStage basicStage) {
         super(basicStage);
-        popUp = new PopUpLayout(basicStage){
+        popUp = new SettingsFrame(basicStage){
             @Override
             public void onExit() {
                 super.onExit();
                 SettingsLayout.this.onExit();
+            }
+
+            @Override
+            public void onReset() {
+                super.onReset();
+                SettingsLayout.this.onReset();
+
             }
         };
         setFillParent(true);
@@ -20,6 +27,9 @@ public class SettingsLayout extends Layout {
     }
 
     public void onExit(){
+    }
+
+    public void onReset(){
 
     }
 

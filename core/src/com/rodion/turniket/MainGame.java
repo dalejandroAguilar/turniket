@@ -110,25 +110,26 @@ public class MainGame extends Game {
                 setScreen(loadingScreen);
             }
         };
-//        setScreen(launchScreen);
-        AssetManagerMaster.loadTitle();
-        AssetManagerMaster.loadLevels();
-        AssetManagerMaster.loadGame();
-        AssetManagerMaster.loadSettings();
-        ColorManagerMaster.load();
-        FontManagerMaster.loadFonts();
-        gameScreen = new GameScreen(MainGame.this) {
-                                    @Override
-                                    public void onGoToLevelScreen() {
-                                        super.onGoToLevelScreen();
-                                        levelScreen.init();
-                                        levelScreen.onEnterBackward();
-                                        setScreen(levelScreen);
-                                    }
-                                };
-        gameScreen.init();
-        setScreen(gameScreen);
-        gameScreen.onEnter();
+        setScreen(launchScreen);
+
+//        AssetManagerMaster.loadTitle();
+//        AssetManagerMaster.loadLevels();
+//        AssetManagerMaster.loadGame();
+//        AssetManagerMaster.loadSettings();
+//        ColorManagerMaster.load();
+//        FontManagerMaster.loadFonts();
+//        gameScreen = new GameScreen(MainGame.this) {
+//                                    @Override
+//                                    public void onGoToLevelScreen() {
+//                                        super.onGoToLevelScreen();
+//                                        levelScreen.init();
+//                                        levelScreen.onEnterBackward();
+//                                        setScreen(levelScreen);
+//                                    }
+//                                };
+//        gameScreen.init();
+//        setScreen(gameScreen);
+//        gameScreen.onEnter();
 
     }
 

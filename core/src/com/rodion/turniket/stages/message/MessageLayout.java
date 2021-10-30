@@ -1,5 +1,6 @@
 package com.rodion.turniket.stages.message;
 
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.rodion.turniket.basics.BackgroundedLabelButton;
 import com.rodion.turniket.basics.BackgroundedLayout;
 import com.rodion.turniket.basics.BasicStage;
@@ -7,6 +8,7 @@ import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
+import com.rodion.turniket.utilities.DecisionFrame;
 import com.rodion.turniket.utilities.FontManagerMaster;
 
 public class MessageLayout extends Layout {
@@ -25,13 +27,12 @@ public class MessageLayout extends Layout {
         add(bottomMenu).expandX().fillX().bottom();
     }
 
-    public void onOk(){
-
+    public void onOk() {
     }
 
-    public void onCancel(){
-
+    public void onCancel() {
     }
+
 
     @Override
     public void resize(int width, int height) {
@@ -52,9 +53,9 @@ public class MessageLayout extends Layout {
             for (int i = 0; i < nLines; i++) {
                 labels[i] = new LabelEntity(lines[i], FontManagerMaster.nexaStyle);
                 if (i < nLines - 1)
-                    add(labels[i]);
-                else
                     add(labels[i]).row();
+                else
+                    add(labels[i]);
             }
         }
 
@@ -76,6 +77,7 @@ public class MessageLayout extends Layout {
     class BottomMenu extends Layout {
         private BackgroundedLabelButton okButton;
         private BackgroundedLabelButton cancelButton;
+
         public BottomMenu(BasicStage basicStage) {
             super(basicStage);
             setFillParent(false);

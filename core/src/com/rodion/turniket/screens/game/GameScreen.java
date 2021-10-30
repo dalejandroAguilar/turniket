@@ -10,7 +10,9 @@ import com.rodion.turniket.screens.game.stages.ConfettiStage;
 import com.rodion.turniket.screens.game.stages.previewStage.PreviewStage;
 import com.rodion.turniket.screens.game.stages.solverStage.SolverStage;
 import com.rodion.turniket.screens.game.stages.youWinStage.YouWinStage;
+import com.rodion.turniket.stages.message.MessageStage;
 import com.rodion.turniket.stages.settings.SettingsStage;
+import com.rodion.turniket.utilities.DecisionFrame;
 import com.rodion.turniket.utilities.ScreenScale;
 
 import java.io.FileNotFoundException;
@@ -23,6 +25,7 @@ public class GameScreen extends BasicScreen {
     private YouWinStage youWinPopUpStage;
     private SolverStage solverStage;
     private SettingsStage settingsStage;
+    private MessageStage confirmationToReturn;
 
     public GameScreen(MainGame mainGame) {
         super(mainGame);
@@ -34,8 +37,10 @@ public class GameScreen extends BasicScreen {
 
             @Override
             public void onReturn() {
-                super.onReturn();
-                onGoToLevelScreen();
+                confirmationToReturn.onEnter();
+
+//                super.onReturn();
+//                onGoToLevelScreen();
             }
 
             public void onSettings() {
@@ -124,6 +129,23 @@ public class GameScreen extends BasicScreen {
 //        settingsStage.close();
 
         solverStage = new SolverStage(screenViewport, this);
+        String[] levelMessageLine = {"Sure to go to exit", "Your progress will lose."};
+        confirmationToReturn = new MessageStage(screenViewport, this, levelMessageLine);
+        confirmationToReturn.setDecisionFrame(new DecisionFrame() {
+            @Override
+            public void onAffirmativeDecision() {
+                confirmationToReturn.onExit();
+//                bookGame.onInput();
+                bookGame.onReturn();
+                onGoToLevelScreen();
+            }
+            @Override
+            public void onNegativeDecision() {
+                confirmationToReturn.onExit();
+                bookGame.onInput();
+            }
+        });
+        confirmationToReturn.close();
 
     }
 
@@ -144,6 +166,7 @@ public class GameScreen extends BasicScreen {
 
 //        backBufferStage.act();
 //        backBufferStage.draw();
+
         bookGame.render(delta);
         confettiStage.act();
         confettiStage.draw();
@@ -155,6 +178,8 @@ public class GameScreen extends BasicScreen {
         solverStage.draw();
         settingsStage.act();
         settingsStage.draw();
+        confirmationToReturn.act();
+        confirmationToReturn.draw();
     }
 
     @Override
@@ -167,6 +192,7 @@ public class GameScreen extends BasicScreen {
         bookGame.resize(width, height);
         solverStage.resize(width, height);
         settingsStage.resize(width, height);
+        confirmationToReturn.resize(width, height);
     }
 
     public void onReturn() {

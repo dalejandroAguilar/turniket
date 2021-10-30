@@ -5,10 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rodion.turniket.basics.BasicScreen;
 import com.rodion.turniket.basics.BasicStage;
+import com.rodion.turniket.stages.message.MessageStage;
+import com.rodion.turniket.utilities.DecisionFrame;
 
-public class SettingsStage extends BasicStage {
+public class SettingsStage extends BasicStage  implements DecisionFrame {
     private SettingsLayout layout;
     private BasicStage focusStage;
+    public MessageStage resetConfirmationMessage;
 
     public SettingsStage(Viewport viewport, BasicScreen basicScreen) {
         super(viewport, basicScreen);
@@ -18,10 +21,20 @@ public class SettingsStage extends BasicStage {
                 super.onExit();
                 SettingsStage.this.onExit();
             }
+
+            @Override
+            public void onReset() {
+                super.onReset();
+                resetConfirmationMessage.onEnter();
+            }
         };
-//        layout.debug();
         addActor(layout);
         focusStage = null;
+        String[] lines = {"Sure you want to reset"};
+        resetConfirmationMessage = new MessageStage(viewport,basicScreen,lines);
+        resetConfirmationMessage.setFocusStage(this);
+        resetConfirmationMessage.setDecisionFrame(this);
+        resetConfirmationMessage.close();
     }
 
     public void init() {
@@ -29,7 +42,6 @@ public class SettingsStage extends BasicStage {
     }
 
     public void close() {
-//        layout.close();
         addAction(Actions.fadeOut(0));
     }
 
@@ -41,6 +53,19 @@ public class SettingsStage extends BasicStage {
                 Actions.fadeIn(.3f)
         ));
         init();
+    }
+
+    @Override
+    public void draw() {
+        super.draw();
+        resetConfirmationMessage.draw();
+
+    }
+
+    @Override
+    public void act() {
+        super.act();
+        resetConfirmationMessage.act();
     }
 
     public void onExit() {
@@ -59,5 +84,18 @@ public class SettingsStage extends BasicStage {
     public void resize(int width, int height) {
         super.resize(width, height);
         layout.resize(width, height);
+        resetConfirmationMessage.resize(width, height);
+    }
+
+    @Override
+    public void onAffirmativeDecision() {
+        resetConfirmationMessage.onExit();
+        onInput();
+    }
+
+    @Override
+    public void onNegativeDecision() {
+        resetConfirmationMessage.onExit();
+        onInput();
     }
 }

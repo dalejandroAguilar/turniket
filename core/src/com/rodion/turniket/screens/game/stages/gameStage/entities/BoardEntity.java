@@ -192,8 +192,13 @@ public class BoardEntity extends Layout {
         for (ImageEntity[] burnRow : burners)
             for (ImageEntity burn : burnRow)
                 burn.getColor().a = 0;
-//        for (ImageEntity ax : axis)
-//            ax.getColor().a = 0.01f;
+        for (ImageEntity ax : axis)
+            ax.getColor().a = 0.001f;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                burnersExternal[i][j].getColor().a = 0.001f;
+            }
+        }
         for (ImageEntity target : targets)
             target.getColor().a = 0;
     }
@@ -203,8 +208,17 @@ public class BoardEntity extends Layout {
         for (ImageEntity[] burnRow : burners)
             for (ImageEntity burn : burnRow)
                 burn.addAction(Actions.fadeIn(0.3f));
-//        for (ImageEntity ax : axis)
-//            ax.addAction(Actions.fadeIn(0.3f));
+
+        for (ImageEntity ax : axis)
+            ax.getColor().a = 1;
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                burnersExternal[i][j].addAction(Actions.fadeIn(0.3f));
+            }
+        }
+
+
         for (ImageEntity target : targets)
             target.addAction(Actions.fadeIn(0.3f));
     }

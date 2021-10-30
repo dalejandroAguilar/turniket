@@ -74,9 +74,7 @@ public class StatusLayout extends Layout {
         add(crown).bottom();
         add(steps).bottom();
         setSteps(0);
-
         setToPreview();
-//        setDebug(true);
     }
 
     public void resetTimer() {
@@ -134,9 +132,6 @@ public class StatusLayout extends Layout {
 //        labelTime.getColor().a = 1;  // labels of level
 //    }
 
-    public void onSetToInactive() {
-
-    }
 
     public void setToPreview() {
         steps.setColor(Color.ORANGE);
@@ -147,15 +142,29 @@ public class StatusLayout extends Layout {
         timer.cancel();
     }
 
+    public void show() {
+        steps.addAction(Actions.fadeIn(0));
+        time.addAction(Actions.fadeIn(0));
+        crown.addAction(Actions.fadeIn(0));
+    }
+
     public void onPlay() {
+//        show();
         steps.addAction(Actions.color(Color.BLACK,.2f));
         time.addAction(Actions.color(Color.BLACK,.2f));
-        crown.addAction(Actions.fadeOut(.2f));
+        if(crown.getColor().a!=0)
+            crown.addAction(Actions.fadeOut(.2f));
+
+        labelSteps.addAction(Actions.fadeIn(.2f));
+        labelTime.addAction(Actions.fadeIn(.2f));
+        timer.cancel();
+        timer.run();
+
 //        crown.getColor().a = 0;
 
 //        labelSteps.getColor().a = 1; // labels of level
 //        labelTime.getColor().a = 1;  // labels of level
-        startTimer();
+//        startTimer();
     }
 
 }

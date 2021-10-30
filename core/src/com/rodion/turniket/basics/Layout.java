@@ -45,14 +45,16 @@ public class Layout extends Table implements Disposable {
     public void hide() {
         setTouchable(Touchable.disabled);
 //        setVisible(false);
-        getColor().a = 0;
+//        getColor().a = 0;
+        addAction(Actions.fadeOut(0));
     }
 
     public void show() {
         setTouchable(Touchable.enabled);
 //        setVisible(true);
 
-        getColor().a = 1;
+//        getColor().a = 1;
+        addAction(Actions.fadeIn(0));
     }
 
     public void onHide() {
@@ -61,6 +63,7 @@ public class Layout extends Table implements Disposable {
     }
 
     public void onShow() {
+//        getColor().a = 1;
         setTouchable(Touchable.enabled);
         addAction(Actions.fadeIn(0.25f));
     }

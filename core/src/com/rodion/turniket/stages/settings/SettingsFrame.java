@@ -12,7 +12,7 @@ import com.rodion.turniket.utilities.FontManagerMaster;
 
 import java.io.FileNotFoundException;
 
-public class PopUpLayout extends BackgroundedLayout {
+public class SettingsFrame extends BackgroundedLayout {
     private LabelEntity title;
     private LabelEntity soundLabel;
     private LabelEntity musicLabel;
@@ -23,9 +23,9 @@ public class PopUpLayout extends BackgroundedLayout {
     private SwitchEntity soundSwitch;
     private SwitchEntity musicSwitch;
     private LabelEntity onLabel;
-    private  LabelEntity offLabel;
+    private LabelEntity offLabel;
 
-    public PopUpLayout(BasicStage basicStage) {
+    public SettingsFrame(BasicStage basicStage) {
         super(basicStage);
         Table musicTable = new Table();
         prepareAssets();
@@ -64,8 +64,8 @@ public class PopUpLayout extends BackgroundedLayout {
             }
 
             @Override
-            public void onAction() throws FileNotFoundException {
-
+            public void onAction() {
+                onReset();
             }
         };
         resetButton.setFillParent(false);
@@ -141,19 +141,22 @@ public class PopUpLayout extends BackgroundedLayout {
         offLabel.resize(width, height);
     }
 
-    public void close(){
+    public void close() {
 
     }
 
-    public void onExit(){
+    public void onExit() {
 
     }
 
+    public void onReset() {
 
+    }
 
 
     class SwitchEntity extends ImageButtonEntity {
         boolean isOn;
+
         public SwitchEntity() {
             prepareAssets();
             isOn = true;
@@ -170,13 +173,8 @@ public class PopUpLayout extends BackgroundedLayout {
             super.onAction();
             setOrigin(Align.center);
             rotateBy(180);
-           isOn=!isOn;
+            isOn = !isOn;
 //            resize();
-
-
-
-
-//            getDrawable()
         }
 
         @Override

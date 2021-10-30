@@ -1,25 +1,23 @@
 package com.rodion.turniket.screens.game.stages.gameStage;
 
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rodion.turniket.basics.BasicScreen;
 import com.rodion.turniket.basics.BasicStage;
-import com.rodion.turniket.screens.game.stages.gameStage.layouts.ConfirmationGameLayout;
-import com.rodion.turniket.screens.game.stages.gameStage.layouts.ConfirmationSolutionLayout;
 import com.rodion.turniket.screens.game.stages.gameStage.layouts.GameLayout;
 import com.rodion.turniket.screens.game.stages.gameStage.layouts.LockLayout;
 import com.rodion.turniket.screens.game.stages.gameStage.layouts.SolverLayout;
+import com.rodion.turniket.stages.message.MessageStage;
+import com.rodion.turniket.utilities.DecisionFrame;
 import com.rodion.turniket.utilities.Level;
-import com.rodion.turniket.utilities.Solution;
 
 import java.io.FileNotFoundException;
 
 public class GameStage extends BasicStage {
     private GameLayout gameLayout;
     private SolverLayout solverLayout;
-    private ConfirmationGameLayout confirmationGameToSolver;
-    private ConfirmationSolutionLayout confirmationSolverToGame;
+    private MessageStage confirmationToSolver;
+    private MessageStage confirmationToGame;
     private LockLayout lockLayout;
 
     public GameStage(Level level, int index, Viewport viewport, BasicScreen basicScreen) {
@@ -54,19 +52,20 @@ public class GameStage extends BasicStage {
             }
 
             @Override
-            public void onSolve() {
-                super.onSolve();
+            public void onHint() {
                 if (gameLayout.isOnBegin())
                     solverLayout.onShow();
-                else
-                    confirmationGameToSolver.onShow();
+                else {
+                    confirmationToSolver.onEnter();
+                }
             }
 
             @Override
             public void setToPreview() {
                 super.setToPreview();
-                if(!isLockedStatus())
+                if (!isLockedStatus())
                     lockLayout.hide();
+
             }
 
         };
@@ -86,21 +85,6 @@ public class GameStage extends BasicStage {
             }
         };
 
-        confirmationGameToSolver = new ConfirmationGameLayout(this) {
-            @Override
-            public void onOk() {
-                super.onOk();
-                gameLayout.restart();
-                solverLayout.show();
-            }
-
-            @Override
-            public void onCancel() {
-                super.onCancel();
-            }
-
-        };
-
         solverLayout = new SolverLayout(this) {
             @Override
             public void onNext() {
@@ -117,7 +101,8 @@ public class GameStage extends BasicStage {
             @Override
             public void onBack() {
                 super.onBack();
-                confirmationSolverToGame.onShow();
+//                confirmationSolverToGame.onShow();
+                confirmationToGame.onEnter();
             }
 
             @Override
@@ -127,32 +112,55 @@ public class GameStage extends BasicStage {
             }
         };
 
-        confirmationSolverToGame = new ConfirmationSolutionLayout(this) {
+        String[] solverMessageLine = {"Sure to go to solver", "Your progress will lose."};
+        confirmationToSolver = new MessageStage(viewport, basicScreen, solverMessageLine);
+        confirmationToSolver.setDecisionFrame(
+                new DecisionFrame() {
+                    @Override
+                    public void onAffirmativeDecision() {
+                        confirmationToSolver.onExit();
+                        gameLayout.restart();
+                        gameLayout.onSetSolve();
+                        solverLayout.show();
+                        onInput();
+                    }
+
+                    @Override
+                    public void onNegativeDecision() {
+                        confirmationToSolver.onExit();
+                        onInput();
+                    }
+                }
+        );
+        confirmationToSolver.close();
+
+        String[] gameMessageLine = {"Sure to go to game", "Your progress will lose."};
+        confirmationToGame = new MessageStage(viewport, basicScreen, gameMessageLine);
+        confirmationToGame.setDecisionFrame(new DecisionFrame() {
             @Override
-            public void onOk() {
+            public void onAffirmativeDecision() {
                 solverLayout.hide();
-                super.onOk();
+                confirmationToGame.onExit();
+                gameLayout.onSetGame();
+                onInput();
             }
 
             @Override
-            public void onCancel() {
-                super.onCancel();
+            public void onNegativeDecision() {
+                confirmationToGame.onExit();
+                onInput();
             }
-        };
-
+        });
+        confirmationToGame.close();
         addActor(gameLayout);
         addActor(solverLayout);
-        addActor(confirmationGameToSolver);
-        addActor(confirmationSolverToGame);
         addActor(lockLayout);
 
         solverLayout.hide();
-        confirmationGameToSolver.hide();
-        confirmationSolverToGame.hide();
         gameLayout.setToPreview();
     }
 
-    public void onPlay(){
+    public void onPlay() {
         gameLayout.onPlay();
     }
 
@@ -170,8 +178,8 @@ public class GameStage extends BasicStage {
         super.resize(width, height);
         gameLayout.resize(width, height);
         solverLayout.resize(width, height);
-        confirmationGameToSolver.resize(width, height);
-        confirmationSolverToGame.resize(width, height);
+        confirmationToSolver.resize(width, height);
+        confirmationToGame.resize(width, height);
         lockLayout.resize(width, height);
     }
 
@@ -183,6 +191,21 @@ public class GameStage extends BasicStage {
 
     }
 
+    @Override
+    public void draw() {
+        super.draw();
+        confirmationToSolver.draw();
+        confirmationToGame.draw();
+
+    }
+
+    @Override
+    public void act() {
+        super.act();
+        confirmationToSolver.act();
+        confirmationToGame.act();
+    }
+
     public void onSaveSolution() throws FileNotFoundException {
         System.out.println("Save solution game stage");
         gameLayout.onSaveSolution();
@@ -192,9 +215,7 @@ public class GameStage extends BasicStage {
         lockLayout.onUnlock();
     }
 
-    public void update(){
+    public void update() {
         gameLayout.update();
     }
-
-
 }

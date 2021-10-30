@@ -250,4 +250,8 @@ public class BookGame {
     public void onPlay() {
         game.onPlay();
     }
+
+    public void onInput() {
+        game.onInput();
+    }
 }

@@ -107,8 +107,9 @@ public class GameLayout extends Layout {
             @Override
             public void onHint() {
                 super.onHint();
-                GameLayout.this.onSolve();
+                GameLayout.this.onHint();
             }
+
         };
         add(topMenu).expandX().fillX().row();
         add(levelTitle).padTop(40)
@@ -186,10 +187,21 @@ public class GameLayout extends Layout {
 
     }
 
-    public void onSolve() {
+    public void onHint() {
+
+    }
+
+    public void onSetSolve() {
         board.getGame().loadSolution();
+        restart();
         status.onHint();
         score.onHint();
+    }
+
+    public void onSetGame() {
+        restart();
+        status.onPlay();
+        score.onPlay();
     }
 
     public void restart() {
@@ -221,12 +233,35 @@ public class GameLayout extends Layout {
 
     public void onPlay() {
         status.onPlay();
+        score.onPlay();
     }
 
     public void onUnlock() {
         board.onUnlock();
         score.show();
         status.show();
+    }
+
+    @Override
+    public void onShow() {
+//        super.onShow();
+
+    }
+
+    @Override
+    public void onHide() {
+//        super.onHide();
+    }
+
+    @Override
+    public void hide() {
+//        super.hide();
+    }
+
+
+    @Override
+    public void show() {
+//        super.show();
     }
 
     public boolean isLockedStatus() {
