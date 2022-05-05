@@ -7,6 +7,7 @@ import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 public class BottomMenuLayoutBack extends Layout {
     private ImageButtonEntity previousButton;
@@ -29,6 +30,13 @@ public class BottomMenuLayoutBack extends Layout {
                 super.onAction();
                 onPrevious();
             }
+
+            @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
         };
         previousButton.prepareAssets();
 
@@ -45,11 +53,17 @@ public class BottomMenuLayoutBack extends Layout {
                 super.onAction();
                 onNext();
             }
+
+            @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
         };
         nextButton.prepareAssets();
 
         levelStatus = new LabelEntity("10/11", FontManagerMaster.nexaStyle);
-
 
 
         add(previousButton).left().padBottom(10).padTop(10).expandX();
@@ -69,15 +83,14 @@ public class BottomMenuLayoutBack extends Layout {
     public void onContinue() {
     }
 
-    public void onPlay(){
+    public void onPlay() {
     }
 
-    public void onNext(){
-
-    }
-
-    public void onPrevious(){
+    public void onNext() {
 
     }
 
+    public void onPrevious() {
+
+    }
 }

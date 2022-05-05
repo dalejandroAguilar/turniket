@@ -8,6 +8,7 @@ import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
 import com.rodion.turniket.utilities.LevelManagerMaster;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 public class BottomMenuLayoutFront extends Layout {
     private ImageButtonEntity previousButton;
@@ -32,6 +33,13 @@ public class BottomMenuLayoutFront extends Layout {
                 onPrevious();
                 levelStatus.setText((LevelManagerMaster.getPage() + 1) + "/" + LevelManagerMaster.getNpages());
             }
+
+            @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
         };
         previousButton.prepareAssets();
 
@@ -49,6 +57,13 @@ public class BottomMenuLayoutFront extends Layout {
                 onNext();
                 levelStatus.setText((LevelManagerMaster.getPage() + 1) + "/" + LevelManagerMaster.getNpages());
             }
+
+            @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
         };
         nextButton.prepareAssets();
 

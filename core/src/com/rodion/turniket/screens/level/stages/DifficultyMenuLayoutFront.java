@@ -6,6 +6,7 @@ import com.rodion.turniket.basics.ImageButtonEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 public class DifficultyMenuLayoutFront extends Layout {
 
@@ -28,6 +29,13 @@ public class DifficultyMenuLayoutFront extends Layout {
                 super.onAction();
                 onPrevious();
             }
+
+             @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
         };
         previousButton.prepareAssets();
 
@@ -44,6 +52,13 @@ public class DifficultyMenuLayoutFront extends Layout {
                 super.onAction();
                 onNext();
             }
+
+             @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
         };
         nextButton.prepareAssets();
 

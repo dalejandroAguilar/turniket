@@ -127,6 +127,8 @@ public class BookGame {
                                         0));
                             }
                             onMoving = false;
+//                            game.tryUnlock();
+//                            if(game.)
                         }
                     })));
         }
@@ -173,9 +175,14 @@ public class BookGame {
                                         0));
                             }
                             onMoving = false;
+                            onFinishNext();
                         }
                     })));
         }
+    }
+
+    public void onFinishNext() {
+        onUnlock();
     }
 
     public void onWin() {
@@ -245,6 +252,10 @@ public class BookGame {
 
     public void onUnlock() {
         game.onUnlock();
+    }
+
+    public boolean areRequirementsSatisfied(){
+        return (game.nStarsSatisfied() && previousGame.isUnlocked());
     }
 
     public void onPlay() {

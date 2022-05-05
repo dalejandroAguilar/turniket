@@ -75,6 +75,7 @@ public class StatusLayout extends Layout {
         add(steps).bottom();
         setSteps(0);
         setToPreview();
+//        setDebug(true);
     }
 
     public void resetTimer() {
@@ -136,22 +137,38 @@ public class StatusLayout extends Layout {
     public void setToPreview() {
         steps.setColor(Color.ORANGE);
         time.setColor(Color.ORANGE);
-        labelSteps.getColor().a = 1;
-        labelTime.getColor().a = 1;
+        if(steps.getColor().a != 1){
+            labelSteps.addAction(Actions.fadeIn(0.2f));
+            labelTime.addAction(Actions.fadeIn(0.2f));
+        }
         crown.getColor().a = 1;
         timer.cancel();
     }
 
-    public void show() {
-        steps.addAction(Actions.fadeIn(0));
-        time.addAction(Actions.fadeIn(0));
-        crown.addAction(Actions.fadeIn(0));
-    }
+//    @Override
+//    public void show() {
+//        steps.addAction(Actions.fadeIn(0));
+//        time.addAction(Actions.fadeIn(0));
+//        crown.addAction(Actions.fadeIn(0));
+//    }
+
+
 
     public void onPlay() {
 //        show();
-        steps.addAction(Actions.color(Color.BLACK,.2f));
-        time.addAction(Actions.color(Color.BLACK,.2f));
+        System.out.println("alfa<<<<<<<<<<<<<<<<"+steps.getColor().a);
+        if(steps.getColor().a != 0) {
+            steps.addAction(Actions.color(Color.BLACK, .2f));
+            time.addAction(Actions.color(Color.BLACK, .2f));
+        }
+        else {
+//            steps.setColor(Color.BLACK);
+//            time.setColor(Color.BLACK);
+            steps.addAction(Actions.fadeIn(.2f));
+            time.addAction(Actions.fadeIn(.2f));
+
+        }
+
         if(crown.getColor().a!=0)
             crown.addAction(Actions.fadeOut(.2f));
 
@@ -166,5 +183,7 @@ public class StatusLayout extends Layout {
 //        labelTime.getColor().a = 1;  // labels of level
 //        startTimer();
     }
+
+
 
 }

@@ -1,5 +1,7 @@
 package com.rodion.turniket.stages.settings;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.rodion.turniket.basics.BackgroundedLabelButton;
@@ -9,6 +11,7 @@ import com.rodion.turniket.basics.ImageButtonEntity;
 import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 import java.io.FileNotFoundException;
 
@@ -35,8 +38,24 @@ public class SettingsFrame extends BackgroundedLayout {
         onLabel = new LabelEntity("On", FontManagerMaster.nexaStyle);
         offLabel = new LabelEntity("Off", FontManagerMaster.nexaStyle);
 
-        soundSwitch = new SwitchEntity();
-        musicSwitch = new SwitchEntity();
+        final Preferences prefs = Gdx.app.getPreferences("turniket-preferences");
+
+        soundSwitch = new SwitchEntity(prefs.getBoolean("sound", true)){
+            @Override
+            public void onAction() {
+                super.onAction();
+                prefs.putBoolean("sound", isOn);
+                prefs.flush();
+            }
+        };
+        musicSwitch = new SwitchEntity(prefs.getBoolean("music", true)){
+            @Override
+            public void onAction() {
+                super.onAction();
+                prefs.putBoolean("music", isOn);
+                prefs.flush();
+            }
+        };
 
         quitButton = new ImageButtonEntity() {
             @Override
@@ -44,6 +63,12 @@ public class SettingsFrame extends BackgroundedLayout {
                 setAssetManager(AssetManagerMaster.settings);
                 assetPath = "settings";
                 assetName = "quit_button";
+            }
+
+            @Override
+            public void onDown() {
+                SoundManagerMaster.play("click");
+                super.onDown();
             }
 
             @Override
@@ -64,6 +89,12 @@ public class SettingsFrame extends BackgroundedLayout {
             }
 
             @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
+            @Override
             public void onAction() {
                 onReset();
             }
@@ -81,6 +112,13 @@ public class SettingsFrame extends BackgroundedLayout {
             }
 
             @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
+
+            @Override
             public void onAction() throws FileNotFoundException {
 
             }
@@ -94,6 +132,13 @@ public class SettingsFrame extends BackgroundedLayout {
                 setAssetPath("settings");
                 setAssetName("large_button");
             }
+
+            @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
 
             @Override
             public void onAction() throws FileNotFoundException {
@@ -157,9 +202,12 @@ public class SettingsFrame extends BackgroundedLayout {
     class SwitchEntity extends ImageButtonEntity {
         boolean isOn;
 
-        public SwitchEntity() {
+        public SwitchEntity(boolean isOn) {
             prepareAssets();
-            isOn = true;
+            this.isOn = isOn;
+            if(!isOn){
+                rotateBy(180);
+            }
         }
 
         public void setAssetAddress() {

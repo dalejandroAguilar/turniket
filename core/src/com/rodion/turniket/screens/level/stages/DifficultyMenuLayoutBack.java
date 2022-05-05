@@ -10,6 +10,7 @@ import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.Difficulty;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 public class DifficultyMenuLayoutBack extends Layout {
 
@@ -29,6 +30,13 @@ public class DifficultyMenuLayoutBack extends Layout {
                 assetPath = "level";
                 assetName = "button_previous";
             }
+
+            @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
         };
         previousButton.prepareAssets();
 
@@ -40,13 +48,20 @@ public class DifficultyMenuLayoutBack extends Layout {
                 assetName = "button_next";
             }
 
+            @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
+
         };
         nextButton.prepareAssets();
 
         level = new LabelEntity(difficulty.name(), FontManagerMaster.nexaStyle);
         Table levelFrame = new Table();
         levelFrame.add(level);
-        levelFrame.setBackground(difficulty.getBgColor());
+        levelFrame.setBackground(ColorManagerMaster.getColorRegion(difficulty));
         setHeight(previousButton.getHeight());
         add(previousButton).left().padBottom(10).padTop(10);
         add(levelFrame).expandX().fillX();

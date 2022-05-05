@@ -1,14 +1,18 @@
 package com.rodion.turniket.screens.game.stages.gameStage.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.rodion.turniket.basics.BundleAnimationEntity;
 import com.rodion.turniket.kernel.Token;
 import com.rodion.turniket.kernel.constants.Direction;
-import com.rodion.turniket.screens.game.stages.gameStage.GameStage;
 import com.rodion.turniket.utilities.AssetManagerMaster;
+import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.ScreenScale;
+import com.rodion.turniket.utilities.SoundManagerMaster;
+
+import java.util.Random;
 
 public class TokenEntity extends BundleAnimationEntity {
     private Token token;
@@ -22,42 +26,84 @@ public class TokenEntity extends BundleAnimationEntity {
         prepareAssets();
         setOnPlay(false);
         this.token = token;
-        switch (token.getColor()) {
-            case Cyan:
-                setColor(Color.CYAN);
-                break;
-            case Magenta:
-                setColor(Color.MAGENTA);
-                break;
-            case Red:
-                setColor(Color.ORANGE);
-                break;
-            case Green:
-                setColor(Color.GREEN);
-                break;
-            default:
-                setColor(Color.DARK_GRAY);
-        }
+//        switch (token.getColor()) {
+//            case Cyan:
+//                setColor(Color.CYAN);
+//                break;
+//            case Magenta:
+//                setColor(Color.MAGENTA);
+//                break;
+//            case Red:
+//                setColor(Color.ORANGE);
+//                break;
+//            case Green:
+//                setColor(Color.GREEN);
+//                break;
+//            default:
+//                setColor(Color.DARK_GRAY);
+//        }
+
+        setColor(ColorManagerMaster.getColor(token.getColor()));
 
         this.token.addListener(new Token.Listener() {
             @Override
             public void onMove(final Direction direction, final Token.Status status) {
                 setRotation(direction.getAngle() - 90);
                 switch (status) {
-                    case Ok:
+                    case Move:
                         setSelectAnimation(0);
+//                        sound2.play(1.0f, 0.8f + random.nextFloat() * (1.2f - 0.8f), 1.f);
+                        SoundManagerMaster.play("move");
+//                        System.out.println("Move");
+                        setOnPlay(true);
                         break;
+
                     case BladeTokenCollision:
                         setSelectAnimation(1);
+//                        sound4.play(3f, 0.9f + random.nextFloat() * (1.1f - 0.9f), 1.f);
+                        SoundManagerMaster.play("bladeTokenCollision");
+//                        System.out.println("bladeTokenCollision");
+                        setOnPlay(true);
+                        break;
+
+                    case MoveAndRotate:
+                        setSelectAnimation(0);
+//                        sound.play(3f, 0.8f + random.nextFloat() * (1.2f - 0.8f), 1.f);
+//                        System.out.println("MoveAndRotate");
+                        SoundManagerMaster.play("moveAndRotate");
+                        setOnPlay(true);
                         break;
 
                     case TokenCollision:
                         setSelectAnimation(3);
+//                        sound3.play(3f, 0.9f + random.nextFloat() * (1.1f - 0.9f), 1.f);
+//                        System.out.println("TokenCollision");
+                        SoundManagerMaster.play("tokenCollision");
+                        setOnPlay(true);
                         break;
+
+                    case MoveAndFit:
+                        setSelectAnimation(0);
+//                        sound3.play(1.0f, 0.8f + random.nextFloat() * (1.2f - 0.8f), 1.f);
+//                        System.out.println("Move");
+                        SoundManagerMaster.play("moveAndFit");
+                        setOnPlay(true);
+                        break;
+
+                    case Nothing:
+                        System.out.println("Default");
+                        onFinish();
+
                 }
-                setOnPlay(true);
+
             }
         });
+
+//        sound = Gdx.audio.newSound(Gdx.files.internal("sounds/pass.mp3"));
+//        sound2 = Gdx.audio.newSound(Gdx.files.internal("sounds/table.wav"));
+//        sound3 = Gdx.audio.newSound(Gdx.files.internal("sounds/sound-81.ogg"));
+//        sound4 = Gdx.audio.newSound(Gdx.files.internal("sounds/sound-370.ogg"));
+
     }
 
     @Override

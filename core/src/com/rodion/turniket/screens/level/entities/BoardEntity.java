@@ -12,6 +12,7 @@ import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.kernel.Blade;
 import com.rodion.turniket.kernel.Game;
 import com.rodion.turniket.kernel.Turnstile;
+import com.rodion.turniket.screens.game.stages.gameStage.entities.TokenEntity;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 
 import java.io.File;
@@ -174,7 +175,14 @@ public class BoardEntity extends Layout {
     }
 
     public void hide(){
-        getColor().a = 0;
+        grid.getColor().a = 0;
+//        backboard.setColor(Color.GRAY);
+
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++) {
+                tokens[i][j].getColor().a = 0;
+            }
+
         for(BladeEntity blade: blades)
             blade.getColor().a = 0;
         for(ImageEntity axis1 : axis)

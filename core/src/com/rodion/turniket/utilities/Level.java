@@ -1,9 +1,8 @@
 package com.rodion.turniket.utilities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-
-import javax.annotation.processing.SupportedSourceVersion;
+import com.rodion.turniket.kernel.Solution;
+import com.rodion.turniket.stages.settings.SettingsStage;
 
 public class Level {
     private int id;
@@ -12,6 +11,7 @@ public class Level {
     private Character[][] map;
     private Solution solutionRead;
     private Solution solutionWrite;
+    private Requirement requirement;
 
     public Level(FileHandle file) {
         stars = 0;
@@ -46,16 +46,40 @@ public class Level {
         if (solutionFile.exists()) {
             String line = solutionFile.readString();
             solutionRead.readSolution(line);
+            System.out.println("Solution Load N steps: " + solutionRead.getNSteps());
             return true;
         } else
             return false;
     }
 
+    public boolean saveSolution(Multiplatform multiplatform) {
+        String idStr = String.format("%06X", id);
+        System.out.println("Saving");
+        FileHandle solutionFile = multiplatform.openFile("maps/Solutions/" + idStr + ".dat");
+
+        System.out.println("NSTEPS: " + solutionWrite.getNSteps());
+
+        solutionFile.writeString(solutionWrite.getString(),false);
+//        solutionWrite.print(str);
+//        solutionFile.writeString(,false);
+//        if (solutionFile.exists()) {
+//        solutionFile.writeString();
+//            String line = solutionFile.readString();
+//            solutionRead.readSolution(line);
+//            return true;
+//        } else
+            return false;
+    }
+
+//    public void saveSolution(Multiplatform multiplatform, com.rodion.turniket.kernel.Solution solution) {
+//
+//    }
+
     public boolean loadStatus(Multiplatform multiplatform) {
         System.out.println(id);
         String idStr = String.format("%06X", id);
         FileHandle progressFile = multiplatform.openFile("maps/Progress/" + idStr + ".dat");
-        System.out.println(">>>>>>>>>>>>>>>>>"+"maps/Progress/" + idStr + ".dat");
+        System.out.println(">>>>>>>>>>>>>>>>>" + "maps/Progress/" + idStr + ".dat");
         if (progressFile.exists()) {
             String lines[] = progressFile.readString().split(("\n"));
             String lineIsUnlocked = lines[0].split(":")[1];
@@ -70,6 +94,20 @@ public class Level {
             System.out.println(">>>>>>>>>>>>>>>>>false");
             return false;
         }
+    }
+
+    public boolean saveStatus(Multiplatform multiplatform) {
+        String idStr = String.format("%06X", id);
+        FileHandle progressFile = multiplatform.openFile("maps/Progress/" + idStr + ".dat");
+        progressFile.writeString("status: ", false);
+        if (isUnlocked)
+            progressFile.writeString("unlocked", true);
+        else
+            progressFile.writeString("locked", true);
+        progressFile.writeString("\n", true);
+        progressFile.writeString("stars:3", true);
+        return false;
+
     }
 
     public Solution getSolutionRead() {
@@ -92,14 +130,34 @@ public class Level {
         return id;
     }
 
-    public int getStars(){
+    public int getStars() {
         return stars;
     }
 
     public boolean isUnlocked() {
         return isUnlocked;
     }
+
     public Character[][] getMap() {
         return map;
     }
+
+    public void setRequirement(Requirement requirement) {
+        this.requirement = requirement;
+    }
+
+    public Requirement getRequirement() {
+        return requirement;
+    }
+
+    public boolean nStarsSatisfied() {
+        if (LevelManagerMaster.getNstars() < requirement.getStars())
+            return false;
+        return true;
+    }
+
+    public void restartReadSolver(){
+        solutionRead.goToBegin();
+    }
+
 }

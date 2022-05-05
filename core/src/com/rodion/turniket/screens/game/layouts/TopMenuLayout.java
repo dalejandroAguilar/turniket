@@ -14,6 +14,7 @@ import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
 import com.rodion.turniket.utilities.Level;
 import com.rodion.turniket.utilities.LevelManagerMaster;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 import java.io.FileNotFoundException;
 
@@ -41,6 +42,12 @@ public class TopMenuLayout extends Layout {
                 super.onAction();
                 onReturn();
             }
+
+            @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
         };
         backButton.setFillParent(false);
         settingsButton = new BackgroundedLabelButton("Settings", FontManagerMaster.helveticaStyle, getParentStage()) {
@@ -55,6 +62,12 @@ public class TopMenuLayout extends Layout {
             public void onAction() throws FileNotFoundException {
                 super.onAction();
                 onSettings();
+            }
+
+            @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
             }
         };
         star = new ImageEntity() {

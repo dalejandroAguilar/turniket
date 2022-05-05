@@ -7,19 +7,30 @@ import com.rodion.turniket.basics.BasicStage;
 
 public class TitleStage extends BasicStage {
     private TitleLayout titleLayout;
+
     public TitleStage(Viewport viewport, BasicScreen basicScreen) {
         super(viewport, basicScreen);
         Gdx.input.setInputProcessor(this);
-        titleLayout = new TitleLayout(this){
+        titleLayout = new TitleLayout(this) {
             @Override
             public void onPlay() {
                 TitleStage.this.onPlay();
+            }
+
+            @Override
+            public void onSettings() {
+                super.onSettings();
+                TitleStage.this.onSettings();
             }
         };
         addActor(titleLayout);
     }
 
-    public void onPlay(){
+    public void onPlay() {
+
+    }
+
+    public void onSettings() {
 
     }
 

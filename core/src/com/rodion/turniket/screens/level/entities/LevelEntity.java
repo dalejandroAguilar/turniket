@@ -16,10 +16,12 @@ import com.rodion.turniket.basics.ImageEntity;
 import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
+import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.Difficulty;
 import com.rodion.turniket.utilities.FontManagerMaster;
 import com.rodion.turniket.utilities.Level;
 import com.rodion.turniket.utilities.LevelManagerMaster;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 public class LevelEntity extends Layout {
     private BoardEntity board;
@@ -76,7 +78,7 @@ public class LevelEntity extends Layout {
             }
         };
         frame.prepareAssets();
-        frame.setColor(difficulty.getColor());
+        frame.setColor(ColorManagerMaster.getColor(difficulty));
 
         numberFrame = new ImageEntity() {
             @Override
@@ -93,8 +95,7 @@ public class LevelEntity extends Layout {
         };
         numberFrame.prepareAssets();
 
-        padlock = new ImageEntity()
-        {
+        padlock = new ImageEntity() {
             @Override
             public void setAssetAddress() {
                 setAssetManager(AssetManagerMaster.level);
@@ -120,7 +121,7 @@ public class LevelEntity extends Layout {
         add(stack);
 
 
-        final Color difficultyColor = difficulty.getColor();
+        final Color difficultyColor = ColorManagerMaster.getColor(difficulty);
 
         setTouchable(Touchable.enabled);
         addListener(new ClickListener() {
@@ -131,6 +132,7 @@ public class LevelEntity extends Layout {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("pointer " + pointer);
                 if (button == 0) {
+                    SoundManagerMaster.play("click");
                     isPressed = true;
                     isClicked = false;
                     frame.addAction(Actions.color(Color.GRAY, .2f));
@@ -211,7 +213,7 @@ public class LevelEntity extends Layout {
 
     public void setLockedStatus() {
         if (isUnlocked) {
-            padlock.getColor().a=0;
+            padlock.getColor().a = 0;
         } else {
             board.hide();
         }

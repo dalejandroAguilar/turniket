@@ -24,13 +24,13 @@ public class SolverLayout extends Layout {
             public void onReturn() {
                 super.onReturn();
                 SolverLayout.this.onReturn();
+                System.out.println("onReturn");
             }
 
             @Override
             public void onSettings() {
                 super.onSettings();
                 SolverLayout.this.onSettings();
-
             }
         };
         bottomMenu = new BottomMenuLayout(basicStage);
@@ -42,7 +42,7 @@ public class SolverLayout extends Layout {
         add().expand().fill().row();
         add().expand().fill().row();
         add(bottomMenu).expandX().fillX().bottom();
-        setDebug(false);
+//        setDebug(true);
     }
 
     @Override

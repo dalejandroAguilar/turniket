@@ -14,7 +14,7 @@ public class Solution {
     }
 
     public boolean goForward() {
-        if (mark < steps.size() - 1) {
+        if (mark < steps.size()) {
             mark++;
             return true;
         }
@@ -53,6 +53,19 @@ public class Solution {
         goForward();
     }
 
+        public void readSolution(String string) {
+
+        String[] strsteps = string.split(" ");
+//        int n = strsteps.length;
+//        for (int i = 0; i < n; i++) {
+//            System.out.println(strsteps[i]);
+//            addStep(string2Step(strsteps[i]));
+//        }
+        for (String str : strsteps) {
+            addStep(Step.string2Step(str));
+        }
+    }
+
     public void readSolution(String[] strings) {
         strings[0] = strings[0];
         String[] header = strings[0].split(" ");
@@ -76,6 +89,15 @@ public class Solution {
         mark = 0;
     }
 
+    public String getString(){
+        String str ="";
+        for (Step step : steps) {
+//            step
+            str += step.getString() + " ";
+        }
+        return str;
+    }
+
     public void clear() {
         steps.clear();
         mark = 0;
@@ -92,5 +114,13 @@ public class Solution {
 
     public int getMark() {
         return mark;
+    }
+
+    public int getNSteps() {
+        return steps.size();
+    }
+
+    public boolean isEOF(){
+        return mark==getNSteps();
     }
 }

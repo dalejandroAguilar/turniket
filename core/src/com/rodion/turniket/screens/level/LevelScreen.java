@@ -11,12 +11,15 @@ import com.rodion.turniket.basics.BasicScreen;
 import com.rodion.turniket.screens.game.GameScreen;
 import com.rodion.turniket.screens.level.stages.PageStage;
 import com.rodion.turniket.screens.level.stages.UILevelStage;
+import com.rodion.turniket.stages.settings.SettingsStage;
 import com.rodion.turniket.utilities.LevelManagerMaster;
 import com.rodion.turniket.utilities.ScreenScale;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 public class LevelScreen extends BasicScreen {
     private UILevelStage uiStage;
     private BookLevel bookLevel;
+    private SettingsStage settingsStage;
     private final ScreenViewport screenViewport = new ScreenViewport();
 
     public LevelScreen(MainGame mainGame) {
@@ -27,7 +30,6 @@ public class LevelScreen extends BasicScreen {
     public void init() {
         final InputMultiplexer multiplexer;
         multiplexer = new InputMultiplexer();
-
         bookLevel = new BookLevel(screenViewport, this) {
             @Override
             public void onClose() {
@@ -95,10 +97,23 @@ public class LevelScreen extends BasicScreen {
             @Override
             public void onSettings() {
                 super.onSettings();
-                LevelScreen.this.onSettings();
+//                LevelScreen.this.onSettings();
+                settingsStage.onEnter(uiStage);
             }
         };
 
+        settingsStage = new SettingsStage(screenViewport,this){
+            @Override
+            public void onExit() {
+                super.onExit();
+                multiplexer.clear();
+                multiplexer.addProcessor(uiStage);
+                multiplexer.addProcessor(bookLevel.getPage());
+                Gdx.input.setInputProcessor(multiplexer);
+            }
+        };
+
+        settingsStage.close();
         multiplexer.addProcessor(uiStage);
         multiplexer.addProcessor(bookLevel.getPage());
         Gdx.input.setInputProcessor(multiplexer);
@@ -116,6 +131,7 @@ public class LevelScreen extends BasicScreen {
         bookLevel.getPage().addAction(Actions.rotateTo(90, 0));
         uiStage.addAction(Actions.rotateBy(-90, .2f));
         bookLevel.getPage().addAction(Actions.rotateBy(-90, .2f));
+        SoundManagerMaster.playMusic("menu");
     }
 
     @Override
@@ -125,6 +141,8 @@ public class LevelScreen extends BasicScreen {
         bookLevel.render(delta);
         uiStage.act();
         uiStage.draw();
+        settingsStage.act();
+        settingsStage.draw();
     }
 
     @Override
@@ -133,6 +151,7 @@ public class LevelScreen extends BasicScreen {
         ScreenScale.resize(width, height);
         uiStage.resize(width, height);
         bookLevel.resize(width, height);
+        settingsStage.resize(width, height);
     }
 
     public void onClose() {

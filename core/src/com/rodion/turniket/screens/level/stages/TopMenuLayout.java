@@ -10,6 +10,7 @@ import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
 import com.rodion.turniket.utilities.LevelManagerMaster;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 import java.io.FileNotFoundException;
 
@@ -30,6 +31,14 @@ public class TopMenuLayout extends Layout {
             }
 
             @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
+
+
+            @Override
             public void onAction() throws FileNotFoundException {
                 super.onAction();
                 TopMenuLayout.this.onBack();
@@ -44,6 +53,13 @@ public class TopMenuLayout extends Layout {
                 setAssetPath("level");
                 setAssetName("button_settings");
             }
+
+             @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
 
             @Override
             public void onAction() throws FileNotFoundException {

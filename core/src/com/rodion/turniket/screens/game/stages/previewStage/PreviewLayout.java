@@ -9,6 +9,7 @@ import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.screens.game.layouts.TopMenuLayout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 public class PreviewLayout extends Layout {
     private TopMenuLayout topMenu;
@@ -129,6 +130,12 @@ public class PreviewLayout extends Layout {
                     super.onAction();
                     onPrevious();
                 }
+
+                @Override
+                public void onDown() {
+                    super.onDown();
+                    SoundManagerMaster.play("click");
+                }
             };
             previousButton.prepareAssets();
 
@@ -144,6 +151,12 @@ public class PreviewLayout extends Layout {
                 public void onAction() {
                     super.onAction();
                     onNext();
+                }
+
+                @Override
+                public void onDown() {
+                    super.onDown();
+                    SoundManagerMaster.play("click");
                 }
             };
             nextButton.prepareAssets();
@@ -161,6 +174,12 @@ public class PreviewLayout extends Layout {
                     super.onAction();
                     onPlay();
                 }
+
+                @Override
+                public void onDown() {
+                    super.onDown();
+                    SoundManagerMaster.play("click");
+                }
             };
             playButton.prepareAssets();
 
@@ -176,6 +195,12 @@ public class PreviewLayout extends Layout {
                 public void onAction() {
                     super.onAction();
                     onUnlock();
+                }
+
+                @Override
+                public void onDown() {
+                    super.onDown();
+                    SoundManagerMaster.play("click");
                 }
             };
             unlockButton.prepareAssets();

@@ -9,9 +9,10 @@ import java.util.ArrayList;
 public class Turnstile extends Node {
     private ArrayList<Blade> blades;
     private TurnId id;
+    private Listener listener;
 
     public Turnstile(Turnstile t) {
-        setPosition(t.getX(),t.getY());
+        setPosition(t.getX(), t.getY());
         id = TurnId.get(t.id);
         blades = new ArrayList<>();
         for (int i = 0; i < t.blades.size(); i++) {
@@ -19,8 +20,8 @@ public class Turnstile extends Node {
         }
     }
 
-    public void set(Turnstile t){
-        setPosition(t.getX(),t.getY());
+    public void set(Turnstile t) {
+        setPosition(t.getX(), t.getY());
         id = TurnId.get(t.id);
         for (int i = 0; i < t.blades.size(); i++) {
             blades.get(i).set(t.blades.get(i));
@@ -51,12 +52,13 @@ public class Turnstile extends Node {
             int halfStepY = blade.getY() + direction.y;
             if (board[halfStepY][halfStepX] != null) {
                 for (Blade blade2 : blades) {
-                    if(blade2.listener != null)
+                    if (blade2.listener != null)
                         blade2.listener.onRotate(spin, Blade.Status.TokenCollision);
                 }
                 return false;
             }
         }
+
         for (Blade blade : blades) {
             Direction direction = blade.getDirection().rotate(spin);
             int stepX = getX() + direction.x;
@@ -68,7 +70,7 @@ public class Turnstile extends Node {
             if (board[stepY][stepX] != null) {
                 if (((Blade) board[stepY][stepX]).getId() != blade.getId()) {
                     for (Blade blade2 : blades) {
-                        if(blade2.listener != null)
+                        if (blade2.listener != null)
                             blade2.listener.onRotate(spin, Blade.Status.BladeCollision);
                     }
                     return false;
@@ -93,7 +95,23 @@ public class Turnstile extends Node {
         return true;
     }
 
+    public void addListener(Listener listener) {
+        this.listener = listener;
+    }
+
     public TurnId getId() {
         return id;
+    }
+
+    public interface Listener {
+        public void onRotate(Spin spin, Status status);
+    }
+
+    public enum Status {
+        Ok(0), BladeCollision(1), TokenCollision(2);
+        private int value;
+
+        Status(int value) {
+        }
     }
 }

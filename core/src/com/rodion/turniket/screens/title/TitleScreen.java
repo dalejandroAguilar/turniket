@@ -7,12 +7,15 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.rodion.turniket.MainGame;
 import com.rodion.turniket.basics.BasicScreen;
 import com.rodion.turniket.basics.BlackStage;
+import com.rodion.turniket.stages.settings.SettingsStage;
 import com.rodion.turniket.utilities.ScreenScale;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 public class TitleScreen extends BasicScreen {
     private TitleStage stage;
     private final ScreenViewport screenViewport = new ScreenViewport();
     private BlackStage blackStage;
+    private SettingsStage settingsStage;
 
     public TitleScreen(MainGame mainGame) {
         super(mainGame);
@@ -30,15 +33,26 @@ public class TitleScreen extends BasicScreen {
                         })
                         )
                 );
+            }
 
+            @Override
+            public void onSettings() {
+                super.onSettings();
+                settingsStage.onEnter(stage);
             }
         };
         blackStage = new BlackStage(screenViewport, this);
+        settingsStage = new SettingsStage(screenViewport, this);
+//        settingsStage.init();
+//        settingsStage.close();
     }
 
     public void init(){
         stage.addAction(Actions.fadeIn(0f));
         Gdx.input.setInputProcessor(stage);
+//        settingsStage.init();
+        settingsStage.close();
+//        settingsStage.resetConfirmationMessage.close();
     }
 
     @Override
@@ -50,6 +64,8 @@ public class TitleScreen extends BasicScreen {
         stage.draw();
         blackStage.act(delta);
         blackStage.draw();
+        settingsStage.act();
+        settingsStage.draw();
     }
 
     public void onPlay() {
@@ -60,9 +76,11 @@ public class TitleScreen extends BasicScreen {
         System.out.println("EnterTitle");
         Gdx.input.setInputProcessor(stage);
         blackStage.onHiding();
+        SoundManagerMaster.playMusic("menu");
     }
 
     public void onEnterBackward() {
+        init();
         stage.addAction(Actions.rotateTo(90, 0));
         stage.addAction(Actions.rotateBy(-90, .2f));
     }
@@ -73,5 +91,6 @@ public class TitleScreen extends BasicScreen {
         ScreenScale.resize(width, height);
         stage.resize(width, height);
         blackStage.resize(width, height);
+        settingsStage.resize(width, height);
     }
 }

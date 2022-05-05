@@ -1,6 +1,6 @@
 package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -10,19 +10,18 @@ import com.rodion.turniket.basics.ImageEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.kernel.Blade;
 import com.rodion.turniket.kernel.Game;
+import com.rodion.turniket.kernel.Step;
 import com.rodion.turniket.kernel.Token;
 import com.rodion.turniket.kernel.Turnstile;
 import com.rodion.turniket.kernel.constants.Direction;
 import com.rodion.turniket.kernel.constants.TokenColor;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.BladeEntity;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.BoardEntity;
-import com.rodion.turniket.screens.game.stages.gameStage.entities.BurnerEntity;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.BurnerExternalEntity;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.TokenEntity;
+import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.Level;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class BoardLayout extends Layout {
@@ -41,7 +40,9 @@ public class BoardLayout extends Layout {
             @Override
             public void onBurnerAction(BurnerExternalEntity burner, Direction direction) {
                 Token selectToken = game.getToken(burner.getI(), burner.getJ());
-                if (selectToken != null) {
+                //TODO: toggle thats two lines to get a win well response
+                if (selectToken != null && !game.isWin()) {
+//                if (selectToken != null) {
 //                    TokenEntity tokenEntity = tokens.get(selectToken.getColor().index);
 //                    tokenEntity.addAction(Actions.scaleBy(2,2,1));
                     move(selectToken.getColor(), direction);
@@ -54,7 +55,7 @@ public class BoardLayout extends Layout {
                 Token token = game.getToken(burner.getI(), burner.getJ());
                 if (token != null) {
                     TokenEntity tokenEntity = getTokenEntity(token);
-                    tokenEntity.addAction(Actions.color(Color.WHITE,0.25f));
+                    tokenEntity.addAction(Actions.color(Color.WHITE, 0.25f));
                 }
             }
 
@@ -64,7 +65,7 @@ public class BoardLayout extends Layout {
                 Token token = game.getToken(burner.getI(), burner.getJ());
                 if (token != null) {
                     TokenEntity tokenEntity = getTokenEntity(token);
-                    tokenEntity.addAction(Actions.color(token.getColor().getColor(), 0.25f));
+                    tokenEntity.addAction(Actions.color(ColorManagerMaster.getColor(token.getColor()), 0.25f));
                 }
             }
         };
@@ -129,7 +130,9 @@ public class BoardLayout extends Layout {
         game.addListener(new Game.Listener() {
             @Override
             public void onWin() {
+//                onMoveFinish();
 //                System.out.p
+//                Gdx.input.setInputProcessor(null);
                 BoardLayout.this.onWin();
             }
         });
@@ -176,7 +179,6 @@ public class BoardLayout extends Layout {
         game.undo();
         for (BladeEntity blade : blades)
             blade.updateRotation();
-
     }
 
     public void onRedo() {
@@ -192,16 +194,29 @@ public class BoardLayout extends Layout {
     }
 
     public void move(TokenColor tokenColor, Direction direction) {
-//        TokenEntity selectToken = tokens.get(tokenColor.index);
-//        if (selectToken != null) {
+        onMoveTry();
+//        game.move(tokenColor, direction);
+
         if (game.move(tokenColor, direction)) {
-            onMoveTry();
+            //TODO: level here
+//            onMove(tokenColor, direction);
             onMove();
         }
+
+//        onMove();
+//        if (game.move(tokenColor, direction)) {
 //        }
+//        else {
+//            onMoveFinish();
+//        }
+
     }
 
     public void onMove() {
+    }
+
+    public void onMove(TokenColor tokenColor, Direction direction) {
+
     }
 
     public void onMoveTry() {
@@ -223,17 +238,21 @@ public class BoardLayout extends Layout {
     }
 
     public void moveFromSolution() {
+
 //        if (game.moveFromSolution()) {
 //            onMoveTry();
 //            onMove();
 //        }
+
     }
 
     public void undoFromSolution() {
 //        game.undoFromSolution();
 //        for (BladeEntity blade : blades)
 //            blade.updateRotation();
-            game.undo();
+        game.undo();
+        for (BladeEntity blade : blades)
+            blade.updateRotation();
     }
 
     public boolean isOnBegin() {
@@ -269,5 +288,9 @@ public class BoardLayout extends Layout {
             if (tokenEntity.getToken() == token)
                 return tokenEntity;
         return null;
+    }
+
+    public void restartSolver(){
+//        game.ge
     }
 }

@@ -13,6 +13,7 @@ import com.rodion.turniket.utilities.FontManagerMaster;
 import com.rodion.turniket.utilities.LevelManagerMaster;
 import com.rodion.turniket.utilities.Multiplatform;
 import com.rodion.turniket.utilities.ScreenScale;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 public class MainGame extends Game {
 
@@ -23,6 +24,7 @@ public class MainGame extends Game {
     public TitleScreen titleScreen;
     public Multiplatform multiplatform;
 
+
     public MainGame(Multiplatform multiplatform) {
         super();
         this.multiplatform = multiplatform;
@@ -32,13 +34,9 @@ public class MainGame extends Game {
     public void create() {
         AssetManagerMaster.loadLoading();
         System.out.println("init");
-
-
         LevelManagerMaster.init(multiplatform);
-//
+        SoundManagerMaster.init();
         ScreenScale.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-
         loadingScreen = new LoadingScreen(this) {
             @Override
             public void onActive() {
@@ -96,6 +94,7 @@ public class MainGame extends Game {
                         setScreen(levelScreen);
                     }
                 };
+                titleScreen.init();
                 titleScreen.onEnterForward();
                 setScreen(titleScreen);
 //                AssetManagerMaster.game.up;
@@ -138,5 +137,6 @@ public class MainGame extends Game {
         super.dispose();
         AssetManagerMaster.dispose();
         FontManagerMaster.dispose();
+        SoundManagerMaster.dispose();
     }
 }

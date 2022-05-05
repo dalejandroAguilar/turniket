@@ -6,17 +6,19 @@ import com.rodion.turniket.basics.ImageEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 import java.io.FileNotFoundException;
 
-public class TitleLayout  extends Layout {
+public class TitleLayout extends Layout {
     private ImageEntity title;
     private BackgroundedLabelButton playButton;
     private BackgroundedLabelButton settingsButton;
+
     public TitleLayout(BasicStage basicStage) {
         super(basicStage);
         setFillParent(true);
-        title = new ImageEntity(){
+        title = new ImageEntity() {
             @Override
             public void setAssetAddress() {
                 setAssetManager(AssetManagerMaster.title);
@@ -35,6 +37,12 @@ public class TitleLayout  extends Layout {
             }
 
             @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
+            @Override
             public void onAction() throws FileNotFoundException {
                 super.onAction();
                 onPlay();
@@ -49,6 +57,18 @@ public class TitleLayout  extends Layout {
                 setAssetPath("title");
                 setAssetName("button_label_frame");
             }
+
+            @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
+
+            @Override
+            public void onAction() throws FileNotFoundException {
+                super.onAction();
+                onSettings();
+            }
         };
         settingsButton.prepareAssets();
         add(title).padTop(50).expand().top().row();
@@ -57,7 +77,11 @@ public class TitleLayout  extends Layout {
     }
 
 
-    public void onPlay(){
+    public void onPlay() {
+
+    }
+
+    public void onSettings() {
 
     }
 

@@ -13,9 +13,13 @@ import com.rodion.turniket.screens.game.stages.youWinStage.YouWinStage;
 import com.rodion.turniket.stages.message.MessageStage;
 import com.rodion.turniket.stages.settings.SettingsStage;
 import com.rodion.turniket.utilities.DecisionFrame;
+import com.rodion.turniket.utilities.LevelManagerMaster;
 import com.rodion.turniket.utilities.ScreenScale;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 import java.io.FileNotFoundException;
+
+//TODO: Erase youWinPopUpStage
 
 public class GameScreen extends BasicScreen {
     private final ScreenViewport screenViewport = new ScreenViewport();
@@ -23,16 +27,19 @@ public class GameScreen extends BasicScreen {
     private BookGame bookGame;
     private ConfettiStage confettiStage;
     private YouWinStage youWinPopUpStage;
+    private MessageStage youWinMessage;
     private SolverStage solverStage;
     private SettingsStage settingsStage;
     private MessageStage confirmationToReturn;
 
-    public GameScreen(MainGame mainGame) {
+    public GameScreen(final MainGame mainGame) {
         super(mainGame);
         bookGame = new BookGame(screenViewport, this) {
             @Override
             public void onWin() {
+                Gdx.input.setInputProcessor(null);
                 confettiStage.onThrow();
+                getGame().saveStatus(getMainGame().multiplatform);
             }
 
             @Override
@@ -56,6 +63,7 @@ public class GameScreen extends BasicScreen {
                 preview.hide();
                 bookGame.getGame().onInput();
                 bookGame.onPlay();
+                SoundManagerMaster.stopMusic("menu");
             }
 
             @Override
@@ -86,7 +94,7 @@ public class GameScreen extends BasicScreen {
                         Actions.run(new Runnable() {
                             @Override
                             public void run() {
-                                 onGoToLevelScreen();
+                                onGoToLevelScreen();
                             }
                         })
                 ));
@@ -103,8 +111,9 @@ public class GameScreen extends BasicScreen {
             @Override
             public void onFinish() {
                 super.onFinish();
-                youWinPopUpStage.showUp();
-                youWinPopUpStage.onInput();
+                youWinMessage.onEnter();
+//                youWinPopUpStage.showUp();
+//                youWinPopUpStage.onInput();
             }
         };
 
@@ -112,23 +121,62 @@ public class GameScreen extends BasicScreen {
             @Override
             public void onContinue() {
                 super.onContinue();
+                System.out.println("Continue");
                 onNext();
+//                if(bookGame.areRequirementsSatisfied() && !bookGame.getGame().isUnlocked()){
+//                }
+//                if(LevelManagerMaster.getNstars() > bookGame.getGame().)
                 preview.show();
                 preview.onInput();
                 bookGame.update();
+                System.out.println("OnUnlock");
+                bookGame.onUnlock();
             }
 
             @Override
             public void onSaveSolution() throws FileNotFoundException {
                 super.onSaveSolution();
-                bookGame.getGame().onSaveSolution();
+//                bookGame.getGame().onSaveSolution();
             }
         };
 
-        settingsStage = new SettingsStage(screenViewport,this);
+        String[] youWinLines = {"You Win"};
+
+        youWinMessage = new MessageStage(screenViewport, this, youWinLines, "Continue",
+                "Save Solution");
+
+        youWinMessage.setDecisionFrame(new DecisionFrame() {
+            @Override
+            public void onAffirmativeDecision() {
+                youWinMessage.onExit();
+                onNext();
+                preview.show();
+                preview.onInput();
+                bookGame.update();
+//                bookGame.getNextGame().onUnlock();
+            }
+
+            @Override
+            public void onNegativeDecision() {
+                /////////////////// ON-SAVE-SOLUTION
+//                youWinMessage.onExit();
+
+                bookGame.getGame().saveSolution(mainGame.multiplatform);
+            }
+        });
+        youWinMessage.close();
+
+        settingsStage = new SettingsStage(screenViewport, this);
 //        settingsStage.close();
 
-        solverStage = new SolverStage(screenViewport, this);
+        solverStage = new SolverStage(screenViewport, this) {
+            @Override
+            public void onReturn() {
+                super.onReturn();
+                System.out.println("onBack back back");
+                confirmationToReturn.onEnter();
+            }
+        };
         String[] levelMessageLine = {"Sure to go to exit", "Your progress will lose."};
         confirmationToReturn = new MessageStage(screenViewport, this, levelMessageLine);
         confirmationToReturn.setDecisionFrame(new DecisionFrame() {
@@ -139,6 +187,7 @@ public class GameScreen extends BasicScreen {
                 bookGame.onReturn();
                 onGoToLevelScreen();
             }
+
             @Override
             public void onNegativeDecision() {
                 confirmationToReturn.onExit();
@@ -150,8 +199,9 @@ public class GameScreen extends BasicScreen {
     }
 
     private void onNext() {
-        if (!bookGame.isOnMoving())
+        if (!bookGame.isOnMoving()) {
             bookGame.onNext();
+        }
     }
 
     public void onInput() {
@@ -180,6 +230,8 @@ public class GameScreen extends BasicScreen {
         settingsStage.draw();
         confirmationToReturn.act();
         confirmationToReturn.draw();
+        youWinMessage.act();
+        youWinMessage.draw();
     }
 
     @Override
@@ -193,6 +245,7 @@ public class GameScreen extends BasicScreen {
         solverStage.resize(width, height);
         settingsStage.resize(width, height);
         confirmationToReturn.resize(width, height);
+        youWinMessage.resize(width, height);
     }
 
     public void onReturn() {
@@ -207,7 +260,6 @@ public class GameScreen extends BasicScreen {
         preview.onInput();
         preview.onEnter();
 //        settingsStage.init();
-
     }
 
     public void init() {
@@ -215,9 +267,7 @@ public class GameScreen extends BasicScreen {
         youWinPopUpStage.hide();
         preview.onInput();
         bookGame.init();
-//        settingsStage.init();
         settingsStage.close();
-
     }
 
     public void onGoToLevelScreen() {
@@ -227,6 +277,5 @@ public class GameScreen extends BasicScreen {
     @Override
     public void dispose() {
         super.dispose();
-//        backBufferStage.dispose();
     }
 }

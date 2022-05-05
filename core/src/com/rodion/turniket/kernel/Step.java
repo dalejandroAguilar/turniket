@@ -55,6 +55,11 @@ public class Step {
         return Direction.get(endX - startX, endY - startY);
     }
 
+            public String getString(){
+            String str = start + ">" + end;
+            return str;
+        }
+
     public int getStart() {
         return start;
     }

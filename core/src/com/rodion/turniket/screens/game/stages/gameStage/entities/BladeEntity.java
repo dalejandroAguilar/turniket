@@ -37,7 +37,7 @@ public class BladeEntity extends BundleAnimationEntity {
                 }
                 switch (status) {
                     case Ok:
-                        sound.play();
+//                        sound.play();
                         setSelectAnimation(0 + mirror);
                         break;
                     case TokenCollision:

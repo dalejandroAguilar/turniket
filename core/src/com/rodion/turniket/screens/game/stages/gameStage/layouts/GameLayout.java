@@ -3,11 +3,16 @@ package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.rodion.turniket.basics.BasicStage;
 import com.rodion.turniket.basics.Layout;
+import com.rodion.turniket.kernel.Step;
+import com.rodion.turniket.kernel.constants.Direction;
+import com.rodion.turniket.kernel.constants.TokenColor;
 import com.rodion.turniket.screens.game.layouts.TopMenuLayout;
 import com.rodion.turniket.screens.game.stages.gameStage.entities.LevelTitleBarEntity;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.Level;
-import com.rodion.turniket.utilities.Solution;
+import com.rodion.turniket.utilities.Multiplatform;
+//import com.rodion.turniket.utilities.Solution;
+import com.sun.org.apache.xpath.internal.operations.Mult;
 
 
 import java.io.FileNotFoundException;
@@ -19,23 +24,31 @@ public class GameLayout extends Layout {
     private BottomMenuLayout bottomMenu;
     private LevelTitleBarEntity levelTitle;
     private StatusLayout status;
+    private Level level;
     private boolean lockedStatus;
+    public boolean isWin;
 
     public GameLayout(final Level level, int index, BasicStage basicStage) {
         super(basicStage);
         setFillParent(true);
+        this.level = level;
+        isWin = false;
         lockedStatus = !level.isUnlocked();
         topMenu = new TopMenuLayout(getParentStage()) {
             @Override
             public void onReturn() {
-                super.onReturn();
-                GameLayout.this.onReturn();
+                if (!isWin) {
+                    super.onReturn();
+                    GameLayout.this.onReturn();
+                }
             }
 
             @Override
             public void onSettings() {
-                super.onSettings();
-                GameLayout.this.onSettings();
+                if (!isWin) {
+                    super.onSettings();
+                    GameLayout.this.onSettings();
+                }
             }
         };
 
@@ -48,7 +61,19 @@ public class GameLayout extends Layout {
             public void onMove() {
                 super.onMove();
                 status.setSteps(board.getSteps());
+                System.out.println("hola solucion");
+                board.getGame().getSolutionWrite().print(System.out);
+//                level.getSolutionWrite().addStep();
             }
+
+//            @Override
+//            public void onMove(TokenColor tokenColor, Direction direction) {
+//                super.onMove(tokenColor, direction);
+////                Step step = new Step(tokenColor,direction);
+//                Step step = Step.getStep(tokenColor,direction,getGame());
+//
+//                level.getSolutionWrite().addStep(new Solution.Step(step.getStart(),step.getEnd()));
+//            }
 
             @Override
             public void onMoveTry() {
@@ -66,18 +91,25 @@ public class GameLayout extends Layout {
                 GameLayout.this.onWin();
                 status.stop();
                 score.onWin();
+                isWin = true;
             }
 
             @Override
             public void moveFromSolution() {
                 super.moveFromSolution();
-                level.loadSolution(getParentStage().getParentScreen().getMainGame().multiplatform);
-                System.out.println(level.getSolutionRead().getNSteps());
-                Solution.Step step = level.getSolutionRead().getStep();
-                getGame().move(step.getTokenColor(getGame().getState()), step.getDirection());
-                onMoveTry();
-                onMove();
-                level.getSolutionRead().goForward();
+//                level.loadSolution(getParentStage().getParentScreen().getMainGame().multiplatform);
+//                System.out.println(level.getSolutionRead().getNSteps());
+//                step
+//                getGame().move(step.getTokenColor(getGame().getState()), step.getDirection());
+//                if()
+                if (!level.getSolutionRead().isEOF()) {
+                    Step step = level.getSolutionRead().getStep();
+                    System.out.println(step.getString());
+                    getGame().move(step);
+                    onMoveTry();
+                    onMove();
+                    level.getSolutionRead().goForward();
+                }
             }
 
             @Override
@@ -87,27 +119,37 @@ public class GameLayout extends Layout {
             }
         };
         bottomMenu = new BottomMenuLayout(getParentStage()) {
+            //            boolean isWin = false;
             @Override
             public void onUndo() {
-                board.onUndo();
-                status.setSteps(board.getSteps());
+                if (!isWin) {
+                    board.onUndo();
+                    status.setSteps(board.getSteps());
+                }
             }
 
             @Override
             public void onRedo() {
-                board.onRedo();
-                status.setSteps(board.getSteps());
+                if (!isWin) {
+                    board.onRedo();
+                    status.setSteps(board.getSteps());
+                }
             }
 
             @Override
             public void onRestart() {
-                GameLayout.this.restart();
+                if (!isWin) {
+                    GameLayout.this.restart();
+                    status.setSteps(0);
+                }
             }
 
             @Override
             public void onHint() {
-                super.onHint();
-                GameLayout.this.onHint();
+                if (!isWin) {
+                    super.onHint();
+                    GameLayout.this.onHint();
+                }
             }
 
         };
@@ -125,6 +167,7 @@ public class GameLayout extends Layout {
 //        setY(board.getY(Align.center), Align.center);
 
         background(ColorManagerMaster.grayBg);
+//        setToPreview();
     }
 
 
@@ -214,10 +257,18 @@ public class GameLayout extends Layout {
         return board;
     }
 
-    public void onSaveSolution() throws FileNotFoundException {
-        System.out.println("Save solution game layout");
-//        board.getGame().saveSolution(LevelManagerMaster.getLevel());
+//    public void onSaveSolution() throws FileNotFoundException {
+//        System.out.println("Save solution game layout");
+////        level.saveSolution()
+////        board.getGame().saveSolution(LevelManagerMaster.getLevel());
+//    }
+
+
+    public boolean saveSolution(Multiplatform multiplatform) {
+        level.setSolutionWrite(board.getGame().getSolutionWrite());
+        return level.saveSolution(multiplatform);
     }
+
 
     public void setToPreview() {
         if (lockedStatus) {
@@ -242,6 +293,10 @@ public class GameLayout extends Layout {
         status.show();
     }
 
+    public boolean nStarsSatisfied() {
+        return level.nStarsSatisfied();
+    }
+
     @Override
     public void onShow() {
 //        super.onShow();
@@ -258,7 +313,6 @@ public class GameLayout extends Layout {
 //        super.hide();
     }
 
-
     @Override
     public void show() {
 //        super.show();
@@ -268,7 +322,15 @@ public class GameLayout extends Layout {
         return lockedStatus;
     }
 
-    public void update(){
+    public void update() {
         topMenu.update();
+    }
+
+    public boolean saveStatus(Multiplatform multiplatform) {
+        return level.saveStatus(multiplatform);
+    }
+
+    public void restartSolver() {
+        level.restartReadSolver();
     }
 }

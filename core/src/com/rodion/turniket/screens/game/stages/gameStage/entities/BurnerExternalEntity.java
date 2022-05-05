@@ -42,11 +42,11 @@ public class BurnerExternalEntity extends ImageEntity {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (pointer == 0) {
+                if (pointer == 0 && button ==  0) {
                     x0 = x;
                     y0 = y;
-                }
                 onPressed(BurnerExternalEntity.this);
+                }
                 System.out.println("touchDown");
                 return true;
 //                        super.touchDown(event, x, y, pointer, button);
@@ -56,7 +56,7 @@ public class BurnerExternalEntity extends ImageEntity {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
 //                if (isOver())
-                if (pointer == 0) {
+                if (pointer == 0  && button ==  0) {
                     if (Math.abs(dx) > Math.abs(dy)) {
                         if (Math.abs(dx) > threshold) {
                             if (dx > 0) {
@@ -83,8 +83,8 @@ public class BurnerExternalEntity extends ImageEntity {
 //                    else
                     dx = 0;
                     dy = 0;
-                }
                 onUnpressed(BurnerExternalEntity.this);
+                }
 
                 System.out.println("touchUp");
 

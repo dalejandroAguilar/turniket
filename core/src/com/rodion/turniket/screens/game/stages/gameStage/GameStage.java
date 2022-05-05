@@ -10,6 +10,7 @@ import com.rodion.turniket.screens.game.stages.gameStage.layouts.SolverLayout;
 import com.rodion.turniket.stages.message.MessageStage;
 import com.rodion.turniket.utilities.DecisionFrame;
 import com.rodion.turniket.utilities.Level;
+import com.rodion.turniket.utilities.Multiplatform;
 
 import java.io.FileNotFoundException;
 
@@ -20,13 +21,15 @@ public class GameStage extends BasicStage {
     private MessageStage confirmationToGame;
     private LockLayout lockLayout;
 
-    public GameStage(Level level, int index, Viewport viewport, BasicScreen basicScreen) {
+    public GameStage(final Level level, int index, Viewport viewport, BasicScreen basicScreen) {
         super(viewport, basicScreen);
+
         gameLayout = new GameLayout(level, index, this) {
             @Override
             public void onWin() {
                 super.onWin();
                 GameStage.this.onWin();
+//                level.saveStatus(Mult)
             }
 
             @Override
@@ -53,6 +56,7 @@ public class GameStage extends BasicStage {
 
             @Override
             public void onHint() {
+                gameLayout.restartSolver();
                 if (gameLayout.isOnBegin())
                     solverLayout.onShow();
                 else {
@@ -65,12 +69,11 @@ public class GameStage extends BasicStage {
                 super.setToPreview();
                 if (!isLockedStatus())
                     lockLayout.hide();
-
             }
 
         };
 
-        lockLayout = new LockLayout(this) {
+        lockLayout = new LockLayout(this, level) {
             @Override
             public void updateLockEntityPosition() {
                 super.updateLockEntityPosition();
@@ -86,16 +89,23 @@ public class GameStage extends BasicStage {
         };
 
         solverLayout = new SolverLayout(this) {
+            boolean isWin = false;
             @Override
             public void onNext() {
-                super.onNext();
-                gameLayout.moveFromSolver();
+                if(!isWin) {
+                    super.onNext();
+                    gameLayout.moveFromSolver();
+                    isWin = gameLayout.isWin;
+                }
             }
 
             @Override
             public void onPrevious() {
-                super.onPrevious();
-                gameLayout.undoFromSolver();
+                if(!isWin) {
+                    super.onPrevious();
+                    gameLayout.undoFromSolver();
+                    isWin = gameLayout.isWin;
+                }
             }
 
             @Override
@@ -109,6 +119,12 @@ public class GameStage extends BasicStage {
             public void onSettings() {
                 super.onSettings();
                 GameStage.this.onSettings();
+            }
+
+            @Override
+            public void onReturn() {
+                super.onReturn();
+                GameStage.this.onReturn();
             }
         };
 
@@ -206,16 +222,31 @@ public class GameStage extends BasicStage {
         confirmationToGame.act();
     }
 
-    public void onSaveSolution() throws FileNotFoundException {
-        System.out.println("Save solution game stage");
-        gameLayout.onSaveSolution();
+//    public void onSaveSolution() throws FileNotFoundException {
+//        System.out.println("Save solution game stage");
+//        gameLayout.onSaveSolution();
+//    }
+
+    public boolean saveSolution(Multiplatform multiplatform){
+        return gameLayout.saveSolution(multiplatform);
+    }
+
+    public boolean saveStatus(Multiplatform multiplatform){
+        return gameLayout.saveStatus(multiplatform);
     }
 
     public void onUnlock() {
         lockLayout.onUnlock();
     }
 
+    public boolean nStarsSatisfied(){
+        return gameLayout.nStarsSatisfied();
+    }
     public void update() {
         gameLayout.update();
+    }
+
+    public boolean isUnlocked(){
+        return !gameLayout.isLockedStatus();
     }
 }

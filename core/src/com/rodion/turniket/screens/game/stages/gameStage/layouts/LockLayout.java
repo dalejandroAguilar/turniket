@@ -1,8 +1,8 @@
 package com.rodion.turniket.screens.game.stages.gameStage.layouts;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RelativeTemporalAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.rodion.turniket.basics.AnimatedEntity;
 import com.rodion.turniket.basics.BasicStage;
@@ -12,45 +12,95 @@ import com.rodion.turniket.screens.game.stages.gameStage.entities.LockEntity;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.Level;
+import com.rodion.turniket.utilities.LevelManagerMaster;
+import com.rodion.turniket.utilities.Requirement;
 
 public class LockLayout extends Layout {
     private LockEntity lockEntity;
     LabelEntity levelRequirementsLabel;
     LabelEntity starRequirementsLabel;
-    private CheckEntity checkEntity1;
-    private CheckEntity checkEntity2;
+    private CheckEntity checkBefore;
+    private CheckEntity checkStars;
+    private Level level;
+    private boolean debug;
 
-    public LockLayout(BasicStage basicStage) {
+    public LockLayout(BasicStage basicStage, final Level level) {
         super(basicStage);
-
-        checkEntity1 = new CheckEntity() {
-            @Override
-            public void onEnd() {
-                super.onEnd();
-                checkEntity2.setOnPlay(true);
-            }
-        };
+        debug = true;
+        this.level = level;
         final Table table1 = new Table();
         final Table table2 = new Table();
-        checkEntity1.setColor(ColorManagerMaster.green);
-        checkEntity2 = new CheckEntity() {
-            @Override
-            public void onEnd() {
-                super.onEnd();
-                table1.addAction(Actions.parallel(
-                        Actions.moveBy(500, 0, 0.5f),
-                        Actions.fadeOut(0.5f)
-                ));
-                table2.addAction(Actions.parallel(
-                        Actions.moveBy(500, 0, 0.5f),
-                        Actions.fadeOut(0.5f)
-                ));
-                lockEntity.setOnPlay(true);
-            }
-        };
-        checkEntity2.setColor(ColorManagerMaster.green);
+        if (!debug) {
+            checkBefore = new CheckEntity() {
+                @Override
+                public void onEnd() {
+                    super.onEnd();
+                    isChecked = true;
+                    if (!starsCheck() && level.nStarsSatisfied()) {
+                        checkStars.setOnPlay(true);
+                    }
+                    if (starsCheck()) {
+                        table1.addAction(Actions.parallel(
+                                Actions.moveBy(500, 0, 0.5f),
+                                Actions.fadeOut(0.5f)
+                        ));
+                        table2.addAction(Actions.parallel(
+                                Actions.moveBy(500, 0, 0.5f),
+                                Actions.fadeOut(0.5f)
+                        ));
+                        lockEntity.setOnPlay(true);
+                    }
+                }
+            };
+            checkStars = new CheckEntity() {
+                @Override
+                public void onEnd() {
+                    super.onEnd();
+                    isChecked = true;
+                    if (beforeLevelCheck()) {
+                        table1.addAction(Actions.parallel(
+                                Actions.moveBy(500, 0, 0.5f),
+                                Actions.fadeOut(0.5f)
+                        ));
+                        table2.addAction(Actions.parallel(
+                                Actions.moveBy(500, 0, 0.5f),
+                                Actions.fadeOut(0.5f)
+                        ));
+                        lockEntity.setOnPlay(true);
+                    }
+                }
+            };
+        } else {
+            checkBefore = new CheckEntity() {
+                @Override
+                public void onEnd() {
+                    super.onEnd();
+                    checkStars.setOnPlay(true);
+                }
+            };
+            checkStars = new CheckEntity() {
+                @Override
+                public void onEnd() {
+                    super.onEnd();
+                    table1.addAction(Actions.parallel(
+                            Actions.moveBy(500, 0, 0.5f),
+                            Actions.fadeOut(0.5f)
+                    ));
+                    table2.addAction(Actions.parallel(
+                            Actions.moveBy(500, 0, 0.5f),
+                            Actions.fadeOut(0.5f)
+                    ));
+                    lockEntity.setOnPlay(true);
+                }
+            };
+        }
 
-        checkEntity1.setOnPlay(false);
+        checkBefore.setColor(ColorManagerMaster.green);
+
+        checkStars.setColor(ColorManagerMaster.green);
+
+        checkBefore.setOnPlay(false);
 //        setDebug(true);
 
 
@@ -77,12 +127,14 @@ public class LockLayout extends Layout {
         levelRequirementsLabel = new LabelEntity("You need complete the previous level",
                 FontManagerMaster.nexaStyle);
 
-        starRequirementsLabel = new LabelEntity("You need 41 stars",
+        int nStars = level.getRequirement().getStars();
+
+        starRequirementsLabel = new LabelEntity("You need " + nStars + " stars",
                 FontManagerMaster.nexaStyle);
 
-        table1.add(checkEntity1).padRight(10);
+        table1.add(checkBefore).padRight(10);
         table1.add(levelRequirementsLabel);
-        table2.add(checkEntity2).padRight(10);
+        table2.add(checkStars).padRight(10);
         table2.add(starRequirementsLabel);
 
         add().expand().fill().row();
@@ -113,8 +165,8 @@ public class LockLayout extends Layout {
         lockEntity.resize(width, height);
         starRequirementsLabel.resize(width, height);
         levelRequirementsLabel.resize(width, height);
-        checkEntity1.resize(width, height);
-        checkEntity2.resize(width, height);
+        checkBefore.resize(width, height);
+        checkStars.resize(width, height);
 
     }
 
@@ -129,19 +181,54 @@ public class LockLayout extends Layout {
 
     }
 
+//    public boolean onTryToUnlock() {
+//        if (!level.isUnlocked()) {
+//            if (!beforeLevelCheck()) {
+//                if (LevelManagerMaster.getPreviousLevel().isUnlocked()) {
+//
+//                }
+//            }
+//        }
+//        return true;
+//    }
+
     public void onUnlock() {
-//        lockEntity.setOnPlay(true);
-        checkEntity1.setOnPlay(true);
+////        lockEntity.setOnPlay(true);
+//        System.out.println(LevelManagerMaster.getNstars());
+//        System.out.println(level.getRequirement().getStars());
+//        System.out.println(level.nStarsSatisfied());
+
+        if (!debug) {
+            if (!LevelManagerMaster.getLevel().isUnlocked())
+                if (!beforeLevelCheck() && LevelManagerMaster.getPreviousLevel().isUnlocked()) {
+                    checkBefore.setOnPlay(true);
+                } else {
+                    if (!starsCheck() && level.nStarsSatisfied())
+                        checkStars.setOnPlay(true);
+                }
+        } else {
+            System.out.println("CHECK BEFORE");
+            checkBefore.setOnPlay(true);
+        }
     }
 
     public void onEnd() {
 
     }
 
+    @Override
+    public void hide() {
+        super.hide();
+        lockEntity.getColor().a = 0;
+    }
+
     class CheckEntity extends AnimatedEntity {
+        public boolean isChecked;
+
         public CheckEntity() {
             super(0.02f);
             prepareAssets();
+            isChecked = false;
         }
 
         @Override
@@ -157,9 +244,11 @@ public class LockLayout extends Layout {
         }
     }
 
-    @Override
-    public void hide() {
-        super.hide();
-        lockEntity.getColor().a = 0;
+    public boolean beforeLevelCheck() {
+        return checkBefore.isChecked;
+    }
+
+    public boolean starsCheck() {
+        return checkStars.isChecked;
     }
 }

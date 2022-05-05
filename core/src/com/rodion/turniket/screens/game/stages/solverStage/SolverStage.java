@@ -8,13 +8,23 @@ import com.rodion.turniket.screens.game.stages.gameStage.layouts.SolverLayout;
 public class SolverStage extends BasicStage {
     private SolverLayout solverLayout;
     private ConfirmationLayout confirmationLayout;
+
     public SolverStage(Viewport viewport, BasicScreen basicScreen) {
         super(viewport, basicScreen);
         confirmationLayout = new ConfirmationLayout(this);
-        solverLayout = new SolverLayout(this);
-
+        solverLayout = new SolverLayout(this) {
+            @Override
+            public void onReturn() {
+                super.onReturn();
+                SolverStage.this.onReturn();
+            }
+        };
         addActor(solverLayout);
         addActor(confirmationLayout);
+    }
+
+    public void onReturn(){
+
     }
 
     @Override
@@ -23,4 +33,5 @@ public class SolverStage extends BasicStage {
         confirmationLayout.resize(width, height);
         solverLayout.resize(width, height);
     }
+
 }

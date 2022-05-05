@@ -5,6 +5,7 @@ import com.rodion.turniket.basics.ImageButtonEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 public class BottomMenuLayout extends Layout {
     private ImageButtonEntity redoButton;
@@ -15,7 +16,7 @@ public class BottomMenuLayout extends Layout {
     public BottomMenuLayout(BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
-        hintButton = new ImageButtonEntity(){
+        hintButton = new ImageButtonEntity() {
             @Override
             public void setAssetAddress() {
                 setAssetManager(AssetManagerMaster.game);
@@ -28,10 +29,16 @@ public class BottomMenuLayout extends Layout {
                 super.onAction();
                 onHint();
             }
+
+            @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
         };
         hintButton.prepareAssets();
 
-        restartButton = new ImageButtonEntity(){
+        restartButton = new ImageButtonEntity() {
             @Override
             public void setAssetAddress() {
                 setAssetManager(AssetManagerMaster.game);
@@ -43,10 +50,16 @@ public class BottomMenuLayout extends Layout {
             public void onAction() {
                 onRestart();
             }
+
+            @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
         };
         restartButton.prepareAssets();
 
-        undoButton = new ImageButtonEntity(){
+        undoButton = new ImageButtonEntity() {
             @Override
             public void setAssetAddress() {
                 setAssetManager(AssetManagerMaster.game);
@@ -58,10 +71,16 @@ public class BottomMenuLayout extends Layout {
             public void onAction() {
                 onUndo();
             }
+
+            @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
+            }
         };
         undoButton.prepareAssets();
 
-        redoButton = new ImageButtonEntity(){
+        redoButton = new ImageButtonEntity() {
             @Override
             public void setAssetAddress() {
                 setAssetManager(AssetManagerMaster.game);
@@ -72,6 +91,12 @@ public class BottomMenuLayout extends Layout {
             @Override
             public void onAction() {
                 onRedo();
+            }
+
+            @Override
+            public void onDown() {
+                super.onDown();
+                SoundManagerMaster.play("click");
             }
         };
         redoButton.prepareAssets();
@@ -94,16 +119,16 @@ public class BottomMenuLayout extends Layout {
         redoButton.resize(width, height);
     }
 
-    public void onUndo(){
+    public void onUndo() {
     }
 
-    public void onRedo(){
+    public void onRedo() {
     }
 
-    public void onRestart(){
+    public void onRestart() {
     }
 
-    public void onHint(){
+    public void onHint() {
 
     }
 }

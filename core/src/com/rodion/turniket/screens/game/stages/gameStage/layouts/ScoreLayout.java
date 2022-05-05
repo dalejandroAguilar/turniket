@@ -10,10 +10,13 @@ import com.rodion.turniket.utilities.Level;
 
 public class ScoreLayout extends Layout {
     private ImageEntity[] stars;
+    private Level level;
 
 
     public ScoreLayout(BasicStage basicStage, Level level) {
         super(basicStage);
+        this.level = level;
+
         setFillParent(false);
         int nStars = level.getStars();
         stars = new ImageEntity[3];
@@ -48,16 +51,23 @@ public class ScoreLayout extends Layout {
     }
 
     public void setToPreview() {
-        stars[0].addAction(Actions.color(Color.YELLOW));
-        stars[1].addAction(Actions.color(Color.YELLOW));
+        if (stars[0].getColor().a == 0)
+            onShow();
+        int nStars = level.getStars();
+        for (int i = 0; i < nStars; i++)
+            stars[i].addAction(Actions.color(Color.YELLOW, 0.2f));
     }
 
     public void onPlay() {
-//        onShow();
-//        if(stars[0].getColor().a != 0)
-        stars[0].addAction(Actions.color(Color.GRAY,0.2f));
-        stars[1].addAction(Actions.color(Color.GRAY,0.2f));
-        stars[2].addAction(Actions.color(Color.DARK_GRAY,0.2f));
+        if (stars[0].getColor().a == 0)
+            onShow();
+        int nStars = level.getStars();
+        System.out.println("Nstars " + nStars);
+        for (int i = 0; i < nStars; i++)
+            stars[i].addAction(Actions.color(Color.GRAY, 0.2f));
+//        stars[0].addAction(Actions.color(Color.GRAY, 0.2f));
+//        stars[1].addAction(Actions.color(Color.GRAY, 0.2f));
+//        stars[2].addAction(Actions.color(Color.DARK_GRAY, 0.2f));
     }
 
     public void onHint() {

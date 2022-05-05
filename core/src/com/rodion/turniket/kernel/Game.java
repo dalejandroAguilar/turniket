@@ -44,10 +44,14 @@ public class Game implements Command {
         int stepY = token.getY() + 2 * dir.y;
         int halfStepX = token.getX() + dir.x;
         int halfStepY = token.getY() + dir.y;
-        if (!(stepY < 5 && stepX < 5 && stepX >= 0 && stepY >= 0))
+        if (!(stepY < 5 && stepX < 5 && stepX >= 0 && stepY >= 0)) {
+            token.listener.onMove(dir, Token.Status.Nothing);
             return false;
-        if (!(halfStepY < 5 && halfStepX < 5 && halfStepX >= 0 && halfStepY >= 0))
+        }
+        if (!(halfStepY < 5 && halfStepX < 5 && halfStepX >= 0 && halfStepY >= 0)) {
+            token.listener.onMove(dir, Token.Status.Nothing);
             return false;
+        }
 
         Step step = Step.getStep(color, dir, this);
 
@@ -56,8 +60,13 @@ public class Game implements Command {
             state.board[token.getY()][token.getX()] = null;
             state.board[stepY][stepX] = token;
             token.setPosition(stepX, stepY);
-            if (token.listener != null)
-                token.listener.onMove(dir, Token.Status.Ok);
+            if (token.listener != null) {
+                Node target = TokenColor.getTarget(token.getColor());
+                if (target == null || !(target.getX() == stepX && target.getY() == stepY))
+                    token.listener.onMove(dir, Token.Status.Move);
+                else
+                    token.listener.onMove(dir, Token.Status.MoveAndFit);
+            }
             if (isWin()) {
                 listener.onWin();
             }
@@ -81,7 +90,7 @@ public class Game implements Command {
                     state.board[stepY][stepX] = token;
                     token.setPosition(stepX, stepY);
                     if (token.listener != null)
-                        token.listener.onMove(dir, Token.Status.Ok);
+                        token.listener.onMove(dir, Token.Status.MoveAndRotate);
                     state.previousState = dummyPreviousState;
                     if (isWin())
                         listener.onWin();
@@ -191,6 +200,9 @@ public class Game implements Command {
                 state.nextState.set(dummyState);
         }
         solutionRead.goBackward();
+
+        solutionWrite.goBackward();
+        System.out.println("mark " + solutionWrite.getMark());
     }
 
     @Override
@@ -198,6 +210,7 @@ public class Game implements Command {
         if (state.nextState != null)
             state.set(state.nextState);
         solutionRead.goForward();
+        solutionWrite.goForward();
     }
 
     @Override
@@ -205,7 +218,7 @@ public class Game implements Command {
         state.set(initState);
     }
 
-    private boolean isWin() {
+    public boolean isWin() {
         for (int i = 0; i < 4; i++) {
             Token token = getTokens()[i];
             if (token.getX() != -1 && token.getY() != -1)
@@ -244,7 +257,7 @@ public class Game implements Command {
         solutionRead.goToBegin();
     }
 
-    public boolean move(Step step){
+    public boolean move(Step step) {
         move(step.getTokenColor(state), step.getDirection());
         return true;
     }
@@ -265,5 +278,14 @@ public class Game implements Command {
 
     public boolean isOnBegin() {
         return (initState == state);
+    }
+
+
+    public Solution getSolutionWrite() {
+        return solutionWrite;
+    }
+
+    public void setSolutionWrite(Solution solutionWrite) {
+        this.solutionWrite = solutionWrite;
     }
 }

@@ -11,6 +11,7 @@ import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.kernel.constants.Direction;
 import com.rodion.turniket.kernel.constants.TokenColor;
 import com.rodion.turniket.utilities.AssetManagerMaster;
+import com.rodion.turniket.utilities.ColorManagerMaster;
 
 public class BoardEntity extends Layout {
     private ImageEntity backboard;
@@ -116,7 +117,10 @@ public class BoardEntity extends Layout {
                 }
             };
             targets[i].prepareAssets();
-            targets[i].setColor(TokenColor.get(i).getColor());
+            targets[i].setColor(
+                    ColorManagerMaster.getColor(TokenColor.get(i))
+//                    TokenColor.get(i).getColor()
+            );
         }
 
         grid = new ImageEntity() {
@@ -217,7 +221,6 @@ public class BoardEntity extends Layout {
                 burnersExternal[i][j].addAction(Actions.fadeIn(0.3f));
             }
         }
-
 
         for (ImageEntity target : targets)
             target.addAction(Actions.fadeIn(0.3f));

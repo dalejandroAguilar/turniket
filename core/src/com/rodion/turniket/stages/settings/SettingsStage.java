@@ -39,6 +39,7 @@ public class SettingsStage extends BasicStage  implements DecisionFrame {
 
     public void init() {
         Gdx.input.setInputProcessor(this);
+        resetConfirmationMessage.close();
     }
 
     public void close() {

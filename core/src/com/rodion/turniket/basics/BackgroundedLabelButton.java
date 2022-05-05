@@ -23,6 +23,7 @@ public class BackgroundedLabelButton extends BackgroundedLayout {
                         @Override
                         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                             if (button == 0) {
+                                onDown();
                                 isPressed = true;
                                 isClicked = false;
                                 addAction(Actions.color(Color.GRAY, .2f));
@@ -74,6 +75,10 @@ public class BackgroundedLabelButton extends BackgroundedLayout {
     }
 
     public void onAction() throws FileNotFoundException {
+    }
+
+    public void onDown() {
+
     }
 
 }

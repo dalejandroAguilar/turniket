@@ -30,6 +30,26 @@ public class MessageStage extends BasicStage {
         addActor(messageLayout);
     }
 
+    public MessageStage(Viewport viewport, BasicScreen basicScreen, String[] lines, String okLine,
+                        String notLine) {
+        super(viewport, basicScreen);
+        messageLayout = new MessageLayout(this, lines, okLine, notLine) {
+            @Override
+            public void onOk() {
+                super.onOk();
+                decisionFrame.onAffirmativeDecision();
+            }
+
+            @Override
+            public void onCancel() {
+                super.onCancel();
+                decisionFrame.onNegativeDecision();
+            }
+        };
+        focusStage = null;
+        addActor(messageLayout);
+    }
+
     public void setFocusStage(BasicStage focusStage) {
         this.focusStage = focusStage;
     }

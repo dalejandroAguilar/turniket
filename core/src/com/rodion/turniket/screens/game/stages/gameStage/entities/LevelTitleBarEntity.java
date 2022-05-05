@@ -75,12 +75,12 @@ public class LevelTitleBarEntity extends Layout {
             }
         };
         center.prepareAssets();
-        center.setColor(difficulty.getColor());
+        center.setColor(ColorManagerMaster.getColor(difficulty));
 
 
         table.add(levelLabel).expand().left().pad(5);
         table.setFillParent(false);
-        table.setBackground(difficulty.getBgColor());
+        table.setBackground(ColorManagerMaster.getColorRegion(difficulty));
         add(table).expandX().fillX();
 
     }

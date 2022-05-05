@@ -1,6 +1,5 @@
 package com.rodion.turniket.stages.message;
 
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.rodion.turniket.basics.BackgroundedLabelButton;
 import com.rodion.turniket.basics.BackgroundedLayout;
 import com.rodion.turniket.basics.BasicStage;
@@ -8,8 +7,8 @@ import com.rodion.turniket.basics.LabelEntity;
 import com.rodion.turniket.basics.Layout;
 import com.rodion.turniket.utilities.AssetManagerMaster;
 import com.rodion.turniket.utilities.ColorManagerMaster;
-import com.rodion.turniket.utilities.DecisionFrame;
 import com.rodion.turniket.utilities.FontManagerMaster;
+import com.rodion.turniket.utilities.SoundManagerMaster;
 
 public class MessageLayout extends Layout {
     private Message message;
@@ -27,12 +26,23 @@ public class MessageLayout extends Layout {
         add(bottomMenu).expandX().fillX().bottom();
     }
 
+    public MessageLayout(BasicStage basicStage, String[] lines, String okLine, String notLine) {
+        super(basicStage);
+        message = new Message(basicStage, lines);
+        bottomMenu = new BottomMenu(basicStage, okLine, notLine);
+        add().expand().row();
+        add().expand().row();
+        add().expand().row();
+        add(message).expand().row();
+        add().expand().row();
+        add(bottomMenu).expandX().fillX().bottom();
+    }
+
     public void onOk() {
     }
 
     public void onCancel() {
     }
-
 
     @Override
     public void resize(int width, int height) {
@@ -108,6 +118,54 @@ public class MessageLayout extends Layout {
                 @Override
                 public void onAction() {
                     onCancel();
+                }
+            };
+            add(okButton).padBottom(10).padTop(10).expand();
+            add(cancelButton).padBottom(10).padTop(10).expand();
+        }
+
+        public BottomMenu(BasicStage basicStage, String okLine, String notLine) {
+            super(basicStage);
+            setFillParent(false);
+            setBackground(ColorManagerMaster.grayBg);
+            okButton = new BackgroundedLabelButton(okLine,
+                    FontManagerMaster.nexaStyle, basicStage) {
+                @Override
+                public void setAssetAddress() {
+                    setAssetManger(AssetManagerMaster.game);
+                    setAssetPath("game");
+                    setAssetName("button_label_frame");
+                }
+
+                @Override
+                public void onAction() {
+                    onOk();
+                }
+
+                @Override
+                public void onDown() {
+                    super.onDown();
+                    SoundManagerMaster.play("click");
+                }
+            };
+            cancelButton = new BackgroundedLabelButton(notLine,
+                    FontManagerMaster.nexaStyle, basicStage) {
+                @Override
+                public void setAssetAddress() {
+                    setAssetManger(AssetManagerMaster.game);
+                    setAssetPath("game");
+                    setAssetName("button_label_frame");
+                }
+
+                @Override
+                public void onAction() {
+                    onCancel();
+                }
+
+                @Override
+                public void onDown() {
+                    super.onDown();
+                    SoundManagerMaster.play("click");
                 }
             };
             add(okButton).padBottom(10).padTop(10).expand();

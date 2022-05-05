@@ -28,22 +28,32 @@ public class LevelManagerMaster {
         maps = new ArrayList<>();
         for (Difficulty difficulty : Difficulty.values()) {
 //            FileHandle dir = Gdx.files.local("maps/"+  difficulty.name()) ; //new File(Gdx.files.path()+"maps\\" +  difficulty.name()); //File("maps\\" + difficulty.name());
-            FileHandle dir = multiplatform.openFile("maps/"+  difficulty.name());
+            FileHandle dir = multiplatform.openFile("maps/" + difficulty.name());
 //                    Gdx.files.internal() ; //new File(Gdx.files.path()+"maps\\" +  difficulty.name()); //File("maps\\" + difficulty.name());
             nmapsPerDiff[difficulty.index] = dir.list().length;
             for (int i = 0; i < nmapsPerDiff[difficulty.index]; i++) {
                 System.out.println(i);
-                maps.add(new Level(dir.list()[i]));
-                Level level = maps.get(i);
+                Level level= new Level(dir.list()[i]);
+                maps.add(level);
+//                Level level = maps.get(maps.size()-1);
                 level.loadSolution(multiplatform);
                 level.loadStatus(multiplatform);
                 nstars += level.getStars();
+//                System.out.println("file naem " + str);
+                System.out.println("nstars " + nstars);
             }
             npagesPerDiff[difficulty.index] = nmapsPerDiff[difficulty.index] / mapsPerPage + 1;
             npages += npagesPerDiff[difficulty.index];
-            System.out.println(difficulty.name() +" " + nmapsPerDiff[difficulty.index]);
+            System.out.println(difficulty.name() + " " + nmapsPerDiff[difficulty.index]);
         }
         nmaps = maps.size();
+
+        RequirementManagerMaster.setnMaps(nmaps);
+        RequirementManagerMaster.setnMapsPerDiff(nmapsPerDiff);
+        for (int i = 0; i < nmaps; i++) {
+            maps.get(i).setRequirement(RequirementManagerMaster.getRequirement(i));
+        }
+
     }
 
     public static Level getPreviousLevel() {
@@ -140,7 +150,7 @@ public class LevelManagerMaster {
         return null;
     }
 
-    public static int getIniForPage(int page){
+    public static int getIniForPage(int page) {
         int nmapsaccum = 0;
         int npagesaccum = 0;
         Difficulty difficulty = getDifficulty(page);
@@ -164,7 +174,7 @@ public class LevelManagerMaster {
         int endLevel = Math.min(iniLevel + mapsPerPage, nmapsaccum + nmapsPerDiff[difficulty.index]);
 
         System.out.println("iniLevel " + iniLevel);
-        if(iniLevel < 0)
+        if (iniLevel < 0)
             return null;
 
         for (int i = iniLevel; i < endLevel; i++)
@@ -173,11 +183,11 @@ public class LevelManagerMaster {
 
     }
 
-    public static int getNpages(){
+    public static int getNpages() {
         return npages;
     }
 
-    public static void goToLevel(int index){
+    public static void goToLevel(int index) {
         bookmark = index;
     }
 
@@ -197,7 +207,7 @@ public class LevelManagerMaster {
         LevelManagerMaster.nstars = nstars;
     }
 
-    public static Difficulty getDifficultOfLevel(int index){
+    public static Difficulty getDifficultOfLevel(int index) {
         int acumLevel = 0;
         for (Difficulty difficulty : Difficulty.values()) {
             acumLevel += nmapsPerDiff[difficulty.index];
@@ -206,6 +216,4 @@ public class LevelManagerMaster {
         }
         return null;
     }
-
-
 }

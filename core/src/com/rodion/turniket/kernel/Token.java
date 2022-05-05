@@ -51,7 +51,6 @@ Token extends Node {
         setPosition(getX() + 2 * direction.x, getY() + 2 * direction.y);
     }
 
-
     public int getj() {
         if (super.getX() == -1)
             return -1;
@@ -73,9 +72,9 @@ Token extends Node {
     }
 
     public enum Status {
-        Ok(0), BladeTokenCollision(1), TokenCollision(2);
+        Move(0),MoveAndRotate(1), BladeTokenCollision(2), TokenCollision(3),
+        MoveAndFit(4), MoveAndRotateAndFit(5), Nothing(6);
         private int value;
-
         Status(int value) {
         }
     }
