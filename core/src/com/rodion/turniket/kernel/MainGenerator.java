@@ -49,6 +49,5 @@ public class MainGenerator {
 //            file.println(movements);
             file.close();
         }
-
     }
 }

@@ -59,9 +59,9 @@ public class LevelGenerator {
             if (color.index > 3 || nTokens > maxNTokens)
                 break;
             if (random.nextBoolean()) {
-                tokens[color.index].setPosition(TokenColor.getTarget(color));
-                board[tokens[color.index].getY()][tokens[color.index].getX()]
-                        = tokens[color.index];
+                Token token = tokens[color.index];
+                token.setPosition(TokenColor.getTarget(color));
+                board[token.getY()][token.getX()] = token;
                 nTokens++;
             }
         }
@@ -70,7 +70,7 @@ public class LevelGenerator {
 
         int nBlades = 0;
         outer:
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++)
             for (int j = 0; j < 5; j++) {
                 stack.clear();
                 stack.add(null);
@@ -93,12 +93,11 @@ public class LevelGenerator {
                     board[i][j] = blade;
                 }
             }
-        }
 
         int indexColor = 4;
         outer:
-        for (int i = 0; i < 5; i+=2) {
-            for (int j = 0; j < 5; j+=2) {
+        for (int i = 0; i < 5; i += 2) {
+            for (int j = 0; j < 5; j += 2) {
                 if (indexColor > 4 + maxNDummyTokens - 1)
                     break outer;
                 if (board[i][j] != null) {
@@ -136,10 +135,10 @@ public class LevelGenerator {
                     if (board[affY][affX] != null) {
                         Direction oppDir = dirAff.getOpposite();
                         Blade blade = (Blade) board[affY][affX];
-                        if(blade.getDirection() == dir.getOpposite()) {
+                        if (blade.getDirection() == dir.getOpposite()) {
                             TurnId id = blade.getId();
                             turnstiles[id.index].rotate(blade.getDirection().spinValue(oppDir),
-                                board);
+                                    board);
                         }
                     }
             }
@@ -155,18 +154,18 @@ public class LevelGenerator {
                     TurnId id = blade.getId();
                     Blade bladeAff = (Blade) board[affY][affX];
                     TurnId idAff = bladeAff.getId();
-                     if(blade.getDirection() == dir.getOpposite()) {
-                         if (id == idAff) {
-                             board[y][x] = null;
-                             if (turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), board)) {
-                                 token.setPosition(stepX, stepY);
-                                 board[stepY][stepX] = token;
-                                 return true;
-                             } else {
-                                 board[y][x] = token;
-                             }
-                         }
-                     }
+                    if (blade.getDirection() == dir.getOpposite()) {
+                        if (id == idAff) {
+                            board[y][x] = null;
+                            if (turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), board)) {
+                                token.setPosition(stepX, stepY);
+                                board[stepY][stepX] = token;
+                                return true;
+                            } else {
+                                board[y][x] = token;
+                            }
+                        }
+                    }
                 }
         }
         return false;
@@ -177,7 +176,7 @@ public class LevelGenerator {
             for (int j = 0; j < 5; j++) {
                 if (board[i][j] != null) {
                     if (board[i][j].getClass() == Token.class)
-                       printStream.print(((Token) board[i][j]).getColor().value);
+                        printStream.print(((Token) board[i][j]).getColor().value);
                     if (board[i][j].getClass() == Blade.class)
                         printStream.print(((Blade) board[i][j]).getId().value);
                 } else if (TurnId.get(j, i) != null) {
@@ -190,9 +189,9 @@ public class LevelGenerator {
         printStream.println("-----");
     }
 
-    public static String getRandomHex(){
+    public static String getRandomHex() {
         int myRandomNumber = random.nextInt(0xFFFFFF); // Generates a random number between 0x10 and 0x20
-        String result = String.format("%06X",myRandomNumber);
+        String result = String.format("%06X", myRandomNumber);
         return result;
     }
 }

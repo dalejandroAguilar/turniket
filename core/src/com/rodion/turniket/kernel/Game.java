@@ -52,7 +52,6 @@ public class Game implements Command {
             token.listener.onMove(dir, Token.Status.Nothing);
             return false;
         }
-
         Step step = Step.getStep(color, dir, this);
 
         if (state.board[halfStepY][halfStepX] == null && state.board[stepY][stepX] == null) {

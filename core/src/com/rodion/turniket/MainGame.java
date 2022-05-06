@@ -24,7 +24,6 @@ public class MainGame extends Game {
     public TitleScreen titleScreen;
     public Multiplatform multiplatform;
 
-
     public MainGame(Multiplatform multiplatform) {
         super();
         this.multiplatform = multiplatform;

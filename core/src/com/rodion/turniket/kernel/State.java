@@ -34,7 +34,6 @@ public class State {
     }
 
     public void set(State s) {
-
         for (int i = 0; i < board.length; i++)
             for (int j = 0; j < board[0].length; j++)
                 board[i][j] = null;
@@ -58,7 +57,6 @@ public class State {
     public int getSteps(){
         return step;
     }
-
     public void setStep(int step) {
         this.step = step;
     }
