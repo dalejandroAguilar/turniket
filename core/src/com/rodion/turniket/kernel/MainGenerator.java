@@ -21,7 +21,6 @@ public class MainGenerator {
         String path = "C:\\Users\\Daniel\\Documents\\Android_Studio_Projects\\turniket\\" +
                 "android\\assets\\maps\\Beginner\\";
 
-
         for (int i = 0; i < 100; i++) {
             LevelGenerator levelGenerator = new LevelGenerator();
             levelGenerator
