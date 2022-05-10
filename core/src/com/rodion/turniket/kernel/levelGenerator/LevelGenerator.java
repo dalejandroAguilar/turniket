@@ -11,6 +11,7 @@ import com.rodion.turniket.kernel.constants.TurnId;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class LevelGenerator {
@@ -20,8 +21,13 @@ public class LevelGenerator {
     private int maxNDummyTokens;
     private int maxNTokens;
     private int maxNBlades;
+    private Character[][] map;
+    final private static ArrayList<Node> turnPositions = new ArrayList<>(
+            Arrays.asList(new Node(1, 1), new Node(3, 1),
+                    new Node(1, 3), new Node(3, 3)));
 
     public LevelGenerator() {
+        map = new Character[5][5];
         initState = new State();
         initState.board = new Node[5][5];
         initState.turnstiles = new Turnstile[TurnId.values().length];
@@ -182,4 +188,49 @@ public class LevelGenerator {
         }
         printStream.println("-----");
     }
+//
+    public void readFile(String[] map) {
+        int i = 0;
+        while (i < 5) {
+            int j;
+            for (j = 0; j < 5; j++) {
+                if (j < map[i].length())
+                    this.map[i][j] = map[i].charAt(j);
+                else
+                    this.map[i][j] = ' ';
+            }
+            i++;
+        }
+        System.out.println(map.length);
+    }
+
+
+    public void setMap(Character[][] map) {
+        this.map = map;
+    }
+
+    public void setFromMap() {
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 5; j++) {
+                for (TokenColor color : TokenColor.values())
+                    if (map[i][j] == color.value) {
+                        initState.tokens[color.index].setPosition(j, i);
+                        initState.board[i][j] = initState.tokens[color.index];
+                    }
+                for (TurnId id : TurnId.values())
+                    if (map[i][j] == id.value)
+                        if (!turnPositions.contains(Node.dummy(j, i))) {
+                            Turnstile turnstile = initState.turnstiles[id.index];
+                            Direction direction = Direction.get(j - turnstile.getX(),
+                                    i - turnstile.getY());
+                            Blade blade = new Blade(j, i, direction, id);
+                            turnstile.addBlade(blade);
+                            initState.board[i][j] = blade;
+                        }
+            }
+        state = new State(initState);
+    }
+
+
+
 }
