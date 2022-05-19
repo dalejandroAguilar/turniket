@@ -113,10 +113,12 @@ public class LevelGenerator {
         int stepY = y + 2 * dir.y;
         int halfStepX = x + dir.x;
         int halfStepY = y + dir.y;
+
         if (!(stepY < 5 && stepX < 5 && stepX >= 0 && stepY >= 0))
             return false;
 
         if (state.board[halfStepY][halfStepX] == null && state.board[stepY][stepX] == null) {
+            state.previousState = new State(state);
             state.board[y][x] = null;
             state.board[stepY][stepX] = token;
             token.setPosition(stepX, stepY);
@@ -134,6 +136,7 @@ public class LevelGenerator {
                         }
                     }
             }
+            state.setStep(state.getSteps() + 1);
             return true;
         }
 
@@ -142,6 +145,7 @@ public class LevelGenerator {
             int affY = y + dirAff.y;
             if (affY < 5 && affX < 5 && affX >= 0 && affY >= 0)
                 if (state.board[affY][affX] != null) {
+                    State dummyPreviousState = new State(state);
                     Blade blade = (Blade) state.board[halfStepY][halfStepX];
                     TurnId id = blade.getId();
                     Blade bladeAff = (Blade) state.board[affY][affX];
@@ -152,6 +156,7 @@ public class LevelGenerator {
                             if (state.turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), state.board)) {
                                 token.setPosition(stepX, stepY);
                                 state.board[stepY][stepX] = token;
+                                state.previousState = dummyPreviousState;
                                 return true;
                             } else {
                                 state.board[y][x] = token;
@@ -201,9 +206,8 @@ public class LevelGenerator {
             }
             i++;
         }
-        System.out.println(map.length);
+//        System.out.println(map.length);
     }
-
 
     public void setMap(Character[][] map) {
         this.map = map;

@@ -287,4 +287,4 @@ public class Game implements Command {
     public void setSolutionWrite(Solution solutionWrite) {
         this.solutionWrite = solutionWrite;
     }
-}
+    }
