@@ -78,4 +78,12 @@ Token extends Node {
         Status(int value) {
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Token token = (Token) o;
+        if (color == token.color && getX() == token.getX() && getY() == token.getY())
+            return true;
+        return false;
+    }
 }

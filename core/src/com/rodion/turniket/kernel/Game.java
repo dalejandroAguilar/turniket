@@ -69,7 +69,7 @@ public class Game implements Command {
             if (isWin()) {
                 listener.onWin();
             }
-            state.setStep(state.getSteps() + 1);
+            state.setnSteps(state.getSteps() + 1);
             solutionWrite.writeStep(step);
             return true;
         }
@@ -93,7 +93,7 @@ public class Game implements Command {
                     state.previousState = dummyPreviousState;
                     if (isWin())
                         listener.onWin();
-                    state.setStep(state.getSteps() + 1);
+                    state.setnSteps(state.getSteps() + 1);
                     solutionWrite.writeStep(step);
 //                    step.print();
                     return true;

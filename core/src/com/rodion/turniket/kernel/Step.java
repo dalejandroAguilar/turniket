@@ -1,3 +1,4 @@
+
 package com.rodion.turniket.kernel;
 
 import com.rodion.turniket.kernel.constants.Direction;
@@ -33,6 +34,17 @@ public class Step {
     public void print(PrintStream stream) {
         stream.print(start + ">" + end);
     }
+    public void println(PrintStream stream) {
+        this.print(stream);
+        stream.println();
+    }
+    public void print2(PrintStream stream) {
+        stream.print(tokenColor + ">" + direction);
+    }
+    public void print2ln(PrintStream stream) {
+        this.print2(stream);
+        stream.println();
+    }
 
     public static Step string2Step(String str) {
         int start = Integer.parseInt(str.substring(0, 1));
@@ -54,11 +66,10 @@ public class Step {
         int endY = (end - 1) / 3;
         return Direction.get(endX - startX, endY - startY);
     }
-
-            public String getString(){
-            String str = start + ">" + end;
-            return str;
-        }
+    public String getString(){
+        String str = start + ">" + end;
+        return str;
+    }
 
     public int getStart() {
         return start;

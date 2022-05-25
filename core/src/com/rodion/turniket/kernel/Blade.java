@@ -71,4 +71,14 @@ public class Blade extends Node {
         private int value;
         Status(int value){}
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Blade blade = (Blade) o;
+        if (direction == blade.direction && id == blade.id &&
+                getX() == blade.getX() && getY() == blade.getY()) {
+            return true;
+        }
+        return false;
+    }
 }

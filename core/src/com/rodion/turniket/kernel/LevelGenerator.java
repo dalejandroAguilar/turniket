@@ -157,9 +157,11 @@ public class LevelGenerator {
                     if (blade.getDirection() == dir.getOpposite()) {
                         if (id == idAff) {
                             board[y][x] = null;
-                            if (turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), board)) {
+                            if (turnstiles[id.index].rotate(blade.getDirection().spinValue(dir),
+                                    board)) {
                                 token.setPosition(stepX, stepY);
                                 board[stepY][stepX] = token;
+
                                 return true;
                             } else {
                                 board[y][x] = token;
@@ -190,7 +192,8 @@ public class LevelGenerator {
     }
 
     public static String getRandomHex() {
-        int myRandomNumber = random.nextInt(0xFFFFFF); // Generates a random number between 0x10 and 0x20
+        int myRandomNumber = random.nextInt(0xFFFFFF);
+        // Generates a random number between 0x10 and 0x20
         String result = String.format("%06X", myRandomNumber);
         return result;
     }

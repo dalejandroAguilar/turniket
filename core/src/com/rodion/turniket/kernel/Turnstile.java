@@ -114,4 +114,18 @@ public class Turnstile extends Node {
         Status(int value) {
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Turnstile turnstile = (Turnstile) o;
+        for (int i = 0; i < blades.size(); i++) {
+            Blade bladeA = blades.get(i);
+            Blade bladeB = turnstile.blades.get(i);
+            if (!bladeA.equals(bladeB))
+                return false;
+        }
+        if (id == turnstile.id && getX() == turnstile.getX() && getY() == turnstile.getY())
+            return true;
+        return false;
+    }
 }

@@ -3,6 +3,7 @@ package com.rodion.turniket.kernel.levelGenerator;
 import com.rodion.turniket.kernel.Blade;
 import com.rodion.turniket.kernel.Node;
 import com.rodion.turniket.kernel.State;
+import com.rodion.turniket.kernel.Step;
 import com.rodion.turniket.kernel.Token;
 import com.rodion.turniket.kernel.Turnstile;
 import com.rodion.turniket.kernel.constants.Direction;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class LevelGenerator {
+public class InverseGame {
     private State state;
     private State initState;
     private static Random random = new Random();
@@ -26,7 +27,7 @@ public class LevelGenerator {
             Arrays.asList(new Node(1, 1), new Node(3, 1),
                     new Node(1, 3), new Node(3, 3)));
 
-    public LevelGenerator() {
+    public InverseGame() {
         map = new Character[5][5];
         initState = new State();
         initState.board = new Node[5][5];
@@ -44,6 +45,21 @@ public class LevelGenerator {
             initState.turnstiles[id.index] = new Turnstile(id);
             initState.turnstiles[id.index].setPosition(TurnId.getPosition(id));
         }
+    }
+
+    public InverseGame setMaxNDummyTokens(int maxNDummyTokens) {
+        this.maxNDummyTokens = maxNDummyTokens;
+        return this;
+    }
+
+    public InverseGame setMaxNTokens(int maxNTokens) {
+        this.maxNTokens = maxNTokens;
+        return this;
+    }
+
+    public InverseGame setMaxNBlades(int maxNBlades) {
+        this.maxNBlades = maxNBlades;
+        return this;
     }
 
     public void generate() {
@@ -136,7 +152,9 @@ public class LevelGenerator {
                         }
                     }
             }
-            state.setStep(state.getSteps() + 1);
+            state.step = new Step(color,dir.getOpposite());
+            state.setnSteps(state.getSteps() + 1);
+            crop();
             return true;
         }
 
@@ -153,10 +171,13 @@ public class LevelGenerator {
                     if (blade.getDirection() == dir.getOpposite()) {
                         if (id == idAff) {
                             state.board[y][x] = null;
-                            if (state.turnstiles[id.index].rotate(blade.getDirection().spinValue(dir), state.board)) {
+                            if (state.turnstiles[id.index].rotate(blade.getDirection().spinValue(dir),
+                                    state.board)) {
                                 token.setPosition(stepX, stepY);
                                 state.board[stepY][stepX] = token;
                                 state.previousState = dummyPreviousState;
+                                state.step = new Step(color,dir.getOpposite());
+                                crop();
                                 return true;
                             } else {
                                 state.board[y][x] = token;
@@ -193,7 +214,7 @@ public class LevelGenerator {
         }
         printStream.println("-----");
     }
-//
+
     public void readFile(String[] map) {
         int i = 0;
         while (i < 5) {
@@ -206,7 +227,6 @@ public class LevelGenerator {
             }
             i++;
         }
-//        System.out.println(map.length);
     }
 
     public void setMap(Character[][] map) {
@@ -235,6 +255,31 @@ public class LevelGenerator {
         state = new State(initState);
     }
 
-
-
+    public void crop() {
+        State previousState = new State(state);
+        while (!previousState.equals(initState)){
+            previousState = previousState.previousState;
+            if (state.equals(previousState)){
+                state = previousState;
+                return;
+            }
+        }
+    }
+    public void printSolution(PrintStream printStream) {
+        State previousState = new State(state);
+        int i = 0 ;
+//        previousState.print(printStream);
+//        previousState.step.print2ln(printStream);
+        do{
+            previousState.print(printStream);
+            previousState.step.print2ln(printStream);
+            previousState = previousState.previousState;
+//            System.out.println(i++);
+        } while (!previousState.equals(initState));
+//        previousState.step.print2ln(printStream);
+        initState.print(printStream);
+        printStream.println();
+    }
 }
+
+

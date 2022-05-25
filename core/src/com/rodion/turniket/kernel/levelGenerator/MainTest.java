@@ -1,6 +1,6 @@
 package com.rodion.turniket.kernel.levelGenerator;
 
-
+import com.rodion.turniket.kernel.State;
 import com.rodion.turniket.kernel.constants.Direction;
 import com.rodion.turniket.kernel.constants.TokenColor;
 
@@ -11,21 +11,35 @@ public class MainTest {
         String[] map = {
                 " 1 2",
                 "1112 ",
-                " 3R4 ",
+                " 3 4 ",
                 " 334 ",
                 "C3 4 "
         };
-        LevelGenerator lg = new LevelGenerator();
+        InverseGame lg = new InverseGame();
         lg.readFile(map);
         lg.setFromMap();
+
         lg.print(System.out);
         lg.reverseMove(TokenColor.Cyan, Direction.Up, true, Direction.Right);
+        lg.getState().step.print2ln(System.out);
         lg.print(System.out);
-        lg.reverseMove(TokenColor.Cyan, Direction.Right, true, Direction.Up);
+        lg.reverseMove(TokenColor.Cyan, Direction.Right, true, Direction.Down);
+        lg.getState().step.print2ln(System.out);
         lg.print(System.out);
-        lg.reverseMove(TokenColor.Cyan, Direction.Up, true, Direction.Left);
+        lg.reverseMove(TokenColor.Cyan, Direction.Down, true, Direction.Left);
+        lg.getState().step.print2ln(System.out);
         lg.print(System.out);
-        lg.reverseMove(TokenColor.Cyan, Direction.Right, false, Direction.Left);
+        lg.reverseMove(TokenColor.Cyan, Direction.Left, true, Direction.Up);
+        lg.getState().step.print2ln(System.out);
         lg.print(System.out);
+        lg.reverseMove(TokenColor.Cyan, Direction.Up, true, Direction.Right);
+        lg.getState().step.print2ln(System.out);
+        lg.print(System.out);
+        State state2 = new State(lg.getState());
+        lg.print(System.out);
+
+//        System.out.println(lg.getState().equals(state2));
+        System.out.println("******************");
+        lg.printSolution(System.out);
     }
 }

@@ -15,8 +15,6 @@ public class Node {
             x = n.getX();
             y = n.getY();
         }
-//        else
-//            this.equals(n);
     }
 
     public Node(int x, int y) {
